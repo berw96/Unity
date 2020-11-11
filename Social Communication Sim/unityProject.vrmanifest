@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.socialcommunicationsim.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\berw9\\Desktop\\git repos\\Unity\\Social Communication Sim\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "Social Communication Sim [Testing]"
+        }
+      }
+    }
+  ]
+}

@@ -58,12 +58,3 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-# Assets directory
-_TerrainAutoUpgrade/
-BrokenVector/
-GrassFlowers/
-SteamVR/
-SteamVR_Input/
-SteamVR_Resources/
-StreamingAssets/
-
