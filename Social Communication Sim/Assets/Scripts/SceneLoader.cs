@@ -11,7 +11,6 @@ public class SceneLoader : GameManager
 
     private void Start()
     {
-        GameManager.gm.f();
         registerAllScenes();
     }
     private void registerAllScenes()
