@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     GameManager gm;
+    GameObject gameManagerObject;
+    GameObject responseCanvas;
+    GameObject theSun;
     private List<GameObject> responses;
     const int capacity = 4;
 
@@ -13,9 +16,9 @@ public class GameManager : MonoBehaviour
     {
         gm = this;
         responses = new List<GameObject>(capacity);
-        instantiateResponses();
+        instantiateObjects();
     }
-    public void instantiateResponses()
+    public void instantiateObjects()
     {
         for (int i = 0; i < responses.Capacity; i++)
         {
@@ -24,8 +27,13 @@ public class GameManager : MonoBehaviour
             responses[i].transform.SetParent(GameObject.Find(this.name).transform);
             responses[i].GetComponent<Transform>().position = new Vector3(
                 responses[i].GetComponent<Transform>().position.x, 
-                ((float)-i/4), 
+                ((float)-i/6), 
                 responses[i].GetComponent<Transform>().position.z);
         }
+        gameManagerObject = GameObject.Find("GameManager");
+        responseCanvas = GameObject.Find("ResponseCanvas");
+        theSun = GameObject.Find("Sun");
+        gameManagerObject.transform.SetParent(responseCanvas.transform);
+        gameManagerObject.GetComponent<Transform>().position = responseCanvas.transform.position;
     }
 }
