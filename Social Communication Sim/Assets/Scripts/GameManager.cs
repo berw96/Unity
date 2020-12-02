@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour
             responses[i].transform.SetParent(GameObject.Find(this.name).transform);
             responses[i].GetComponent<Transform>().position = new Vector3(
                 responses[i].GetComponent<Transform>().position.x, 
-                ((float)-i/6), 
-                responses[i].GetComponent<Transform>().position.z);
+                ((float)-i/6) + 1, 
+                responses[i].GetComponent<Transform>().position.z + 1);
         }
         gameManagerObject = GameObject.Find("GameManager");
         responseCanvas = GameObject.Find("ResponseCanvas");
