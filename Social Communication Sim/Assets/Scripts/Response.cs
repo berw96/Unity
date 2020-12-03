@@ -41,11 +41,6 @@ public class Response : MonoBehaviour
         {
             GetComponent<Image>().color = new Color(200.0f, 0.0f, 0.0f, 0.392f);
         }
-        else
-        {
-            //GetComponent<Image>().color = new Color(0.0f, 0.0f, 200.0f, 0.392f);
-        }
-
         topic = ResponseData.Topic.WEATHER;
         history = new List<ResponseData.Type>();
         Debug.Log("history.Count = " + history.Count);

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class <c>GameManager</c> is attatched to a singleton which
+/// manages the instantiation, deletion and spawning of
+/// other game objects.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     GameManager gm;
@@ -25,9 +30,10 @@ public class GameManager : MonoBehaviour
             // ordninally adds any game objects to the list which adhere to the following naming convention: Response x.
             responses.Add(GameObject.Find("Response " + i));
             responses[i].transform.SetParent(GameObject.Find(this.name).transform);
+            // adjust the position of each response in the scene.
             responses[i].GetComponent<Transform>().position = new Vector3(
                 responses[i].GetComponent<Transform>().position.x, 
-                ((float)-i/6) + 1, 
+                ((float)-i/6) + 1.2f, 
                 responses[i].GetComponent<Transform>().position.z + 1);
         }
         gameManagerObject = GameObject.Find("GameManager");
