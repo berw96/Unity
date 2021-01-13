@@ -56,7 +56,7 @@ public class Response : MonoBehaviour
     {
         for (int i = 0; i < history.Count; i++)
         {
-            Debug.Log("Response " + (i+1) + ": " + history[i]);
+            Debug.Log("Response " + (i + 1) + ": " + history[i]);
         }
         setContents();
     }
@@ -131,7 +131,9 @@ public class Response : MonoBehaviour
                                 {
                                     case ResponseData.Type.NPC:
                                         GetComponentInChildren<Text>().text = "...";
-                                        Debug.Log("GAME OVER");
+                                        break;
+                                    default:
+                                        GetComponentInChildren<Text>().text = "";
                                         break;
                                 }
                                 Debug.Log("Response Type: " + this.type);
@@ -278,7 +280,9 @@ public class Response : MonoBehaviour
                                         {
                                             case ResponseData.Type.NPC:
                                                 GetComponentInChildren<Text>().text = "...";
-                                                Debug.Log("GAME OVER");
+                                                break;
+                                            default:
+                                                GetComponentInChildren<Text>().text = "";
                                                 break;
                                         }
                                         Debug.Log("Response Type: " + this.type);
@@ -427,7 +431,9 @@ public class Response : MonoBehaviour
                                                 {
                                                     case ResponseData.Type.NPC:
                                                         GetComponentInChildren<Text>().text = "Sorry, bye then.";
-                                                        Debug.Log("GAME OVER");
+                                                        break;
+                                                    default:
+                                                        GetComponentInChildren<Text>().text = "";
                                                         break;
                                                 }
                                                 Debug.Log("Response Type: " + this.type);
@@ -646,7 +652,9 @@ public class Response : MonoBehaviour
                                                 {
                                                     case ResponseData.Type.NPC:
                                                         GetComponentInChildren<Text>().text = "Sure, okay.";
-                                                        Debug.Log("GAME OVER");
+                                                        break;
+                                                    default:
+                                                        GetComponentInChildren<Text>().text = "";
                                                         break;
                                                 }
                                                 Debug.Log("Response Type: " + this.type);
@@ -734,7 +742,7 @@ public class Response : MonoBehaviour
                                                                 GetComponentInChildren<Text>().text = "Poor you.";
                                                                 break;
                                                             case ResponseData.Type.NEUTRAL:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "Do you have a nickname?";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -1020,7 +1028,9 @@ public class Response : MonoBehaviour
                                                         {
                                                             case ResponseData.Type.NPC:
                                                                 GetComponentInChildren<Text>().text = "No worries, my apologies.";
-                                                                Debug.Log("GAME OVER");
+                                                                break;
+                                                            default:
+                                                                GetComponentInChildren<Text>().text = "";
                                                                 break;
                                                         }
                                                         break;
@@ -1364,16 +1374,16 @@ public class Response : MonoBehaviour
                                                         switch (type)
                                                         {
                                                             case ResponseData.Type.NPC:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "It was, but if you are sorry then I\'m happy to put that behind us.";
                                                                 break;
                                                             case ResponseData.Type.POSITIVE:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "I\'m glad.";
                                                                 break;
                                                             case ResponseData.Type.NEGATIVE:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "You seem a lot more hurt than you should be.";
                                                                 break;
                                                             case ResponseData.Type.NEUTRAL:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "...";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -1388,7 +1398,9 @@ public class Response : MonoBehaviour
                                                         {
                                                             case ResponseData.Type.NPC:
                                                                 GetComponentInChildren<Text>().text = "...ahahahaha! Whatever.";
-                                                                Debug.Log("GAME OVER");
+                                                                break;
+                                                            default:
+                                                                GetComponentInChildren<Text>().text = "";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -1430,16 +1442,16 @@ public class Response : MonoBehaviour
                                                         switch (type)
                                                         {
                                                             case ResponseData.Type.NPC:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "I get it.";
                                                                 break;
                                                             case ResponseData.Type.POSITIVE:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "You might also get to see me around here again.";
                                                                 break;
                                                             case ResponseData.Type.NEGATIVE:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "...congratulations.";
                                                                 break;
                                                             case ResponseData.Type.NEUTRAL:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "I mean, who doesn\'t like the outdoors?";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -1456,13 +1468,13 @@ public class Response : MonoBehaviour
                                                                 GetComponentInChildren<Text>().text = "Okay, if you say so.";
                                                                 break;
                                                             case ResponseData.Type.POSITIVE:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "Thank you.";
                                                                 break;
                                                             case ResponseData.Type.NEGATIVE:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "Just leave me alone!";
                                                                 break;
                                                             case ResponseData.Type.NEUTRAL:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "...";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -1476,16 +1488,16 @@ public class Response : MonoBehaviour
                                                         switch (type)
                                                         {
                                                             case ResponseData.Type.NPC:
-                                                                GetComponentInChildren<Text>().text = "I was hoping you could answer that for me. I\'m outdoors for the tranquility it offers.";
+                                                                GetComponentInChildren<Text>().text = "I was hoping you could answer that for me. I\'m outdoors for the tranquillity it offers.";
                                                                 break;
                                                             case ResponseData.Type.POSITIVE:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "The weather is quite tranquil isn\'t it?";
                                                                 break;
                                                             case ResponseData.Type.NEGATIVE:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "...";
                                                                 break;
                                                             case ResponseData.Type.NEUTRAL:
-                                                                GetComponentInChildren<Text>().text = "";
+                                                                GetComponentInChildren<Text>().text = "I like to keep most things to myself.";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -1607,7 +1619,9 @@ public class Response : MonoBehaviour
                                                         {
                                                             case ResponseData.Type.NPC:
                                                                 GetComponentInChildren<Text>().text = "Hey...at least I can go to parties.";
-                                                                Debug.Log("GAME OVER");
+                                                                break;
+                                                            default:
+                                                                GetComponentInChildren<Text>().text = "";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -1647,8 +1661,1968 @@ public class Response : MonoBehaviour
                 break;
             case 5:
                 Debug.Log("Setting NPC end remarks.");
+                switch (history[history.Count - 5])
+                {
+                    case ResponseData.Type.POSITIVE:
+                        switch (history[history.Count - 4])
+                        {
+                            case ResponseData.Type.POSITIVE:
+                                switch (history[history.Count - 3])
+                                {
+                                    case ResponseData.Type.POSITIVE:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "As with you <player_name>, see you around!";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...yes your majesty.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'ll try to keep that in mind, see ya!";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Oh, haha. Well it was nice chatting, I\'ve gotta run.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'d rather be <NPC_name> than a jerk any day. See ya.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I do, it\'s <NPC_nickname>.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I love the classics.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'m sorry you think that way, you are missing out.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "That\'s fair enough.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case ResponseData.Type.NEGATIVE:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Well I\'d prefer to be friends if that\'s okay...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'d stop right now and change your approach if I were you.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'m not interested in relationships at the moment.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Oh, I agree. Well it was nice meeting you. Take care!";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "You are making me feel uncomfortable, you seemed so nice at first.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Nothing, I have to get going now.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'ll be going now, it was nice to meet you.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I hope your bantering skills improve haha.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case ResponseData.Type.NEUTRAL:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Tends to be that way with people.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...what a vague comment...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Well, when you put it like that it sounds to me like you lack stimulus.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Oh! Haha, you had me there for a second.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "How rude! I never!";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Oh, bye.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "No worries, good talking with you.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "You sound like quite the politician.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "You sound like quite the adventurer.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                }
+                                break;
+                            case ResponseData.Type.NEGATIVE:
+                                switch (history[history.Count - 3])
+                                {
+                                    case ResponseData.Type.POSITIVE:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "No problem.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "That\'s okay.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'m going, I\'m going.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Take care.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "It\'s no problem, please take care.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...well fine then, goodbye.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case ResponseData.Type.NEUTRAL:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'m sure everything will be okay, you should give yourself a chance.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Sorry, but I can\'t.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Then this conversation is pointless.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "You too.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Fine, no need to be rude about it.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...have a nice day.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                }
+                                break;
+                            case ResponseData.Type.NEUTRAL:
+                                switch (history[history.Count - 3])
+                                {
+                                    case ResponseData.Type.POSITIVE:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Nice, it\'s <NPC_name>.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Okay. Well, see you.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Nice meeting you <player_name>.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'m sorry to hear that, don\'t worry I shan\'t bother you.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "With your attitide that makes two of us.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "It\'s okay, but you could be more subtle though.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Yeah.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "You were misleading.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "You're welcome.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case ResponseData.Type.NEGATIVE:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "That sounds nice, sure.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Yep, will do.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'ll cope.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "As things do.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...uh...good one...?";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "You\'re welcome.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case ResponseData.Type.NEUTRAL:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "They are indeed timeless masterpieces.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Not too sure why you\'d jump to that conclusion.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "To each their own.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Like what?";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "How should I talk about it then, professor?";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Oh, fair enough.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Indeed it is.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Oh definitely, you\'re my biggest role model on that.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Yeah, I recommend it.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                    case ResponseData.Type.NEUTRAL:
+                        switch (history[history.Count - 4])
+                        {
+                            case ResponseData.Type.POSITIVE:
+                                switch (history[history.Count - 3])
+                                {
+                                    case ResponseData.Type.POSITIVE:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Exactly.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I don\'t know the exact number but I can tell there are lot\'s here.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I think there\'s just the right amount.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Haha, or a drone.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Maybe we should change the topic...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'ve never met someone so antiavian.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I understand, but no-one\'s asking you to eat them. They\'re practically harmless.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Not that bad, I just hate birds.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "It does. It must be challenging for you to come outside.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case ResponseData.Type.NEGATIVE:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Me too, I\'ll be leaving now.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "My emotions are mine, not yours.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...well, good day.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "That\'s an interesting philosophy, I like that.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...are you sure it isn\'t your ego that\'s blocking it?";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I didn\'t, but seeing as you asked - Sunny with a light breeze.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case ResponseData.Type.NEUTRAL:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "That would be very nice, it\'s been pleasant talking to you.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Well, I have to go now, bye!";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Beats me. Anyways, I bid you a good day.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "No worries.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "All you had to do was ask nicely!";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Indeed.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...anyway I must get going now, maybe see you again.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "That makes you a difficult person for others to know.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                }
+                                break;
+                            case ResponseData.Type.NEUTRAL:
+                                switch (history[history.Count - 3])
+                                {
+                                    case ResponseData.Type.POSITIVE:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Okay then, you have a nice day.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "If you put it like that then neither do I.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Well if you are ever around I\'ll come and say hello.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEGATIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "It\'s okay, I understand, although I must say that I am disappointed, you seem like a nice person too.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Hey at least I tried, bye then.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "...";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'m sorry to hear that, it\'s okay don\'t worry.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "You\'re a very blunt individual.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Oh okay then, I\'m glad.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case ResponseData.Type.NEUTRAL:
+                                        switch (history[history.Count - 2])
+                                        {
+                                            case ResponseData.Type.POSITIVE:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "That\'s good.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I\'d rather be boring than obnoxious.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "Parks are nice, although getting out at all is a treat.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case ResponseData.Type.NEUTRAL:
+                                                switch (history[history.Count - 1])
+                                                {
+                                                    case ResponseData.Type.POSITIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "It\'s always better to see people in-person than on a screen.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEGATIVE:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "It doesn\'t take superior intellect to recognize that was a rude thing to say.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                    case ResponseData.Type.NEUTRAL:
+                                                        switch (topic)
+                                                        {
+                                                            case ResponseData.Topic.WEATHER:
+                                                                switch (type)
+                                                                {
+                                                                    case ResponseData.Type.NPC:
+                                                                        GetComponentInChildren<Text>().text = "I hope it helps.";
+                                                                        break;
+                                                                    default:
+                                                                        GetComponentInChildren<Text>().text = "";
+                                                                        break;
+                                                                }
+                                                                break;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                }
                 break;
         }
+        Debug.Log("history.Count = " + history.Count);
     }
 
     /// <summary>
@@ -1661,11 +3635,16 @@ public class Response : MonoBehaviour
     public void onSelected()
     {
         history.Add(this.type);
-        Debug.Log("history.Count = " + history.Count);
     }
 
     public void setTopic(ResponseData.Topic t)
     {
         topic = t;
+    }
+
+    public void resetHistory()
+    {
+        Debug.Log("Clearing history.");
+        history.Clear();
     }
 }

@@ -13,7 +13,7 @@ public class Rotate : MonoBehaviour
     [SerializeField] GameObject dirLight;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (rotateX <= 120.0f)
         {

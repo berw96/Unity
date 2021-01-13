@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    private static string name;
+    private static string nickname;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +17,25 @@ public class NPC : MonoBehaviour
     void Update()
     {
         
+    }
+
+    string getName()
+    {
+        return name;
+    }
+
+    string getNickname()
+    {
+        return nickname;
+    }
+
+    void setName(string n)
+    {
+        name = n;
+    }
+
+    void setNickname(string nn)
+    {
+        nickname = nn;
     }
 }
