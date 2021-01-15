@@ -19,11 +19,16 @@ using UnityEngine.UI;
 
 public class Response : MonoBehaviour
 {
+    [SerializeField] private Timer timer;
+    [SerializeField] private ScoreObject scoreObject;
     [SerializeField] ResponseData.Type type;
     private static ResponseData.Topic topic;
     private static List<ResponseData.Type> history;
-    private static float timer;
-    
+    private static string playerName    = "Elliot";
+    private static string NPCName       = "Kelly";
+    private static string NPCNickname   = "Kiki";
+    private static bool isOver;
+    private static int maxStages = 5;
 
     /// <summary>
     /// Function <c>Awake</c> is called by the Unity engine on startup.
@@ -38,12 +43,12 @@ public class Response : MonoBehaviour
     public void Awake()
     {
         if (this.type == ResponseData.Type.NPC)
-        {
             GetComponent<Image>().color = new Color(200.0f, 0.0f, 0.0f, 0.392f);
-        }
         topic = ResponseData.Topic.WEATHER;
         history = new List<ResponseData.Type>();
         Debug.Log("history.Count = " + history.Count);
+
+        isOver = false;
     }
 
     /// <summary>
@@ -55,10 +60,12 @@ public class Response : MonoBehaviour
     public void Update()
     {
         for (int i = 0; i < history.Count; i++)
-        {
             Debug.Log("Response " + (i + 1) + ": " + history[i]);
-        }
+
         setContents();
+
+        if (isOver || history.Count >= maxStages)
+            scoreObject.calculateScore();
     }
 
     /// <summary>
@@ -137,6 +144,7 @@ public class Response : MonoBehaviour
                                         break;
                                 }
                                 Debug.Log("Response Type: " + this.type);
+                                isOver = true;
                                 break;
                         }
                         break;
@@ -185,7 +193,7 @@ public class Response : MonoBehaviour
                                                 GetComponentInChildren<Text>().text = "Yeah.";
                                                 break;
                                             case ResponseData.Type.POSITIVE:
-                                                GetComponentInChildren<Text>().text = "I\'m " + "<player_name>" + " by the way.";
+                                                GetComponentInChildren<Text>().text = "I\'m " + playerName + " by the way.";
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
                                                 GetComponentInChildren<Text>().text = "You are pretty hot.";
@@ -286,6 +294,7 @@ public class Response : MonoBehaviour
                                                 break;
                                         }
                                         Debug.Log("Response Type: " + this.type);
+                                        isOver = true;
                                         break;
                                 }
                                 break;
@@ -333,7 +342,7 @@ public class Response : MonoBehaviour
                                                 switch (type)
                                                 {
                                                     case ResponseData.Type.NPC:
-                                                        GetComponentInChildren<Text>().text = "<NPC_name>" + ", nice to meet you.";
+                                                        GetComponentInChildren<Text>().text = NPCName + ", nice to meet you.";
                                                         break;
                                                     case ResponseData.Type.POSITIVE:
                                                         GetComponentInChildren<Text>().text = "That\'s a cool name.";
@@ -342,7 +351,7 @@ public class Response : MonoBehaviour
                                                         GetComponentInChildren<Text>().text = "That\'s a weird name.";
                                                         break;
                                                     case ResponseData.Type.NEUTRAL:
-                                                        GetComponentInChildren<Text>().text = "So " + "<NPC_name>" + ", what brings you outdoors today?";
+                                                        GetComponentInChildren<Text>().text = "So " + NPCName + ", what brings you outdoors today?";
                                                         break;
                                                 }
                                                 Debug.Log("Response Type: " + this.type);
@@ -628,10 +637,10 @@ public class Response : MonoBehaviour
                                                 switch (type)
                                                 {
                                                     case ResponseData.Type.NPC:
-                                                        GetComponentInChildren<Text>().text = "My name\'s " + "<NPC_name>" + " by the way.";
+                                                        GetComponentInChildren<Text>().text = "My name\'s " + NPCName + " by the way.";
                                                         break;
                                                     case ResponseData.Type.POSITIVE:
-                                                        GetComponentInChildren<Text>().text = "Nice to meet you " + "<NPC_name>" + ", I\'m " + "<player_name>" + ".";
+                                                        GetComponentInChildren<Text>().text = "Nice to meet you " + NPCName + ", I\'m " + playerName + ".";
                                                         break;
                                                     case ResponseData.Type.NEGATIVE:
                                                         GetComponentInChildren<Text>().text = "I\'m not looking for a friend.";
@@ -658,6 +667,7 @@ public class Response : MonoBehaviour
                                                         break;
                                                 }
                                                 Debug.Log("Response Type: " + this.type);
+                                                isOver = true;
                                                 break;
                                         }
                                         break;
@@ -713,7 +723,7 @@ public class Response : MonoBehaviour
                                                                 GetComponentInChildren<Text>().text = "Haha I suppose it is. Well, I should get going.";
                                                                 break;
                                                             case ResponseData.Type.POSITIVE:
-                                                                GetComponentInChildren<Text>().text = "It was nice meeting you " + "<NPC_name>" + ".";
+                                                                GetComponentInChildren<Text>().text = "It was nice meeting you " + NPCName + ".";
                                                                 break;
                                                             case ResponseData.Type.NEGATIVE:
                                                                 GetComponentInChildren<Text>().text = "Leave already!";
@@ -1033,6 +1043,8 @@ public class Response : MonoBehaviour
                                                                 GetComponentInChildren<Text>().text = "";
                                                                 break;
                                                         }
+                                                        Debug.Log("Response Type: " + this.type);
+                                                        isOver = true;
                                                         break;
                                                 }
                                                 break;
@@ -1079,13 +1091,13 @@ public class Response : MonoBehaviour
                                                                 GetComponentInChildren<Text>().text = "Haha, me too. I didn\'t get your name.";
                                                                 break;
                                                             case ResponseData.Type.POSITIVE:
-                                                                GetComponentInChildren<Text>().text = "It\'s " + "<player_name>" + ", what about yours?";
+                                                                GetComponentInChildren<Text>().text = "It\'s " + playerName + ", what about yours?";
                                                                 break;
                                                             case ResponseData.Type.NEGATIVE:
                                                                 GetComponentInChildren<Text>().text = "I\'d rather not say.";
                                                                 break;
                                                             case ResponseData.Type.NEUTRAL:
-                                                                GetComponentInChildren<Text>().text = "It\'s " + "<player_name>" + ".";
+                                                                GetComponentInChildren<Text>().text = "It\'s " + playerName + ".";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -1174,10 +1186,10 @@ public class Response : MonoBehaviour
                                                         {
                                                             case ResponseData.Type.NPC:
                                                                 GetComponentInChildren<Text>().text = "...";
-                                                                Debug.Log("GAME OVER");
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
+                                                        isOver = true;
                                                         break;
                                                 }
                                                 break;
@@ -1404,6 +1416,7 @@ public class Response : MonoBehaviour
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
+                                                        isOver = true;
                                                         break;
                                                 }
                                                 break;
@@ -1625,6 +1638,7 @@ public class Response : MonoBehaviour
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
+                                                        isOver = true;
                                                         break;
                                                 }
                                                 break;
@@ -1767,7 +1781,7 @@ public class Response : MonoBehaviour
                                                                 switch (type)
                                                                 {
                                                                     case ResponseData.Type.NPC:
-                                                                        GetComponentInChildren<Text>().text = "I do, it\'s <NPC_nickname>.";
+                                                                        GetComponentInChildren<Text>().text = "I do, it\'s " + NPCNickname;
                                                                         break;
                                                                     default:
                                                                         GetComponentInChildren<Text>().text = "";
@@ -1868,6 +1882,8 @@ public class Response : MonoBehaviour
                                                                         GetComponentInChildren<Text>().text = "";
                                                                         break;
                                                                 }
+                                                                Debug.Log("Response Type: " + this.type);
+                                                                isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -2255,6 +2271,8 @@ public class Response : MonoBehaviour
                                                                         GetComponentInChildren<Text>().text = "";
                                                                         break;
                                                                 }
+                                                                Debug.Log("Response Type: " + this.type);
+                                                                isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -2419,6 +2437,8 @@ public class Response : MonoBehaviour
                                                                         GetComponentInChildren<Text>().text = "";
                                                                         break;
                                                                 }
+                                                                Debug.Log("Response Type: " + this.type);
+                                                                isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -2646,6 +2666,8 @@ public class Response : MonoBehaviour
                                                                         GetComponentInChildren<Text>().text = "";
                                                                         break;
                                                                 }
+                                                                Debug.Log("Response Type: " + this.type);
+                                                                isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -3428,6 +3450,8 @@ public class Response : MonoBehaviour
                                                                         GetComponentInChildren<Text>().text = "";
                                                                         break;
                                                                 }
+                                                                Debug.Log("Response Type: " + this.type);
+                                                                isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -3592,6 +3616,8 @@ public class Response : MonoBehaviour
                                                                         GetComponentInChildren<Text>().text = "";
                                                                         break;
                                                                 }
+                                                                Debug.Log("Response Type: " + this.type);
+                                                                isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -3631,10 +3657,16 @@ public class Response : MonoBehaviour
     /// the chosen response to the list of historic response types
     /// and then uses it in the function <c>setContents</c> to
     /// update all the other responses in the conversation.
+    /// 
+    /// Each response and the time taken to provide it is sent to
+    /// the score object which manages player score.
     /// </summary>
     public void onSelected()
     {
         history.Add(this.type);
+        scoreObject.logResponseType(this.type);
+        scoreObject.logResponseTime(timer.time);
+        timer.time = 0.0f;
     }
 
     public void setTopic(ResponseData.Topic t)
@@ -3646,5 +3678,6 @@ public class Response : MonoBehaviour
     {
         Debug.Log("Clearing history.");
         history.Clear();
+        isOver = false;
     }
 }
