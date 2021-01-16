@@ -64,8 +64,8 @@ public class Response : MonoBehaviour
 
         setContents();
 
-        if (isOver || history.Count >= maxStages)
-            scoreObject.calculateScore();
+        //if (isOver || history.Count >= maxStages)
+        //    scoreObject.calculateScore();
     }
 
     /// <summary>
@@ -446,6 +446,7 @@ public class Response : MonoBehaviour
                                                         break;
                                                 }
                                                 Debug.Log("Response Type: " + this.type);
+                                                isOver = true;
                                                 break;
                                         }
                                         break;
@@ -1186,6 +1187,9 @@ public class Response : MonoBehaviour
                                                         {
                                                             case ResponseData.Type.NPC:
                                                                 GetComponentInChildren<Text>().text = "...";
+                                                                break;
+                                                            default:
+                                                                GetComponentInChildren<Text>().text = "";
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
@@ -3666,6 +3670,7 @@ public class Response : MonoBehaviour
         history.Add(this.type);
         scoreObject.logResponseType(this.type);
         scoreObject.logResponseTime(timer.time);
+        scoreObject.calculateScore();
         timer.time = 0.0f;
     }
 

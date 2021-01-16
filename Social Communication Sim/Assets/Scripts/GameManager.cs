@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private GameObject gameManagerObject;
     private GameObject responseCanvas;
     private GameObject theSun;
+    private GameObject playerHUD;
     private List<GameObject> responses;
 
     private void Awake()
@@ -59,6 +60,8 @@ public class GameManager : MonoBehaviour
         }
         
         theSun = GameObject.Find("Sun");
+        playerHUD = GameObject.Find("PlayerHUD");
+        playerHUD.transform.SetParent(GameObject.Find("Player").transform);
     }
 
     public void deleteObject(GameObject obj)

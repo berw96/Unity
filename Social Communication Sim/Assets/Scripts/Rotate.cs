@@ -12,7 +12,6 @@ public class Rotate : MonoBehaviour
     [SerializeField] float rotateZRate;
     [SerializeField] GameObject dirLight;
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (rotateX <= 120.0f)
