@@ -65,7 +65,7 @@ public class Response : MonoBehaviour
         setContents();
 
         //if (isOver || history.Count >= maxStages)
-        //    scoreObject.calculateScore();
+        //    resetHistory();
     }
 
     /// <summary>
@@ -1700,7 +1700,7 @@ public class Response : MonoBehaviour
                                                                 switch (type)
                                                                 {
                                                                     case ResponseData.Type.NPC:
-                                                                        GetComponentInChildren<Text>().text = "As with you <player_name>, see you around!";
+                                                                        GetComponentInChildren<Text>().text = "As with you " + playerName + ", see you around!";
                                                                         break;
                                                                     default:
                                                                         GetComponentInChildren<Text>().text = "";
@@ -1769,7 +1769,7 @@ public class Response : MonoBehaviour
                                                                 switch (type)
                                                                 {
                                                                     case ResponseData.Type.NPC:
-                                                                        GetComponentInChildren<Text>().text = "I\'d rather be <NPC_name> than a jerk any day. See ya.";
+                                                                        GetComponentInChildren<Text>().text = "I\'d rather be " + "\"" + NPCName + "\"" +  " than a jerk any day. See ya.";
                                                                         break;
                                                                     default:
                                                                         GetComponentInChildren<Text>().text = "";
@@ -2516,7 +2516,7 @@ public class Response : MonoBehaviour
                                                                 switch (type)
                                                                 {
                                                                     case ResponseData.Type.NPC:
-                                                                        GetComponentInChildren<Text>().text = "Nice meeting you <player_name>.";
+                                                                        GetComponentInChildren<Text>().text = "Nice meeting you " + playerName + ".";
                                                                         break;
                                                                     default:
                                                                         GetComponentInChildren<Text>().text = "";
@@ -3671,7 +3671,7 @@ public class Response : MonoBehaviour
         scoreObject.logResponseType(this.type);
         scoreObject.logResponseTime(timer.time);
         scoreObject.calculateScore();
-        timer.time = 0.0f;
+        timer.resetTimer();
     }
 
     public void setTopic(ResponseData.Topic t)

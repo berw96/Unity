@@ -3,6 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class <c>HUDManager</c> handles the text contents of the
+/// Player's Heads Up Display (HUD). The player's response time
+/// is displayed the HUD, indicating how long the player is taking
+/// to reply to the NPC. If the player takes more than 10 seconds
+/// to provide a response to an NPC statement the on-screen text
+/// will read "AWKWARD SILENCE" in a red colour, acting as an
+/// indicator to player that they are taking a long time to respond.
+/// 
+/// To accomplish timing the HUDManager uses a <c>Timer</c> object.
+/// There is no limit to how long the player may take to respond, as
+/// they may require time to read and understand the choices they're
+/// given. However, long response times will severely impact their
+/// conversational rating.
+/// </summary>
+
 public class HUDManager : MonoBehaviour
 {
     [SerializeField] private Timer timer;
@@ -10,7 +26,6 @@ public class HUDManager : MonoBehaviour
 
     private void Awake()
     {
-        timer.initTime(0.0f);
         scoreObject.initScoreObject(0.0f);
     }
 
@@ -18,8 +33,7 @@ public class HUDManager : MonoBehaviour
     {
         if (timer.time < 10.0f)
         {
-            timer.time += Time.deltaTime;
-            GetComponentInChildren<Text>().text = "RESPONSE TIME: " + ((int)timer.time) + "s";
+            GetComponentInChildren<Text>().text = "RESPONSE TIME: " + ((int)timer.time) + " s";
             GetComponentInChildren<Text>().color = new Color(255.0f, 255.0f, 255.0f);
         }
         else

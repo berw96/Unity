@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class <c>ScoreObject</c> handles aspects of the player's
+/// conversational score, including how their response history
+/// and response time affect it.
+/// </summary>
+
 [CreateAssetMenu]
 
 public class ScoreObject : ScriptableObject
@@ -10,9 +16,15 @@ public class ScoreObject : ScriptableObject
     public static List<ResponseData.Type> responseHistory;
     public static List<float> responseTimes;
 
-    public void initScoreObject(float s)
+    /// <summary>
+    /// Function <c>initScoreObject</c> initializes the score
+    /// attribute and the lists which are used to contain the
+    /// player's response history and response times.
+    /// </summary>
+    /// <param name="initScore"></param>
+    public void initScoreObject(float initScore)
     {
-        score = s;
+        score = initScore;
         responseHistory = new List<ResponseData.Type>();
         responseTimes = new List<float>();
     }

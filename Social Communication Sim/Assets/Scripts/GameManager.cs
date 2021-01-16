@@ -9,21 +9,28 @@ using UnityEngine.UI;
 /// manages the instantiation, deletion and spawning of
 /// other game objects.
 /// </summary>
+
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private ScoreObject scoreObject;
-    const int capacity = 4;
+    [SerializeField] private Timer timer;
+    bool toggled;
+    const int menuButtonCapacity = 2;
+    const int responseCapacity = 4;
     private GameManager gm;
     private GameObject gameManagerObject;
     private GameObject responseCanvas;
     private GameObject theSun;
     private GameObject playerHUD;
+    private List<GameObject> menuButtons;
     private List<GameObject> responses;
 
     private void Awake()
     {
         gm = this;
-        responses = new List<GameObject>(capacity);
+        toggled = false;
+        menuButtons = new List<GameObject>(menuButtonCapacity);
+        responses = new List<GameObject>(responseCapacity);
         instantiateObjects();
     }
 
@@ -42,30 +49,72 @@ public class GameManager : MonoBehaviour
     /// object as their parent and adjusts their positions accordingly
     /// relative to the <c>responseCanvas</c> object.
     /// </summary>
-    public void instantiateObjects()
+    private void instantiateObjects()
     {
         gameManagerObject = GameObject.Find("GameManager");
         responseCanvas = GameObject.Find("ResponseCanvas");
         gameManagerObject.transform.SetParent(responseCanvas.transform);
         gameManagerObject.GetComponent<Transform>().position = responseCanvas.transform.position;
+        theSun = GameObject.Find("Sun");
+        playerHUD = GameObject.Find("PlayerHUD");
+        playerHUD.SetActive(toggled);
+        playerHUD.transform.SetParent(GameObject.Find("Player").transform);
+
+        for (int i = 0; i < menuButtons.Capacity; i++)
+        {
+            menuButtons.Add(GameObject.Find("MenuButton " + i));
+        }
+        if (menuButtons[0] != null)
+            menuButtons[0].GetComponentInChildren<Text>().text = "START";
+        if (menuButtons[1] != null)
+            menuButtons[1].GetComponentInChildren<Text>().text = "QUIT";
 
         for (int i = 0; i < responses.Capacity; i++)
         {
             responses.Add(GameObject.Find("Response " + i));
-            responses[i].transform.SetParent(GameObject.Find(this.name).transform);
             responses[i].GetComponent<Transform>().position = new Vector3(
-                responses[i].GetComponent<Transform>().position.x, 
-                ((float)-i/6) + 1.2f, 
+                responses[i].GetComponent<Transform>().position.x - 0.45f,
+                ((float)-i / 6) + 1.2f,
                 responses[i].GetComponent<Transform>().position.z + 1);
+            responses[i].transform.rotation = Quaternion.Euler(0.0f, -45.0f, 0.0f);
         }
-        
-        theSun = GameObject.Find("Sun");
-        playerHUD = GameObject.Find("PlayerHUD");
-        playerHUD.transform.SetParent(GameObject.Find("Player").transform);
+    }
+
+    public void toggleSimulation()
+    {
+        switch (toggled)
+        {
+            case true:
+                toggled = false;
+                for (int i = 0; i < responses.Capacity; i++)
+                    responses[i].transform.SetParent(null);
+                menuButtons[0].GetComponentInChildren<Text>().text = "START";
+                playerHUD.SetActive(toggled);
+                break;
+            case false:
+                toggled = true;
+                for (int i = 0; i < responses.Capacity; i++)
+                    responses[i].transform.SetParent(GameObject.Find(this.name).transform);
+                menuButtons[0].GetComponentInChildren<Text>().text = "BACK";
+                playerHUD.SetActive(toggled);
+                break;
+        }
+        timer.resetTimer();
+    }
+
+    private void FixedUpdate()
+    {
+        if (toggled)
+            timer.incrementTime();
     }
 
     public void deleteObject(GameObject obj)
     {
         Destroy(obj);
+    }
+
+    public void quitSimulation()
+    {
+        Application.Quit();
     }
 }

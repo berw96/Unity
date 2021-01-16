@@ -8,8 +8,13 @@ public class Timer : ScriptableObject
 {
     public float time;
 
-    public void initTime(float time)
+    public void resetTimer()
     {
-        this.time = time;
+        time = 0.0f;
+    }
+
+    public void incrementTime()
+    {
+        time += Time.deltaTime;
     }
 }
