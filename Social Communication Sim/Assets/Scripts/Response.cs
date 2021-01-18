@@ -14,7 +14,7 @@ using UnityEngine.UI;
 /// <c>GetComponentInChildren<Text>().text</c>. The <c>text</c> field's
 /// string value also depends on each response's set <c>topic</c>
 /// and the responses provided in previous parts of the conversation.
-/// Each repsonse instance knows the conversation history.
+/// Each repsonse instance knows the conversation responseDataObject.responseHistory.
 /// </summary>
 
 public class Response : MonoBehaviour
@@ -22,19 +22,17 @@ public class Response : MonoBehaviour
     [SerializeField] private Timer timer;
     [SerializeField] private ScoreObject scoreObject;
     [SerializeField] ResponseData.Type type;
+    [SerializeField] private ResponseData responseDataObject;
     private static ResponseData.Topic topic;
-    private static List<ResponseData.Type> history;
     private static string playerName    = "Elliot";
     private static string NPCName       = "Kelly";
     private static string NPCNickname   = "Kiki";
-    private static bool isOver;
-    private static int maxStages = 5;
 
     /// <summary>
     /// Function <c>Awake</c> is called by the Unity engine on startup.
     /// Here it sets the topic of each response and initializes the
-    /// list of responses. At this stage <c>history</c> has a Count
-    /// of 0, corresponding to 'no history'. Once the player selects a
+    /// list of responses. At this stage <c>responseDataObject.responseHistory</c> has a Count
+    /// of 0, corresponding to 'no responseDataObject.responseHistory'. Once the player selects a
     /// response button the <c>onSelected</c> function is invoked, which
     /// adds the selected response's type to the list, via the inbuilt
     /// <c>Add</c> function which increments the Count of the list
@@ -45,10 +43,7 @@ public class Response : MonoBehaviour
         if (this.type == ResponseData.Type.NPC)
             GetComponent<Image>().color = new Color(200.0f, 0.0f, 0.0f, 0.392f);
         topic = ResponseData.Topic.WEATHER;
-        history = new List<ResponseData.Type>();
-        Debug.Log("history.Count = " + history.Count);
-
-        isOver = false;
+        responseDataObject.initResponseDataObject();
     }
 
     /// <summary>
@@ -59,13 +54,10 @@ public class Response : MonoBehaviour
     /// </summary>
     public void Update()
     {
-        for (int i = 0; i < history.Count; i++)
-            Debug.Log("Response " + (i + 1) + ": " + history[i]);
+        for (int i = 0; i < responseDataObject.responseHistory.Count; i++)
+            Debug.Log("Response " + (i + 1) + ": " + responseDataObject.responseHistory[i]);
 
         setContents();
-
-        //if (isOver || history.Count >= maxStages)
-        //    resetHistory();
     }
 
     /// <summary>
@@ -73,11 +65,11 @@ public class Response : MonoBehaviour
     /// based on the history of responses provided, the <c>topic</c> of the
     /// response and its <c>type</c>. Response contents are stored in a
     /// <c>Text</c> component which is accessible via 
-    /// <c>GetComponenet<Text>().text</c>.
+    /// <c>GetComponent<Text>().text</c>.
     /// </summary>
     public void setContents()
     {
-        switch (history.Count)
+        switch (responseDataObject.responseHistory.Count)
         {
             case 0:
                 Debug.Log("Setting initial responses");
@@ -105,7 +97,7 @@ public class Response : MonoBehaviour
                 break;
             case 1:
                 Debug.Log("Setting responses at stage 2");
-                switch (history[history.Count - 1])
+                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                 {
                     case ResponseData.Type.POSITIVE:
                         switch (topic)
@@ -144,7 +136,7 @@ public class Response : MonoBehaviour
                                         break;
                                 }
                                 Debug.Log("Response Type: " + this.type);
-                                isOver = true;
+                                responseDataObject.isOver = true;
                                 break;
                         }
                         break;
@@ -178,10 +170,10 @@ public class Response : MonoBehaviour
                 break;
             case 2:
                 Debug.Log("Setting responses at stage 3");
-                switch (history[history.Count - 2])
+                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                 {
                     case ResponseData.Type.POSITIVE:
-                        switch (history[history.Count - 1])
+                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                         {
                             case ResponseData.Type.POSITIVE:
                                 switch (topic)
@@ -255,7 +247,7 @@ public class Response : MonoBehaviour
                         }
                         break;
                     case ResponseData.Type.NEUTRAL:
-                        switch (history[history.Count - 1])
+                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                         {
                             case ResponseData.Type.POSITIVE:
                                 switch (topic)
@@ -294,7 +286,7 @@ public class Response : MonoBehaviour
                                                 break;
                                         }
                                         Debug.Log("Response Type: " + this.type);
-                                        isOver = true;
+                                        responseDataObject.isOver = true;
                                         break;
                                 }
                                 break;
@@ -327,13 +319,13 @@ public class Response : MonoBehaviour
                 break;
             case 3:
                 Debug.Log("Setting responses at stage 4");
-                switch (history[history.Count - 3])
+                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 3])
                 {
                     case ResponseData.Type.POSITIVE:
-                        switch (history[history.Count - 2])
+                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                         {
                             case ResponseData.Type.POSITIVE:
-                                switch (history[history.Count - 1])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                 {
                                     case ResponseData.Type.POSITIVE:
                                         switch (topic)
@@ -407,7 +399,7 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEGATIVE:
-                                switch (history[history.Count - 1])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                 {
                                     case ResponseData.Type.POSITIVE:
                                         switch (topic)
@@ -446,7 +438,7 @@ public class Response : MonoBehaviour
                                                         break;
                                                 }
                                                 Debug.Log("Response Type: " + this.type);
-                                                isOver = true;
+                                                responseDataObject.isOver = true;
                                                 break;
                                         }
                                         break;
@@ -457,7 +449,7 @@ public class Response : MonoBehaviour
                                                 switch (type)
                                                 {
                                                     case ResponseData.Type.NPC:
-                                                        GetComponentInChildren<Text>().text = "I'm sorry to hear that, would you like to talke about it?";
+                                                        GetComponentInChildren<Text>().text = "I'm sorry to hear that, would you like to talk about it?";
                                                         break;
                                                     case ResponseData.Type.POSITIVE:
                                                         GetComponentInChildren<Text>().text = "...sure.";
@@ -476,7 +468,7 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEUTRAL:
-                                switch (history[history.Count - 1])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                 {
                                     case ResponseData.Type.POSITIVE:
                                         switch (topic)
@@ -552,10 +544,10 @@ public class Response : MonoBehaviour
                         }
                         break;
                     case ResponseData.Type.NEUTRAL:
-                        switch (history[history.Count - 2])
+                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                         {
                             case ResponseData.Type.POSITIVE:
-                                switch (history[history.Count - 1])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                 {
                                     case ResponseData.Type.POSITIVE:
                                         switch (topic)
@@ -629,7 +621,7 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEUTRAL:
-                                switch (history[history.Count - 1])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                 {
                                     case ResponseData.Type.POSITIVE:
                                         switch (topic)
@@ -668,7 +660,7 @@ public class Response : MonoBehaviour
                                                         break;
                                                 }
                                                 Debug.Log("Response Type: " + this.type);
-                                                isOver = true;
+                                                responseDataObject.isOver = true;
                                                 break;
                                         }
                                         break;
@@ -703,16 +695,16 @@ public class Response : MonoBehaviour
                 break;
             case 4:
                 Debug.Log("Setting responses at stage 5");
-                switch (history[history.Count - 4])
+                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 4])
                 {
                     case ResponseData.Type.POSITIVE:
-                        switch (history[history.Count - 3])
+                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 3])
                         {
                             case ResponseData.Type.POSITIVE:
-                                switch (history[history.Count - 2])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -786,7 +778,7 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEGATIVE:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -857,7 +849,7 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -930,10 +922,10 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEGATIVE:
-                                switch (history[history.Count - 2])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1007,7 +999,7 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1045,7 +1037,7 @@ public class Response : MonoBehaviour
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
-                                                        isOver = true;
+                                                        responseDataObject.isOver = true;
                                                         break;
                                                 }
                                                 break;
@@ -1077,10 +1069,10 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEUTRAL:
-                                switch (history[history.Count - 2])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1154,7 +1146,7 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEGATIVE:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1193,7 +1185,7 @@ public class Response : MonoBehaviour
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
-                                                        isOver = true;
+                                                        responseDataObject.isOver = true;
                                                         break;
                                                 }
                                                 break;
@@ -1223,7 +1215,7 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1301,13 +1293,13 @@ public class Response : MonoBehaviour
                         }
                         break;
                     case ResponseData.Type.NEUTRAL:
-                        switch (history[history.Count - 3])
+                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 3])
                         {
                             case ResponseData.Type.POSITIVE:
-                                switch (history[history.Count - 2])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1381,7 +1373,7 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEGATIVE:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1420,7 +1412,7 @@ public class Response : MonoBehaviour
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
-                                                        isOver = true;
+                                                        responseDataObject.isOver = true;
                                                         break;
                                                 }
                                                 break;
@@ -1450,7 +1442,7 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1526,10 +1518,10 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEUTRAL:
-                                switch (history[history.Count - 2])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1603,7 +1595,7 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 1])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                         {
                                             case ResponseData.Type.POSITIVE:
                                                 switch (topic)
@@ -1642,7 +1634,7 @@ public class Response : MonoBehaviour
                                                                 break;
                                                         }
                                                         Debug.Log("Response Type: " + this.type);
-                                                        isOver = true;
+                                                        responseDataObject.isOver = true;
                                                         break;
                                                 }
                                                 break;
@@ -1679,19 +1671,19 @@ public class Response : MonoBehaviour
                 break;
             case 5:
                 Debug.Log("Setting NPC end remarks.");
-                switch (history[history.Count - 5])
+                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 5])
                 {
                     case ResponseData.Type.POSITIVE:
-                        switch (history[history.Count - 4])
+                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 4])
                         {
                             case ResponseData.Type.POSITIVE:
-                                switch (history[history.Count - 3])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 3])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -1744,7 +1736,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -1797,7 +1789,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -1852,10 +1844,10 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEGATIVE:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -1887,7 +1879,7 @@ public class Response : MonoBehaviour
                                                                         break;
                                                                 }
                                                                 Debug.Log("Response Type: " + this.type);
-                                                                isOver = true;
+                                                                responseDataObject.isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -1910,7 +1902,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -1936,6 +1928,7 @@ public class Response : MonoBehaviour
                                                                 {
                                                                     case ResponseData.Type.NPC:
                                                                         GetComponentInChildren<Text>().text = "You are making me feel uncomfortable, you seemed so nice at first.";
+                                                                        responseDataObject.isOver = true;
                                                                         break;
                                                                     default:
                                                                         GetComponentInChildren<Text>().text = "";
@@ -1963,7 +1956,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2019,10 +2012,10 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2075,7 +2068,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2128,7 +2121,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2185,13 +2178,13 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEGATIVE:
-                                switch (history[history.Count - 3])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 3])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2244,7 +2237,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2276,7 +2269,7 @@ public class Response : MonoBehaviour
                                                                         break;
                                                                 }
                                                                 Debug.Log("Response Type: " + this.type);
-                                                                isOver = true;
+                                                                responseDataObject.isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -2299,7 +2292,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2354,10 +2347,10 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2410,7 +2403,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2442,7 +2435,7 @@ public class Response : MonoBehaviour
                                                                         break;
                                                                 }
                                                                 Debug.Log("Response Type: " + this.type);
-                                                                isOver = true;
+                                                                responseDataObject.isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -2469,13 +2462,13 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEUTRAL:
-                                switch (history[history.Count - 3])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 3])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2528,7 +2521,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2581,7 +2574,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2636,10 +2629,10 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEGATIVE:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2671,7 +2664,7 @@ public class Response : MonoBehaviour
                                                                         break;
                                                                 }
                                                                 Debug.Log("Response Type: " + this.type);
-                                                                isOver = true;
+                                                                responseDataObject.isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -2694,7 +2687,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2749,10 +2742,10 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2805,7 +2798,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2858,7 +2851,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2917,16 +2910,16 @@ public class Response : MonoBehaviour
                         }
                         break;
                     case ResponseData.Type.NEUTRAL:
-                        switch (history[history.Count - 4])
+                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 4])
                         {
                             case ResponseData.Type.POSITIVE:
-                                switch (history[history.Count - 3])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 3])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -2979,7 +2972,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3032,7 +3025,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3087,10 +3080,10 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEGATIVE:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3143,7 +3136,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3198,10 +3191,10 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3254,7 +3247,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3307,7 +3300,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3364,13 +3357,13 @@ public class Response : MonoBehaviour
                                 }
                                 break;
                             case ResponseData.Type.NEUTRAL:
-                                switch (history[history.Count - 3])
+                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 3])
                                 {
                                     case ResponseData.Type.POSITIVE:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3423,7 +3416,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEGATIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3455,7 +3448,7 @@ public class Response : MonoBehaviour
                                                                         break;
                                                                 }
                                                                 Debug.Log("Response Type: " + this.type);
-                                                                isOver = true;
+                                                                responseDataObject.isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -3478,7 +3471,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3533,10 +3526,10 @@ public class Response : MonoBehaviour
                                         }
                                         break;
                                     case ResponseData.Type.NEUTRAL:
-                                        switch (history[history.Count - 2])
+                                        switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 2])
                                         {
                                             case ResponseData.Type.POSITIVE:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3589,7 +3582,7 @@ public class Response : MonoBehaviour
                                                 }
                                                 break;
                                             case ResponseData.Type.NEUTRAL:
-                                                switch (history[history.Count - 1])
+                                                switch (responseDataObject.responseHistory[responseDataObject.responseHistory.Count - 1])
                                                 {
                                                     case ResponseData.Type.POSITIVE:
                                                         switch (topic)
@@ -3621,7 +3614,7 @@ public class Response : MonoBehaviour
                                                                         break;
                                                                 }
                                                                 Debug.Log("Response Type: " + this.type);
-                                                                isOver = true;
+                                                                responseDataObject.isOver = true;
                                                                 break;
                                                         }
                                                         break;
@@ -3652,7 +3645,7 @@ public class Response : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log("history.Count = " + history.Count);
+        Debug.Log("responseDataObject.responseHistory.Count = " + responseDataObject.responseHistory.Count);
     }
 
     /// <summary>
@@ -3667,11 +3660,18 @@ public class Response : MonoBehaviour
     /// </summary>
     public void onSelected()
     {
-        history.Add(this.type);
-        scoreObject.logResponseType(this.type);
-        scoreObject.logResponseTime(timer.time);
-        scoreObject.calculateScore();
-        timer.resetTimer();
+        if (!responseDataObject.isOver)
+        {
+            responseDataObject.responseHistory.Add(this.type);
+            scoreObject.logResponseType(this.type);
+            scoreObject.logResponseTime(timer.time);
+            scoreObject.calculateScore();
+            timer.resetTimer();
+        }
+        else
+        {
+            Debug.Log("End of conversation reached.");
+        }
     }
 
     public void setTopic(ResponseData.Topic t)
@@ -3681,8 +3681,7 @@ public class Response : MonoBehaviour
 
     public void resetHistory()
     {
-        Debug.Log("Clearing history.");
-        history.Clear();
-        isOver = false;
+        Debug.Log("Clearing response history.");
+        responseDataObject.initResponseDataObject();
     }
 }

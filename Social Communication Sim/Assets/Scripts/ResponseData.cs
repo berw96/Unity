@@ -14,6 +14,9 @@ using UnityEngine;
 
 public class ResponseData : ScriptableObject
 {
+    private const int max = 5;
+    public bool isOver;
+
     public enum Type
     {
         POSITIVE, NEGATIVE, NEUTRAL, NPC
@@ -21,5 +24,18 @@ public class ResponseData : ScriptableObject
     public enum Topic
     {
         WEATHER, WORK, ROMANCE, SHOPPING, SCHOOL, POLITICS, OTHERS
+    }
+
+    public List<Type> responseHistory;
+
+    public void initResponseDataObject()
+    {
+        isOver = false;
+        responseHistory = new List<Type>();
+    }
+
+    public int getMaxHistory()
+    {
+        return max;
     }
 }

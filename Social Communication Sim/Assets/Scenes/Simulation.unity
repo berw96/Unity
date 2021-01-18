@@ -1791,6 +1791,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 58b47b814ffdc1141a84eb8b0ddba6d7,
         type: 2}
+    - target: {fileID: 3559126394839203232, guid: ba62623c997ebf047af9109284806809,
+        type: 3}
+      propertyPath: responseDataObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 1596504ff3585da408a5336ff57d8824,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba62623c997ebf047af9109284806809, type: 3}
 --- !u!1001 &762162717
@@ -2350,6 +2356,32 @@ PrefabInstance:
       propertyPath: m_CullTransparentMesh
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7069276916138384249, guid: 2f647ca6cb0a714459de2b0c7f0bde83,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00000095367
+      objectReference: {fileID: 0}
+    - target: {fileID: 7069276916138384249, guid: 2f647ca6cb0a714459de2b0c7f0bde83,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 473
+      objectReference: {fileID: 0}
+    - target: {fileID: 7069276916138384249, guid: 2f647ca6cb0a714459de2b0c7f0bde83,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 76.500015
+      objectReference: {fileID: 0}
+    - target: {fileID: 7069276916138384249, guid: 2f647ca6cb0a714459de2b0c7f0bde83,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 153
+      objectReference: {fileID: 0}
+    - target: {fileID: 7069276916849021320, guid: 2f647ca6cb0a714459de2b0c7f0bde83,
+        type: 3}
+      propertyPath: responseDataObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 1596504ff3585da408a5336ff57d8824,
+        type: 2}
     - target: {fileID: 7069276916849021322, guid: 2f647ca6cb0a714459de2b0c7f0bde83,
         type: 3}
       propertyPath: m_Camera
@@ -2793,6 +2825,12 @@ PrefabInstance:
       propertyPath: timer
       value: 
       objectReference: {fileID: 11400000, guid: 7a33d91275561bb4182d34c62c6b1cf1,
+        type: 2}
+    - target: {fileID: 2850484292955281021, guid: 02edec61b1436d6428c05db203b7f041,
+        type: 3}
+      propertyPath: responseDataObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 1596504ff3585da408a5336ff57d8824,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02edec61b1436d6428c05db203b7f041, type: 3}
@@ -3670,6 +3708,12 @@ PrefabInstance:
       propertyPath: scoreObject
       value: 
       objectReference: {fileID: 11400000, guid: 58b47b814ffdc1141a84eb8b0ddba6d7,
+        type: 2}
+    - target: {fileID: 3559126394839203232, guid: ba62623c997ebf047af9109284806809,
+        type: 3}
+      propertyPath: responseDataObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 1596504ff3585da408a5336ff57d8824,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba62623c997ebf047af9109284806809, type: 3}
@@ -4965,6 +5009,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 58b47b814ffdc1141a84eb8b0ddba6d7,
         type: 2}
+    - target: {fileID: 3559126394839203232, guid: ba62623c997ebf047af9109284806809,
+        type: 3}
+      propertyPath: responseDataObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 1596504ff3585da408a5336ff57d8824,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba62623c997ebf047af9109284806809, type: 3}
 --- !u!1001 &1970756923
@@ -5839,6 +5889,12 @@ PrefabInstance:
       propertyPath: timer
       value: 
       objectReference: {fileID: 11400000, guid: 7a33d91275561bb4182d34c62c6b1cf1,
+        type: 2}
+    - target: {fileID: 8225526577125545236, guid: 2d9cdafd6d57ac941a2a12c50352910f,
+        type: 3}
+      propertyPath: responseDataObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 1596504ff3585da408a5336ff57d8824,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d9cdafd6d57ac941a2a12c50352910f, type: 3}

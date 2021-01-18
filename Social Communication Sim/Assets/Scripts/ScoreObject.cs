@@ -22,9 +22,9 @@ public class ScoreObject : ScriptableObject
     /// player's response history and response times.
     /// </summary>
     /// <param name="initScore"></param>
-    public void initScoreObject(float initScore)
+    public void initScoreObject()
     {
-        score = initScore;
+        score = 0.0f;
         responseHistory = new List<ResponseData.Type>();
         responseTimes = new List<float>();
     }
@@ -43,9 +43,13 @@ public class ScoreObject : ScriptableObject
     /// The quicker the player selects a response, the more they will score.
     /// It is assumed that the number of response times is equal to the number
     /// of responses provided.
+    /// 
+    /// On each call, the score is set to zero to prevent build-up of points
+    /// on each calculation.
     /// </summary>
     public void calculateScore()
     {
+        score = 0.0f;
         for (int i = 0; i < responseHistory.Count; i++)
         {
             switch (responseHistory[i])

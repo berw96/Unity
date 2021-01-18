@@ -12,6 +12,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private ResponseData responseDataObject;
     [SerializeField] private ScoreObject scoreObject;
     [SerializeField] private Timer timer;
     bool toggled;
@@ -100,11 +101,15 @@ public class GameManager : MonoBehaviour
                 break;
         }
         timer.resetTimer();
+        scoreObject.initScoreObject();
     }
 
     private void FixedUpdate()
     {
-        if (toggled)
+        if (responseDataObject.responseHistory.Count >= responseDataObject.getMaxHistory())
+            responseDataObject.isOver = true;
+
+        if (toggled && !responseDataObject.isOver && timer.time < 10.0f)
             timer.incrementTime();
     }
 
