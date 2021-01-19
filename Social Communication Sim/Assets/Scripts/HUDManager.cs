@@ -54,17 +54,17 @@ public class HUDManager : MonoBehaviour
         } 
         else if (responseDataObject.isOver)
         {
-            if (scoreObject.getScore() >= -1 && scoreObject.getScore() < 0)
+            if (scoreObject.getScore() < 0.2)
                 GetComponentInChildren<Text>().text = "You performed poorly in this conversation and demonstrated inadequate social skills.";
-            else if (scoreObject.getScore() >= 0 && scoreObject.getScore() < 1)
+            else if (scoreObject.getScore() >= 0.2 && scoreObject.getScore() < 0.4)
                 GetComponentInChildren<Text>().text = "Your performance was acceptable, but there is much room for improvement!";
-            else if (scoreObject.getScore() >= 1 && scoreObject.getScore() < 2)
+            else if (scoreObject.getScore() >= 0.4 && scoreObject.getScore() < 0.6)
                 GetComponentInChildren<Text>().text = "Your performance was average and you demonstrated basic social skills.";
-            else if(scoreObject.getScore() >= 2 && scoreObject.getScore() < 3)
+            else if(scoreObject.getScore() >= 0.6 && scoreObject.getScore() < 0.8)
                 GetComponentInChildren<Text>().text = "You performed well in this conversation and demonstrated good social skills.";
-            else if(scoreObject.getScore() >= 3 && scoreObject.getScore() < 4)
+            else if(scoreObject.getScore() >= 0.8 && scoreObject.getScore() < 1)
                 GetComponentInChildren<Text>().text = "You performed very well in this conversation and demonstrated great social skills";
-            else if(scoreObject.getScore() >= 4 && scoreObject.getScore() <= 5)
+            else if(scoreObject.getScore() >= 1)
                 GetComponentInChildren<Text>().text = "You performed perfectly in this conversation and demonstrated brilliant social skills.";
             GetComponentInChildren<Text>().color = new Color(255.0f, 255.0f, 255.0f);
         }

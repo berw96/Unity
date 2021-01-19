@@ -23,7 +23,7 @@ public class ResponseData : ScriptableObject
     }
     public enum Topic
     {
-        WEATHER, WORK, ROMANCE, SHOPPING, SCHOOL, POLITICS, OTHERS
+        WEATHER, WORK, ROMANCE, SHOPPING, SCHOOL, POLITICS, OTHERS, HEALTH
     }
 
     public List<Type> responseHistory;
