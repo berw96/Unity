@@ -58,13 +58,12 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-# Assets directory
-_TerrainAutoUpgrade/
-BrokenVector/
-GrassFlowers/
-Distant Lands Free Characters/
-SteamVR/
-SteamVR_Input/
-SteamVR_Resources/
-StreamingAssets/
+# Library directory
+Library/
 
+# Project folders
+Tippity Top/
+Social Communication Sim/
+
+# Temporary
+temp/
