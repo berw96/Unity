@@ -65,3 +65,12 @@ Library/
 Tippity Top/
 Social Communication Sim/
 
+# Device-specific folders
+Temp/
+ProjectSettings/
+UserSettings/
+Logs/
+Packages/
+*.log
+*.json
+*.txt
