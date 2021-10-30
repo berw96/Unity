@@ -19,6 +19,11 @@ public class MoveCamera : MonoBehaviour
 
     private const float minRotationRate = 0.001f;
     private const float maxRotationRate = 0.100f;
+    private const int numberOfRotationLevels = 4;
+    private const float rotationLevel_4_EulerAngle = 315.0f;
+    private const float rotationLevel_3_EulerAngle = 225.0f;
+    private const float rotationLevel_2_EulerAngle = 135.0f;
+    private const float rotationLevel_1_EulerAngle = 45.0f;
     private Quaternion rotationLevel_4;
     private Quaternion rotationLevel_3;
     private Quaternion rotationLevel_2;
@@ -30,23 +35,28 @@ public class MoveCamera : MonoBehaviour
 
     private const float minShiftRate = 0.5f;
     private const float maxShiftRate = 2.0f;
-    private Vector2 shiftLevel_3;
-    private Vector2 shiftLevel_2;
-    private Vector2 shiftLevel_1;
-    private float shiftProgress;
-    private Vector2 initPosition, resPosition;
+    private const int numberOfShiftLevels = 3;
+    private const float shiftLevel_3_Height = 18.0f;
+    private const float shiftLevel_2_Height = 10.0f;
+    private const float shiftLevel_1_Height = 2.0f;
+    private Vector3 shiftLevel_3;
+    private Vector3 shiftLevel_2;
+    private Vector3 shiftLevel_1;
+    private float shiftValue;
+    private Vector3 initPosition, resPosition;
     private int shiftIterator = 0;
     private DIRECTION shiftDirection;
 
     private const float minZoomRate = 0.2f;
     private const float maxZoomRate = 0.5f;
+    private const int numberOfZoomLevels = 2;
     private const int zoomLevel_2 = 16;
     private const int zoomLevel_1 = 8;
-    private float initZoom, resZoom;
+    private float resZoom;
     private DIRECTION zoomDirection;
 
     private List<Quaternion> rotationPresets;
-    private List<Vector2> shiftPresets;
+    private List<Vector3> shiftPresets;
     private List<int> zoomPresets;
 
     [Header("Camera Pivot")]
@@ -74,7 +84,7 @@ public class MoveCamera : MonoBehaviour
         SetZoomPresets();
 
         SetRotationProgress();
-        SetShiftProgress();
+        SetShiftValue();
 
         SetInitOrientation();
         SetInitPosition();
@@ -134,11 +144,36 @@ public class MoveCamera : MonoBehaviour
     private void AdjustCameraHeight()
     {
         {
-            if (cameraPivot.transform.position != (Vector3)resPosition)
-                Vector3.Lerp(
-                    cameraPivot.transform.position,
-                    resPosition,
-                    shiftProgress += shiftRate);
+            if(cameraPivot.transform.position.y != resPosition.y)
+            {
+                switch (shiftDirection)
+                {
+                    case DIRECTION.UP:
+                        {
+                            if (cameraPivot.transform.position.y < resPosition.y)
+                            {
+                                shiftValue += shiftRate;
+                                cameraPivot.transform.position = new Vector2(0.0f, shiftValue);
+                            }
+                            else
+                                cameraPivot.transform.position = resPosition;
+                        }
+                        break;
+                    case DIRECTION.DOWN:
+                        {
+                            if (cameraPivot.transform.position.y > resPosition.y)
+                            {
+                                shiftValue -= shiftRate;
+                                cameraPivot.transform.position = new Vector2(0.0f, shiftValue);
+                            }
+                            else
+                                cameraPivot.transform.position = resPosition;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
             else
             {
                 StopShifting();
@@ -176,8 +211,10 @@ public class MoveCamera : MonoBehaviour
 
     private void SetInitOrientation() { initOrientation.eulerAngles = cameraPivot.transform.rotation.eulerAngles; }
 
-    private void SetInitPosition(){ initPosition = cameraPivot.transform.position; }
-
+    private void SetInitPosition()
+    { 
+        initPosition = cameraPivot.transform.position;
+    }
 
     private void SetResOrientation(DIRECTION d)
     {
@@ -241,7 +278,7 @@ public class MoveCamera : MonoBehaviour
 
     private void SetRotationProgress() { rotationProgress = 0.0f; }
     
-    private void SetShiftProgress() { shiftProgress = 0.0f; }
+    private void SetShiftValue() { shiftValue = 0.0f; }
 
     public void SetDirection(GameObject obj)
     {
@@ -332,26 +369,26 @@ public class MoveCamera : MonoBehaviour
     {
         Debug.Log("Setting Rotation presets...");
 
-        rotationPresets = new List<Quaternion>();
+        rotationPresets = new List<Quaternion>(numberOfRotationLevels);
 
         rotationLevel_4 = Quaternion.Euler(
             initOrientation.x,
-            315.0f,
+            rotationLevel_4_EulerAngle,
             initOrientation.z
             );
         rotationLevel_3 = Quaternion.Euler(
             initOrientation.x,
-            225.0f,
+            rotationLevel_3_EulerAngle,
             initOrientation.z
             );
         rotationLevel_2 = Quaternion.Euler(
             initOrientation.x,
-            135.0f,
+            rotationLevel_2_EulerAngle,
             initOrientation.z
             );
         rotationLevel_1 = Quaternion.Euler(
             initOrientation.x,
-            45.0f,
+            rotationLevel_1_EulerAngle,
             initOrientation.z
             );
 
@@ -365,19 +402,22 @@ public class MoveCamera : MonoBehaviour
     {
         Debug.Log("Setting Shift presets...");
 
-        shiftPresets = new List<Vector2>(3);
+        shiftPresets = new List<Vector3>(numberOfShiftLevels);
 
-        shiftLevel_3 = new Vector2(
+        shiftLevel_3 = new Vector3(
             initPosition.x,
-            18.0f
+            shiftLevel_3_Height,
+            initPosition.z
             );
-        shiftLevel_2 = new Vector2(
+        shiftLevel_2 = new Vector3(
             initPosition.x,
-            10.0f
+            shiftLevel_2_Height,
+            initPosition.z
             );
-        shiftLevel_1 = new Vector2(
+        shiftLevel_1 = new Vector3(
             initPosition.x,
-            2.0f
+            shiftLevel_1_Height,
+            initPosition.z
             );
 
         shiftPresets.Add(shiftLevel_1);
@@ -389,7 +429,7 @@ public class MoveCamera : MonoBehaviour
     {
         Debug.Log("Setting Zoom presets...");
 
-        zoomPresets = new List<int>(2);
+        zoomPresets = new List<int>(numberOfZoomLevels);
         zoomPresets.Add(zoomLevel_1);
         zoomPresets.Add(zoomLevel_2);
     }
@@ -403,7 +443,6 @@ public class MoveCamera : MonoBehaviour
     private void StopShifting()
     {
         shiftDirection = DIRECTION.NONE;
-        SetShiftProgress();
     }
 
     private void StopZooming()
