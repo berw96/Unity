@@ -87,6 +87,8 @@ public class JengaBlock : MonoBehaviour
                 clicks++;
                 if (clicks == 2)
                     AddBlockToInventory(gameObject);
+                if (clicks >= int.MaxValue - 1)
+                    clicks = int.MaxValue - 1; 
                 return;
             }
         }
