@@ -16,8 +16,11 @@ public class JengaBlock : MonoBehaviour
 
     [Header("GFX")]
     [SerializeField] Renderer renderer;
-    private MeshRenderer meshRenderer;
     private static float colorLerpRate = 0.05f;
+
+    [Header("Physics")]
+    [SerializeField] Rigidbody rigidbody;
+    [SerializeField] BoxCollider collider;
 
     private static GameObject cameraPivotReference;
     private readonly Color defaultColor = Color.white;
@@ -40,7 +43,6 @@ public class JengaBlock : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
         dragPoint = GameObject.Find("MouseDragPoint");
         initBlockPosition = gameObject.transform.position;
     }
@@ -267,6 +269,21 @@ public class JengaBlock : MonoBehaviour
                 Debug.LogWarning("Drag point is set to null. " +
                     "Unable to specify where block should be move.");
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        
     }
 }
 #endif

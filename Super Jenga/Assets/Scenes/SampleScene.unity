@@ -478,6 +478,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 3178515885569193578, guid: f60ec0005d7b2fb4dad3e967bcbee85d,
+        type: 3}
+      propertyPath: m_ScaleFactor
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3178515885569193580, guid: f60ec0005d7b2fb4dad3e967bcbee85d,
         type: 3}
       propertyPath: m_Name
@@ -631,6 +636,21 @@ PrefabInstance:
         type: 3}
       propertyPath: far clip plane
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359996919278547779, guid: b3eab7c930f6ca94ea304d15173f366f,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.507743
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359996919278547779, guid: b3eab7c930f6ca94ea304d15173f366f,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.5432644
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359996919278547779, guid: b3eab7c930f6ca94ea304d15173f366f,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.6603774
       objectReference: {fileID: 0}
     - target: {fileID: 5359996919358459344, guid: b3eab7c930f6ca94ea304d15173f366f,
         type: 3}
