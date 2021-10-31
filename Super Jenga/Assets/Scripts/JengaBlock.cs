@@ -35,7 +35,7 @@ public class JengaBlock : MonoBehaviour
     private bool isDragging = false;
     private int clicks = 0;
 
-    private static float blockLerpRate = 0.01f;
+    private static float blockLerpRate = 0.001f;
     private float blockLerpProgress = 0.0f;
     private Vector3 initBlockPosition;
     private const float blockLerpScaler = 0.002f;
@@ -52,8 +52,7 @@ public class JengaBlock : MonoBehaviour
         clicks = 0;
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
         {
             {
