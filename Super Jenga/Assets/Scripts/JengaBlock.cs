@@ -34,12 +34,15 @@ public class JengaBlock : MonoBehaviour
 
     private static float blockLerpRate = 0.01f;
     private float blockLerpProgress = 0.0f;
+    private Vector3 initBlockPosition;
+    private const float blockLerpScaler = 0.002f;
 
     // Start is called before the first frame update
     private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         dragPoint = GameObject.Find("MouseDragPoint");
+        initBlockPosition = gameObject.transform.position;
     }
 
     private void InitializeClicks()
@@ -70,10 +73,9 @@ public class JengaBlock : MonoBehaviour
             }
 
             {
-                if (isDragging)
+                if (!isDragging)
                 {
-                    SetDragPointWithMousePosition();
-                    LerpToDragPoint(dragPoint.transform.position);
+                    LerpToPoint(initBlockPosition);
                 }
             }
         }
@@ -85,7 +87,7 @@ public class JengaBlock : MonoBehaviour
             if (isHovered &&
             !gameObject.Equals(GetSelectedBlock()))
             {
-                if(!gameObject.Equals(GetInventoriedBlock()))
+                if (!gameObject.Equals(GetInventoriedBlock()))
                     RemoveInventoriedBlock();
                 InitializeClicks();
                 clicks++;
@@ -100,18 +102,18 @@ public class JengaBlock : MonoBehaviour
                 if (clicks == 2)
                     AddBlockToInventory(gameObject);
                 if (clicks >= int.MaxValue - 1)
-                    clicks = int.MaxValue - 1; 
+                    clicks = int.MaxValue - 1;
                 return;
             }
         }
     }
 
     private void OnMouseUp()
-    { 
+    {
+        isDragging = false;
         Debug.Log("Click up");
         Debug.Log($"Clicks provided = {clicks}");
         Cursor.visible = true;
-        isDragging = false;
     }
 
     private void OnMouseOver()
@@ -139,24 +141,7 @@ public class JengaBlock : MonoBehaviour
 
             Debug.Log($"Mouse position: [{Input.mousePosition.normalized}]");
 
-            // range-based angle detection to avoid bugs caused by floating point leakage.
-            {
-                if (dragAngle >= 44.5f &&
-                dragAngle <= 45.5f)
-                    Debug.Log("45 DRAG");
-
-                if (dragAngle >= 134.5f &&
-                    dragAngle <= 135.5f)
-                    Debug.Log("135 DRAG");
-
-                if (dragAngle >= 224.5f &&
-                    dragAngle <= 225.5f)
-                    Debug.Log("225 DRAG");
-
-                if (dragAngle >= 314.5f &&
-                    dragAngle <= 315.5f)
-                    Debug.Log("315 DRAG");
-            }
+            AdjustDragPoint(dragAngle);
         }
     }
 
@@ -186,14 +171,7 @@ public class JengaBlock : MonoBehaviour
         }
     }
 
-    private void SetDragPointWithMousePosition()
-    {
-        Debug.Log("Drag point should be moving...");
-        Vector3 newPoint = new Vector3(Input.mousePosition.x * 0.001f, 0.0f, Input.mousePosition.y * 0.001f);
-        dragPoint.transform.position = newPoint;
-    }
-
-    private void LerpToDragPoint(Vector3 target)
+    private void LerpToPoint(Vector3 target)
     {
         {
             if (gameObject.transform.position != target)
@@ -215,6 +193,79 @@ public class JengaBlock : MonoBehaviour
                 blockLerpProgress = 0.0f;
                 return;
             }
+        }
+    }
+
+    private void AdjustDragPoint(float dragAngle)
+    {
+        // declare Vector3 to store new drag point.
+        Vector3 newPoint = new Vector3();
+
+        // range-based angle detection to avoid bugs caused by floating point leakage.
+        {
+            if (dragAngle >= 44.5f &&
+                dragAngle <= 45.5f)
+            {
+                newPoint = new Vector3(
+                    Input.mousePosition.x * blockLerpScaler,
+                    0.0f,
+                    Input.mousePosition.y * blockLerpScaler
+                    );
+
+                Debug.Log("45 DRAG");
+            }
+        }
+
+        {
+            if (dragAngle >= 134.5f &&
+                dragAngle <= 135.5f)
+            {
+                newPoint = new Vector3(
+                    Input.mousePosition.y * blockLerpScaler,
+                    0.0f,
+                    -Input.mousePosition.x * blockLerpScaler
+                    );
+
+                Debug.Log("135 DRAG");
+            }
+        }
+
+        {
+            if (dragAngle >= 224.5f &&
+                dragAngle <= 225.5f)
+            {
+                newPoint = new Vector3(
+                    -Input.mousePosition.x * blockLerpScaler,
+                    0.0f,
+                    -Input.mousePosition.y * blockLerpScaler
+                    );
+
+                Debug.Log("225 DRAG");
+            }
+        }
+
+        {
+            if (dragAngle >= 314.5f &&
+                dragAngle <= 315.5f)
+            {
+                newPoint = new Vector3(
+                    -Input.mousePosition.y * blockLerpScaler,
+                    0.0f,
+                    Input.mousePosition.x * blockLerpScaler
+                    );
+
+                Debug.Log("315 DRAG");
+            }
+        }
+        
+        dragPoint.transform.position = newPoint;
+        
+        {
+            if (dragPoint.transform.position != null)
+                LerpToPoint(dragPoint.transform.position);
+            else
+                Debug.LogWarning("Drag point is set to null. " +
+                    "Unable to specify where block should be move.");
         }
     }
 }
