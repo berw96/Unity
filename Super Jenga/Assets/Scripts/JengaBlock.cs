@@ -19,8 +19,6 @@ public class JengaBlock : MonoBehaviour
     private MeshRenderer meshRenderer;
     private static float colorLerpRate = 0.05f;
 
-    private static GameObject dragPoint;
-
     private static GameObject cameraPivotReference;
     private readonly Color defaultColor = Color.white;
     private readonly Color hoverColor = Color.grey;
@@ -28,9 +26,14 @@ public class JengaBlock : MonoBehaviour
     private readonly Color inventoriedColor = Color.green;
     private float colorLerpProgress = 0.0f;
 
+    private static GameObject dragPoint;
+
     private bool isHovered = false;
     private bool isDragging = false;
     private int clicks = 0;
+
+    private static float blockLerpRate = 0.01f;
+    private float blockLerpProgress = 0.0f;
 
     // Start is called before the first frame update
     private void Awake()
@@ -69,8 +72,8 @@ public class JengaBlock : MonoBehaviour
             {
                 if (isDragging)
                 {
-                    Debug.Log("Drag point should be moving...");
-                    dragPoint.transform.position = Input.mousePosition;
+                    SetDragPointWithMousePosition();
+                    LerpToDragPoint(dragPoint.transform.position);
                 }
             }
         }
@@ -183,9 +186,36 @@ public class JengaBlock : MonoBehaviour
         }
     }
 
-    private void LerpToDragPoint()
+    private void SetDragPointWithMousePosition()
     {
+        Debug.Log("Drag point should be moving...");
+        Vector3 newPoint = new Vector3(Input.mousePosition.x * 0.001f, 0.0f, Input.mousePosition.y * 0.001f);
+        dragPoint.transform.position = newPoint;
+    }
 
+    private void LerpToDragPoint(Vector3 target)
+    {
+        {
+            if (gameObject.transform.position != target)
+            {
+                gameObject.transform.position = Vector3.Lerp(
+                    gameObject.transform.position,
+                    target,
+                    blockLerpProgress += blockLerpRate
+                    );
+
+                {
+                    if (blockLerpProgress >= 1.0f)
+                        blockLerpProgress = 1.0f;
+                }
+            }
+            else
+            {
+                gameObject.transform.position = target;
+                blockLerpProgress = 0.0f;
+                return;
+            }
+        }
     }
 }
 #endif
