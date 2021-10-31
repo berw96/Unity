@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace BlockManagement
 {
-    public sealed class SelectedBlock : ScriptableObject
+    public class SelectedBlock : ScriptableObject
     {
         private static GameObject reference;
 
@@ -16,7 +16,7 @@ namespace BlockManagement
             Debug.Log($"Querying {reference} as selected block.");
             return reference;
         }
-        
+
         public static void SetSelectedBlock(GameObject block)
         {
             {
@@ -36,6 +36,29 @@ namespace BlockManagement
         {
             Debug.LogWarning("Selected block reference set to NULL.");
             reference = null;
+        }
+    }
+
+    public sealed class InventoriedBlock : SelectedBlock
+    {
+        private static GameObject ineventoriedBlock;
+
+        public static void AddBlockToInventory(GameObject block)
+        {
+            ineventoriedBlock = block;
+            Debug.Log($"The block {block} has been added to the inventory" +
+                $"and should now be moveable.");
+        }
+
+        public static void RemoveInventoriedBlock()
+        {
+            Debug.Log("The inventoried block value has been set to null.");
+            ineventoriedBlock = null;
+        }
+
+        public static GameObject GetInventoriedBlock()
+        {
+            return ineventoriedBlock;
         }
     }
 }

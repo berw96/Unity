@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using static BlockManagement.SelectedBlock;
+using static BlockManagement.InventoriedBlock;
 
 /// <summary>
 /// <c>InputManager</c> maps mouse and touch screen inputs detected by Unity
@@ -24,6 +25,7 @@ public class JengaBlock : MonoBehaviour
     private readonly Color defaultColor = Color.white;
     private readonly Color hoverColor = Color.grey;
     private readonly Color selectedColor = Color.red;
+    private readonly Color inventoriedColor = Color.green;
     private float colorLerpProgress = 0.0f;
 
     private bool isHovered = false;
@@ -34,6 +36,11 @@ public class JengaBlock : MonoBehaviour
     private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
+    }
+
+    private void InitializeClicks()
+    {
+        clicks = 0;
     }
 
     // Update is called once per frame
@@ -52,6 +59,11 @@ public class JengaBlock : MonoBehaviour
                     !gameObject.Equals(GetSelectedBlock()))
                     LerpToColor(hoverColor);
             }
+
+            {
+                if (gameObject.Equals(GetInventoriedBlock()))
+                    LerpToColor(inventoriedColor);
+            }
         }
     }
 
@@ -61,7 +73,9 @@ public class JengaBlock : MonoBehaviour
             if (isHovered &&
             !gameObject.Equals(GetSelectedBlock()))
             {
-                clicks = 0;
+                if(!gameObject.Equals(GetInventoriedBlock()))
+                    RemoveInventoriedBlock();
+                InitializeClicks();
                 clicks++;
                 SetSelectedBlock(gameObject);
                 AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
@@ -71,8 +85,8 @@ public class JengaBlock : MonoBehaviour
                 gameObject.Equals(GetSelectedBlock()))
             {
                 clicks++;
-                Debug.LogWarning($"{gameObject} is already selected.");
-                DeselectCurrentBlock();
+                if (clicks == 2)
+                    AddBlockToInventory(gameObject);
                 return;
             }
         }
