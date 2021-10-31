@@ -28,10 +28,9 @@ public class JengaBlock : MonoBehaviour
     [Header("GFX")]
     [SerializeField] Renderer renderer;
     private MeshRenderer meshRenderer;
-    [SerializeField] float colorLerpRate;
+    private static float colorLerpRate = 0.05f;
 
     private bool isHovered;
-    private bool isSelected;
     private bool isHeld;
 
     // Start is called before the first frame update
@@ -47,15 +46,15 @@ public class JengaBlock : MonoBehaviour
         {
             {
                 if (!gameObject.Equals(GetSelectedBlock()))
-                    renderer.material.color = defaultColor;
+                    LerpToColor(defaultColor);
                 else
-                    renderer.material.color = selectedColor;
+                    LerpToColor(selectedColor);
             }
 
             {
                 if (isHovered &&
                     !gameObject.Equals(GetSelectedBlock()))
-                    renderer.material.color = hoverColor;
+                    LerpToColor(hoverColor);
             }
         }
     }
@@ -67,7 +66,6 @@ public class JengaBlock : MonoBehaviour
             if (isHovered &&
             !gameObject.Equals(GetSelectedBlock()))
             {
-                isSelected = true;
                 SetSelectedBlock(gameObject);
                 AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
                 return;
@@ -76,7 +74,6 @@ public class JengaBlock : MonoBehaviour
                 gameObject.Equals(GetSelectedBlock()))
             {
                 Debug.LogWarning($"{gameObject} is already selected.");
-                isSelected = false;
                 DeselectCurrentBlock();
             }
         }
@@ -100,9 +97,30 @@ public class JengaBlock : MonoBehaviour
         Debug.Log("Not hovering");
     }
 
-    private void LerpColor(Color a, Color b)
+    private void LerpToColor(Color target)
     {
+        {
+            if (renderer.material.color != target)
+            {
+                Debug.Log($"Lerping colors...progress [{colorLerpProgress}]");
+                renderer.material.color = Color.Lerp(
+                    renderer.material.color,
+                    target,
+                    colorLerpProgress += colorLerpRate
+                    );
 
+                {
+                    if (colorLerpProgress >= 1.0f)
+                        colorLerpProgress = 1.0f;
+                }
+            }
+            else
+            {
+                renderer.material.color = target;
+                colorLerpProgress = 0.0f;
+                return;
+            }
+        }
     }
 }
 #endif
