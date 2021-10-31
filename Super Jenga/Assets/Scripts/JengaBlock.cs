@@ -13,15 +13,6 @@ using static BlockManagement.SelectedBlock;
 /// </summary>
 public class JengaBlock : MonoBehaviour
 {
-    private const int numberOfJengaLayers = 18;
-    private const int numberOfJengaBlocks = 54;
-    private const int numberOfJengaSlots = 108;
-
-    private readonly Color defaultColor = Color.white;
-    private readonly Color hoverColor = Color.grey;
-    private readonly Color selectedColor = Color.red;
-    private float colorLerpProgress;
-
     [Header("SFX")]
     [SerializeField] AudioClip clip;
 
@@ -30,13 +21,18 @@ public class JengaBlock : MonoBehaviour
     private MeshRenderer meshRenderer;
     private static float colorLerpRate = 0.05f;
 
-    private bool isHovered;
-    private bool isHeld;
+    private readonly Color defaultColor = Color.white;
+    private readonly Color hoverColor = Color.grey;
+    private readonly Color selectedColor = Color.red;
+    private float colorLerpProgress = 0.0f;
+
+    private bool isHovered = false;
+    private bool isHeld = false;
+    private int clicks = 0;
 
     // Start is called before the first frame update
     private void Awake()
     {
-        colorLerpProgress = 0.0f;
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
@@ -61,11 +57,12 @@ public class JengaBlock : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("Click down");
         {
             if (isHovered &&
             !gameObject.Equals(GetSelectedBlock()))
             {
+                clicks = 0;
+                clicks++;
                 SetSelectedBlock(gameObject);
                 AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
                 return;
@@ -73,8 +70,10 @@ public class JengaBlock : MonoBehaviour
             else if (isHovered &&
                 gameObject.Equals(GetSelectedBlock()))
             {
+                clicks++;
                 Debug.LogWarning($"{gameObject} is already selected.");
                 DeselectCurrentBlock();
+                return;
             }
         }
     }
@@ -82,6 +81,7 @@ public class JengaBlock : MonoBehaviour
     private void OnMouseUp()
     { 
         Debug.Log("Click up");
+        Debug.Log($"Clicks provided = {clicks}");
         isHeld = false;
     }
 
@@ -102,7 +102,7 @@ public class JengaBlock : MonoBehaviour
         {
             if (renderer.material.color != target)
             {
-                Debug.Log($"Lerping colors...progress [{colorLerpProgress}]");
+                Debug.Log($"Lerping colors...progress [{colorLerpProgress * 100}%]");
                 renderer.material.color = Color.Lerp(
                     renderer.material.color,
                     target,

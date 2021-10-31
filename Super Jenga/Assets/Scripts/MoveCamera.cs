@@ -1,3 +1,6 @@
+#define MOVE_CAMERA
+#if (UNITY_2019_3_OR_NEWER && MOVE_CAMERA)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -450,3 +453,4 @@ public class MoveCamera : MonoBehaviour
         zoomDirection = DIRECTION.NONE;
     }
 }
+#endif

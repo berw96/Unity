@@ -1,10 +1,13 @@
+#define BLOCK_MANAGEMENT
+#if (UNITY_2019_3_OR_NEWER && BLOCK_MANAGEMENT)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BlockManagement
 {
-    public class SelectedBlock : ScriptableObject
+    public sealed class SelectedBlock : ScriptableObject
     {
         private static GameObject reference;
 
@@ -36,4 +39,4 @@ namespace BlockManagement
         }
     }
 }
-
+#endif

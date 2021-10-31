@@ -1,3 +1,6 @@
+#define INITAILIZE_OBJECT_TRANSFORMS
+#if (UNITY_2019_3_OR_NEWER && INITAILIZE_OBJECT_TRANSFORMS)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,3 +20,4 @@ public class InitializeObjectTransforms : MonoBehaviour
         
     }
 }
+#endif
