@@ -9,10 +9,6 @@ using static BlockManagement.SelectedBlock;
 using static BlockManagement.InventoriedBlock;
 using static CameraManagement.MoveCamera;
 
-/// <summary>
-/// <c>InputManager</c> maps mouse and touch screen inputs detected by Unity
-/// to triggering SFX and RigidBody physics associated with each Jenga block prefab.
-/// </summary>
 public class JengaBlock : MonoBehaviour
 {
     [Header("SFX")]
@@ -23,6 +19,8 @@ public class JengaBlock : MonoBehaviour
     private MeshRenderer meshRenderer;
     private static float colorLerpRate = 0.05f;
 
+    private static GameObject dragPoint;
+
     private static GameObject cameraPivotReference;
     private readonly Color defaultColor = Color.white;
     private readonly Color hoverColor = Color.grey;
@@ -31,12 +29,14 @@ public class JengaBlock : MonoBehaviour
     private float colorLerpProgress = 0.0f;
 
     private bool isHovered = false;
+    private bool isDragging = false;
     private int clicks = 0;
 
     // Start is called before the first frame update
     private void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();
+        dragPoint = GameObject.Find("MouseDragPoint");
     }
 
     private void InitializeClicks()
@@ -64,6 +64,14 @@ public class JengaBlock : MonoBehaviour
             {
                 if (gameObject.Equals(GetInventoriedBlock()))
                     LerpToColor(inventoriedColor);
+            }
+
+            {
+                if (isDragging)
+                {
+                    Debug.Log("Drag point should be moving...");
+                    dragPoint.transform.position = Input.mousePosition;
+                }
             }
         }
     }
@@ -100,6 +108,7 @@ public class JengaBlock : MonoBehaviour
         Debug.Log("Click up");
         Debug.Log($"Clicks provided = {clicks}");
         Cursor.visible = true;
+        isDragging = false;
     }
 
     private void OnMouseOver()
@@ -118,23 +127,33 @@ public class JengaBlock : MonoBehaviour
     {
         if (GetInventoriedBlock() != null)
         {
+            isDragging = true;
             cameraPivotReference = GetCameraPivot();
 
             Debug.Log($"Dragging at {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
             Cursor.visible = false;
-            
 
+            Debug.Log($"Mouse position: [{Input.mousePosition.normalized}]");
 
             // maps mouse drags across xy-plane to block xz-plane based on current camera angle
             switch (cameraPivotReference.transform.rotation.eulerAngles.y)
             {
                 case 45.0f:
+                    Debug.Log($"Drag angle detected as {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
                     break;
                 case 135.0f:
+                    Debug.Log($"Drag angle detected as {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
                     break;
-                case 215.0f:
+                case 225.0f:
+                    Debug.Log($"Drag angle detected as {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
                     break;
                 case 315.0f:
+                    Debug.Log($"Drag angle detected as {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
+                    break;
+                default:
+                    Debug.LogWarning("Could not detect a preset drag angle. It may be " +
+                        "that the current orientation of the camera pivot is not precisely " +
+                        "equal to the case value.");
                     break;
             }
         }
@@ -164,6 +183,11 @@ public class JengaBlock : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private void LerpToDragPoint()
+    {
+
     }
 }
 #endif
