@@ -20,6 +20,7 @@ public class JengaBlock : MonoBehaviour
     private readonly Color defaultColor = Color.white;
     private readonly Color hoverColor = Color.grey;
     private readonly Color selectedColor = Color.red;
+    private float colorLerpProgress;
 
     [Header("SFX")]
     [SerializeField] AudioClip clip;
@@ -27,13 +28,16 @@ public class JengaBlock : MonoBehaviour
     [Header("GFX")]
     [SerializeField] Renderer renderer;
     private MeshRenderer meshRenderer;
+    [SerializeField] float colorLerpRate;
 
     private bool isHovered;
     private bool isSelected;
+    private bool isHeld;
 
     // Start is called before the first frame update
     private void Awake()
     {
+        colorLerpProgress = 0.0f;
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
@@ -41,45 +45,47 @@ public class JengaBlock : MonoBehaviour
     private void Update()
     {
         {
-            if (!gameObject.Equals(GetSelectedBlock()))
-                renderer.material.color = defaultColor;
-            else
-                renderer.material.color = selectedColor;
+            {
+                if (!gameObject.Equals(GetSelectedBlock()))
+                    renderer.material.color = defaultColor;
+                else
+                    renderer.material.color = selectedColor;
+            }
 
-            if (isHovered &&
-                !isSelected)
-                renderer.material.color = hoverColor;
+            {
+                if (isHovered &&
+                    !gameObject.Equals(GetSelectedBlock()))
+                    renderer.material.color = hoverColor;
+            }
         }
     }
 
     private void OnMouseDown()
     {
         Debug.Log("Click down");
-
-        if (isHovered &&
+        {
+            if (isHovered &&
             !gameObject.Equals(GetSelectedBlock()))
-        {
-            isSelected = true;
-            SetSelectedBlock(gameObject);
-            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
-            return;
-        }
-        else
-        {
-            isSelected = false;
-            Debug.LogWarning($"{gameObject} is already selected.");
-        }
-
-        // enable block to be deselected
-        if (gameObject.Equals(GetSelectedBlock()))
-        {
-            DeselectCurrentBlock();
+            {
+                isSelected = true;
+                SetSelectedBlock(gameObject);
+                AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+                return;
+            }
+            else if (isHovered &&
+                gameObject.Equals(GetSelectedBlock()))
+            {
+                Debug.LogWarning($"{gameObject} is already selected.");
+                isSelected = false;
+                DeselectCurrentBlock();
+            }
         }
     }
 
     private void OnMouseUp()
     { 
         Debug.Log("Click up");
+        isHeld = false;
     }
 
     private void OnMouseOver()
@@ -92,6 +98,11 @@ public class JengaBlock : MonoBehaviour
     {
         isHovered = false;
         Debug.Log("Not hovering");
+    }
+
+    private void LerpColor(Color a, Color b)
+    {
+
     }
 }
 #endif
