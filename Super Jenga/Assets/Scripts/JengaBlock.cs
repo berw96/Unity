@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using static BlockManagement.SelectedBlock;
 using static BlockManagement.InventoriedBlock;
+using static CameraManagement.MoveCamera;
 
 /// <summary>
 /// <c>InputManager</c> maps mouse and touch screen inputs detected by Unity
@@ -22,6 +23,7 @@ public class JengaBlock : MonoBehaviour
     private MeshRenderer meshRenderer;
     private static float colorLerpRate = 0.05f;
 
+    private static GameObject cameraPivotReference;
     private readonly Color defaultColor = Color.white;
     private readonly Color hoverColor = Color.grey;
     private readonly Color selectedColor = Color.red;
@@ -29,7 +31,6 @@ public class JengaBlock : MonoBehaviour
     private float colorLerpProgress = 0.0f;
 
     private bool isHovered = false;
-    private bool isHeld = false;
     private int clicks = 0;
 
     // Start is called before the first frame update
@@ -98,7 +99,7 @@ public class JengaBlock : MonoBehaviour
     { 
         Debug.Log("Click up");
         Debug.Log($"Clicks provided = {clicks}");
-        isHeld = false;
+        Cursor.visible = true;
     }
 
     private void OnMouseOver()
@@ -111,6 +112,32 @@ public class JengaBlock : MonoBehaviour
     {
         isHovered = false;
         Debug.Log("Not hovering");
+    }
+
+    private void OnMouseDrag()
+    {
+        if (GetInventoriedBlock() != null)
+        {
+            cameraPivotReference = GetCameraPivot();
+
+            Debug.Log($"Dragging at {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
+            Cursor.visible = false;
+            
+
+
+            // maps mouse drags across xy-plane to block xz-plane based on current camera angle
+            switch (cameraPivotReference.transform.rotation.eulerAngles.y)
+            {
+                case 45.0f:
+                    break;
+                case 135.0f:
+                    break;
+                case 215.0f:
+                    break;
+                case 315.0f:
+                    break;
+            }
+        }
     }
 
     private void LerpToColor(Color target)
