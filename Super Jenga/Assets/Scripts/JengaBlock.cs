@@ -208,7 +208,7 @@ public class JengaBlock : MonoBehaviour
             {
                 newPoint = new Vector3(
                     Input.mousePosition.x * blockLerpScaler,
-                    0.0f,
+                    initBlockPosition.y,
                     Input.mousePosition.y * blockLerpScaler
                     );
 
@@ -222,7 +222,7 @@ public class JengaBlock : MonoBehaviour
             {
                 newPoint = new Vector3(
                     Input.mousePosition.y * blockLerpScaler,
-                    0.0f,
+                    initBlockPosition.y,
                     -Input.mousePosition.x * blockLerpScaler
                     );
 
@@ -236,7 +236,7 @@ public class JengaBlock : MonoBehaviour
             {
                 newPoint = new Vector3(
                     -Input.mousePosition.x * blockLerpScaler,
-                    0.0f,
+                    initBlockPosition.y,
                     -Input.mousePosition.y * blockLerpScaler
                     );
 
@@ -250,7 +250,7 @@ public class JengaBlock : MonoBehaviour
             {
                 newPoint = new Vector3(
                     -Input.mousePosition.y * blockLerpScaler,
-                    0.0f,
+                    initBlockPosition.y,
                     Input.mousePosition.x * blockLerpScaler
                     );
 
