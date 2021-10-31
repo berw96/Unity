@@ -129,32 +129,30 @@ public class JengaBlock : MonoBehaviour
         {
             isDragging = true;
             cameraPivotReference = GetCameraPivot();
+            float dragAngle = cameraPivotReference.transform.rotation.eulerAngles.y;
 
-            Debug.Log($"Dragging at {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
+            Debug.Log($"Dragging at {dragAngle} degrees");
             Cursor.visible = false;
 
             Debug.Log($"Mouse position: [{Input.mousePosition.normalized}]");
 
-            // maps mouse drags across xy-plane to block xz-plane based on current camera angle
-            switch (cameraPivotReference.transform.rotation.eulerAngles.y)
+            // range-based angle detection to avoid bugs caused by floating point leakage.
             {
-                case 45.0f:
-                    Debug.Log($"Drag angle detected as {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
-                    break;
-                case 135.0f:
-                    Debug.Log($"Drag angle detected as {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
-                    break;
-                case 225.0f:
-                    Debug.Log($"Drag angle detected as {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
-                    break;
-                case 315.0f:
-                    Debug.Log($"Drag angle detected as {cameraPivotReference.transform.rotation.eulerAngles.y} degrees");
-                    break;
-                default:
-                    Debug.LogWarning("Could not detect a preset drag angle. It may be " +
-                        "that the current orientation of the camera pivot is not precisely " +
-                        "equal to the case value.");
-                    break;
+                if (dragAngle >= 44.5f &&
+                dragAngle <= 45.5f)
+                    Debug.Log("45 DRAG");
+
+                if (dragAngle >= 134.5f &&
+                    dragAngle <= 135.5f)
+                    Debug.Log("135 DRAG");
+
+                if (dragAngle >= 224.5f &&
+                    dragAngle <= 225.5f)
+                    Debug.Log("225 DRAG");
+
+                if (dragAngle >= 314.5f &&
+                    dragAngle <= 315.5f)
+                    Debug.Log("315 DRAG");
             }
         }
     }
