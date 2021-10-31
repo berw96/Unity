@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InitialObjectTransformData : ScriptableObject
+namespace InitialObjectTransform
 {
-    
+    public class InitialObjectTransformData : ScriptableObject
+    {
+
+    }
 }
+

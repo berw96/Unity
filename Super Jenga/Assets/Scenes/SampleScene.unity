@@ -671,5 +671,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraPivot
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5359996919358459346, guid: b3eab7c930f6ca94ea304d15173f366f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b3eab7c930f6ca94ea304d15173f366f, type: 3}
