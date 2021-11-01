@@ -12,7 +12,10 @@ using static CameraManagement.MoveCamera;
 public class JengaBlock : MonoBehaviour
 {
     [Header("SFX")]
-    [SerializeField] AudioClip clip;
+    [SerializeField] AudioClip hoveredSFX;
+    [SerializeField] AudioClip selectedSFX;
+    [SerializeField] AudioClip inventoriedSFX;
+    [SerializeField] AudioClip collisionSFX;
 
     [Header("GFX")]
     [SerializeField] Renderer renderer;
@@ -21,6 +24,7 @@ public class JengaBlock : MonoBehaviour
     [Header("Physics")]
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] BoxCollider collider;
+    [SerializeField] PhysicMaterial material;
 
     private static GameObject cameraPivotReference;
     private readonly Color defaultColor = Color.white;
@@ -38,6 +42,7 @@ public class JengaBlock : MonoBehaviour
     private static float blockLerpRate = 0.001f;
     private float blockLerpProgress = 0.0f;
     private Vector3 initBlockPosition;
+    private Vector3 mouseOffset;
     private const float blockLerpScaler = 0.002f;
 
     // Start is called before the first frame update
@@ -45,6 +50,12 @@ public class JengaBlock : MonoBehaviour
     {
         dragPoint = GameObject.Find("MouseDragPoint");
         initBlockPosition = gameObject.transform.position;
+        mouseOffset = new Vector3(
+            initBlockPosition.x - Input.mousePosition.x,
+            initBlockPosition.z - Input.mousePosition.y,
+            0.0f
+
+            );
     }
 
     private void InitializeClicks()
@@ -70,20 +81,26 @@ public class JengaBlock : MonoBehaviour
 
             {
                 if (gameObject.Equals(GetInventoriedBlock()))
-                    LerpToColor(inventoriedColor);
-            }
-
-            {
-                if (!isDragging)
                 {
-                    LerpToPoint(initBlockPosition);
+                    LerpToColor(inventoriedColor);
+                    rigidbody.isKinematic = true;
                 }
+                else
+                    rigidbody.isKinematic = false;
             }
         }
     }
 
     private void OnMouseDown()
     {
+        {
+            mouseOffset = new Vector3(
+            gameObject.transform.position.x - Input.mousePosition.x,
+            gameObject.transform.position.z - Input.mousePosition.y,
+            0.0f
+            );
+        }
+
         {
             if (isHovered &&
             !gameObject.Equals(GetSelectedBlock()))
@@ -93,7 +110,7 @@ public class JengaBlock : MonoBehaviour
                 InitializeClicks();
                 clicks++;
                 SetSelectedBlock(gameObject);
-                AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+                AudioSource.PlayClipAtPoint(selectedSFX, Camera.main.transform.position);
                 return;
             }
             else if (isHovered &&
@@ -272,17 +289,12 @@ public class JengaBlock : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        
+        Debug.Log("Block collider ENTER");
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        
+        Debug.Log("Block collider EXIT");
     }
 }
 #endif
