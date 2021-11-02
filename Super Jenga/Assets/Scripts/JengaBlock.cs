@@ -27,7 +27,7 @@ public class JengaBlock : MonoBehaviour
     [SerializeField] PhysicMaterial material;
 
     private static GameObject cameraPivotReference;
-    private readonly Color defaultColor = Color.white;
+    private readonly Color defaultColor = new Color(90.0f / 255.0f, 50.0f / 255.0f, 20.0f / 255.0f);
     private readonly Color hoverColor = Color.grey;
     private readonly Color selectedColor = Color.red;
     private readonly Color inventoriedColor = Color.green;
@@ -42,20 +42,14 @@ public class JengaBlock : MonoBehaviour
     private static float blockLerpRate = 0.001f;
     private float blockLerpProgress = 0.0f;
     private Vector3 initBlockPosition;
-    private Vector3 mouseOffset;
-    private const float blockLerpScaler = 0.002f;
+    private Vector3 initBlockRotation;
+    private Vector3 clickPoint;
+    private const float blockLerpScaler = 0.02f;
 
     // Start is called before the first frame update
     private void Awake()
     {
         dragPoint = GameObject.Find("MouseDragPoint");
-        initBlockPosition = gameObject.transform.position;
-        mouseOffset = new Vector3(
-            initBlockPosition.x - Input.mousePosition.x,
-            initBlockPosition.z - Input.mousePosition.y,
-            0.0f
-
-            );
     }
 
     private void InitializeClicks()
@@ -75,7 +69,8 @@ public class JengaBlock : MonoBehaviour
 
             {
                 if (isHovered &&
-                    !gameObject.Equals(GetSelectedBlock()))
+                    !gameObject.Equals(GetSelectedBlock()) &&
+                    GetInventoriedBlock() == null)
                     LerpToColor(hoverColor);
             }
 
@@ -93,13 +88,9 @@ public class JengaBlock : MonoBehaviour
 
     private void OnMouseDown()
     {
-        {
-            mouseOffset = new Vector3(
-            gameObject.transform.position.x - Input.mousePosition.x,
-            gameObject.transform.position.z - Input.mousePosition.y,
-            0.0f
-            );
-        }
+        clickPoint = Input.mousePosition;
+        initBlockPosition = gameObject.transform.position;
+        initBlockRotation = gameObject.transform.rotation.eulerAngles;
 
         {
             if (isHovered &&
@@ -219,15 +210,22 @@ public class JengaBlock : MonoBehaviour
         // declare Vector3 to store new drag point.
         Vector3 newPoint = new Vector3();
 
+        // we all float down here ;)
+        float mouseDX = Input.mousePosition.x - clickPoint.x;
+        float mouseDY = Input.mousePosition.y - clickPoint.y;
+        float blockDX = (initBlockPosition.x + mouseDX) * blockLerpScaler;
+        float blockDZ = (initBlockPosition.z + mouseDY) * blockLerpScaler;
+
         // range-based angle detection to avoid bugs caused by floating point leakage.
+        // sets drag point target based on camera pivot angle.
         {
             if (dragAngle >= 44.5f &&
                 dragAngle <= 45.5f)
             {
                 newPoint = new Vector3(
-                    Input.mousePosition.x * blockLerpScaler,
+                    blockDX,
                     initBlockPosition.y,
-                    Input.mousePosition.y * blockLerpScaler
+                    blockDZ
                     );
 
                 Debug.Log("45 DRAG");
@@ -239,9 +237,9 @@ public class JengaBlock : MonoBehaviour
                 dragAngle <= 135.5f)
             {
                 newPoint = new Vector3(
-                    Input.mousePosition.y * blockLerpScaler,
+                    blockDZ,
                     initBlockPosition.y,
-                    -Input.mousePosition.x * blockLerpScaler
+                    -blockDX
                     );
 
                 Debug.Log("135 DRAG");
@@ -253,9 +251,9 @@ public class JengaBlock : MonoBehaviour
                 dragAngle <= 225.5f)
             {
                 newPoint = new Vector3(
-                    -Input.mousePosition.x * blockLerpScaler,
+                    -blockDX,
                     initBlockPosition.y,
-                    -Input.mousePosition.y * blockLerpScaler
+                    -blockDZ
                     );
 
                 Debug.Log("225 DRAG");
@@ -267,9 +265,9 @@ public class JengaBlock : MonoBehaviour
                 dragAngle <= 315.5f)
             {
                 newPoint = new Vector3(
-                    -Input.mousePosition.y * blockLerpScaler,
+                    -blockDZ,
                     initBlockPosition.y,
-                    Input.mousePosition.x * blockLerpScaler
+                    blockDX
                     );
 
                 Debug.Log("315 DRAG");

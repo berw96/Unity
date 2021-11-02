@@ -42,14 +42,14 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.9933143, g: 1, b: 0.7688679, a: 0.3137255}
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -103,6 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5359996919278547780}
   - component: {fileID: 5359996919278547779}
+  - component: {fileID: 4983210435892170895}
   - component: {fileID: 5359996919278547782}
   - component: {fileID: 5359996919278547778}
   - component: {fileID: 5359996919278547781}
@@ -151,8 +152,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 30
+  near clip plane: 0.0001
+  far clip plane: 60
   field of view: 60
   orthographic: 1
   orthographic size: 16
@@ -171,6 +172,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &4983210435892170895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5359996919278547777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ddec0626a767d48b2ce4580770675a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5359996919278547782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,7 +348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023eb99ff5335794d9e24ccdcb9260dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPivot: {fileID: 5359996919358459375}
   rotationRate: 0.0525
   shiftRate: 2
   zoomRate: 0.5
