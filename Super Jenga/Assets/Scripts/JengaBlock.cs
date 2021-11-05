@@ -27,7 +27,7 @@ public class JengaBlock : MonoBehaviour
     [SerializeField] PhysicMaterial material;
 
     private static GameObject cameraPivotReference;
-    private readonly Color defaultColor = new Color(90.0f / 255.0f, 50.0f / 255.0f, 20.0f / 255.0f);
+    private readonly Color defaultColor = new Color(215.0f / 255.0f, 166.0f / 255.0f, 104.0f / 255.0f);
     private readonly Color hoverColor = Color.grey;
     private readonly Color selectedColor = Color.red;
     private readonly Color inventoriedColor = Color.green;
@@ -39,12 +39,11 @@ public class JengaBlock : MonoBehaviour
     private bool isDragging = false;
     private int clicks = 0;
 
-    private static float blockLerpRate = 0.001f;
+    private static float blockLerpRate = 0.000005f;
     private float blockLerpProgress = 0.0f;
     private Vector3 initBlockPosition;
     private Vector3 initBlockRotation;
     private Vector3 clickPoint;
-    private const float blockLerpScaler = 0.02f;
 
     // Start is called before the first frame update
     private void Awake()
@@ -213,8 +212,8 @@ public class JengaBlock : MonoBehaviour
         // we all float down here ;)
         float mouseDX = Input.mousePosition.x - clickPoint.x;
         float mouseDY = Input.mousePosition.y - clickPoint.y;
-        float blockDX = (initBlockPosition.x + mouseDX) * blockLerpScaler;
-        float blockDZ = (initBlockPosition.z + mouseDY) * blockLerpScaler;
+        float blockDX = (initBlockPosition.x + mouseDX);
+        float blockDZ = (initBlockPosition.z + mouseDY);
 
         // range-based angle detection to avoid bugs caused by floating point leakage.
         // sets drag point target based on camera pivot angle.
@@ -281,7 +280,7 @@ public class JengaBlock : MonoBehaviour
                 LerpToPoint(dragPoint.transform.position);
             else
                 Debug.LogWarning("Drag point is set to null. " +
-                    "Unable to specify where block should be move.");
+                    "Unable to specify where block should be moved.");
         }
     }
 

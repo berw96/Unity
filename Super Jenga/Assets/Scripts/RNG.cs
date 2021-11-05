@@ -11,7 +11,7 @@ namespace RandomNumberGeneration
     public sealed class RNG : ScriptableObject
     {
         private const int minRandomValue = 0;
-        private const int maxRandomValue = 4;
+        private const int maxRandomValue = 5;
 
         private int randomNumber;
 
