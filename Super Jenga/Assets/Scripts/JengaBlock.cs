@@ -12,19 +12,17 @@ using static CameraManagement.MoveCamera;
 public class JengaBlock : MonoBehaviour
 {
     [Header("SFX")]
-    [SerializeField] AudioClip hoveredSFX;
     [SerializeField] AudioClip selectedSFX;
     [SerializeField] AudioClip inventoriedSFX;
     [SerializeField] AudioClip collisionSFX;
 
     [Header("GFX")]
     [SerializeField] Renderer renderer;
-    private static float colorLerpRate = 0.05f;
+    private static float colorLerpRate = 0.03f;
 
     [Header("Physics")]
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] BoxCollider collider;
-    [SerializeField] PhysicMaterial material;
 
     private static GameObject cameraPivotReference;
     private readonly Color defaultColor = new Color(215.0f / 255.0f, 166.0f / 255.0f, 104.0f / 255.0f);
