@@ -11,6 +11,9 @@ using static CameraManagement.MoveCamera;
 
 public class JengaBlock : MonoBehaviour
 {
+    private const int maxMouseYScroll = 1;
+    private const int minMouseYScroll = -1;
+
     [Header("SFX")]
     [SerializeField] AudioClip selectedSFX;
     [SerializeField] AudioClip inventoriedSFX;
