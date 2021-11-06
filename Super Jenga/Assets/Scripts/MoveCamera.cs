@@ -209,7 +209,7 @@ namespace CameraManagement
         {
             cameraPivot.transform.rotation.eulerAngles.Set(
                     0.0f,
-                    Mathf.RoundToInt((int)cameraPivot.transform.rotation.eulerAngles.y + 45),
+                    Mathf.RoundToInt((int)cameraPivot.transform.rotation.eulerAngles.y),
                     0.0f
                     );
         }

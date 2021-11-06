@@ -11,11 +11,11 @@ using UnityEngine.UI;
 public class SceneLoader : MonoBehaviour
 {
     private static Scene[] scenes;
-    private readonly float maxOverlayFill = 1.0f;
-    private readonly float minOverlayFill = 0.0f;
-    private readonly float maxOverlayFillRate = 0.05f;
+    public readonly float maxOverlayFill = 1.0f;
+    public readonly float minOverlayFill = 0.0f;
+    public readonly float maxOverlayFillRate = 0.05f;
     private float waitTime = 0.0f;
-    private readonly float maxWaitTime = 1.0f;
+    public readonly float maxWaitTime = 1.0f;
     [SerializeField] Image sceneTransitionOverlay;
 
     private void Awake()
@@ -82,6 +82,11 @@ public class SceneLoader : MonoBehaviour
     public void ExitApplication()
     {
         Application.Quit();
+    }
+
+    public float GetOverlayFillAmount()
+    {
+        return sceneTransitionOverlay.fillAmount;
     }
 }
 #endif

@@ -9,11 +9,8 @@ using static BlockManagement.SelectedBlock;
 using static BlockManagement.InventoriedBlock;
 using static CameraManagement.MoveCamera;
 
-public class JengaBlock : MonoBehaviour
+public sealed class JengaBlock : MonoBehaviour
 {
-    private const int maxMouseYScroll = 1;
-    private const int minMouseYScroll = -1;
-
     [Header("SFX")]
     [SerializeField] AudioClip selectedSFX;
     [SerializeField] AudioClip inventoriedSFX;
@@ -27,11 +24,13 @@ public class JengaBlock : MonoBehaviour
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] BoxCollider collider;
 
+
     private static GameObject cameraPivotReference;
     private readonly Color defaultColor = new Color(215.0f / 255.0f, 166.0f / 255.0f, 104.0f / 255.0f);
     private readonly Color hoverColor = Color.grey;
     private readonly Color selectedColor = Color.red;
     private readonly Color inventoriedColor = Color.green;
+    private const int clicksToInventoryBlock = 2;
     private float colorLerpProgress = 0.0f;
 
     private static GameObject dragPoint;
@@ -40,15 +39,20 @@ public class JengaBlock : MonoBehaviour
     private bool isDragging = false;
     private int clicks = 0;
 
-    private static float blockLerpRate = 0.000005f;
+    private static float blockYShiftRate = 5.0f;
+    private static float blockLerpRate = 0.000001f;
+    private static float blockSlerpRate = 0.01f;
     private float blockLerpProgress = 0.0f;
+    private float blockSlerpProgress = 0.0f;
     private Vector3 initBlockPosition;
-    private Vector3 initBlockRotation;
+    private Quaternion initBlockOrientation;
+    private Quaternion targetBlockOrientation;
     private Vector3 clickPoint;
 
     private void Awake()
     {
         dragPoint = GameObject.Find("MouseDragPoint");
+        initBlockOrientation.eulerAngles = gameObject.transform.rotation.eulerAngles;
     }
 
     private void InitializeClicks()
@@ -77,6 +81,9 @@ public class JengaBlock : MonoBehaviour
                 if (gameObject.Equals(GetInventoriedBlock()))
                 {
                     LerpToColor(inventoriedColor);
+                    MoveBlockVertically();
+                    RotateBlockAboutYAxis();
+                    SlerpToOrientation(targetBlockOrientation);
                     rigidbody.isKinematic = true;
                 }
                 else
@@ -89,7 +96,7 @@ public class JengaBlock : MonoBehaviour
     {
         clickPoint = Input.mousePosition;
         initBlockPosition = gameObject.transform.position;
-        initBlockRotation = gameObject.transform.rotation.eulerAngles;
+        targetBlockOrientation = initBlockOrientation;
 
         {
             if (isHovered &&
@@ -107,7 +114,7 @@ public class JengaBlock : MonoBehaviour
                 gameObject.Equals(GetSelectedBlock()))
             {
                 clicks++;
-                if (clicks == 2)
+                if (clicks >= clicksToInventoryBlock)
                     AddBlockToInventory(gameObject);
                 if (clicks >= int.MaxValue - 1)
                     clicks = int.MaxValue - 1;
@@ -118,7 +125,9 @@ public class JengaBlock : MonoBehaviour
 
     private void OnMouseUp()
     {
+        // player releases block
         isDragging = false;
+        RemoveInventoriedBlock();
         Debug.Log("Click up");
         Debug.Log($"Clicks provided = {clicks}");
         Cursor.visible = true;
@@ -204,6 +213,18 @@ public class JengaBlock : MonoBehaviour
         }
     }
 
+    private void SlerpToOrientation(Quaternion target)
+    {
+        {
+            if (GetInventoriedBlock().transform.rotation.eulerAngles != target.eulerAngles)
+                GetInventoriedBlock().transform.rotation = Quaternion.Slerp(
+                    GetInventoriedBlock().transform.rotation,
+                    target,
+                    blockSlerpProgress += blockSlerpRate
+                    );
+        }
+    }
+
     private void AdjustDragPoint(float dragAngle)
     {
         // declare Vector3 to store new drag point.
@@ -281,6 +302,48 @@ public class JengaBlock : MonoBehaviour
             else
                 Debug.LogWarning("Drag point is set to null. " +
                     "Unable to specify where block should be moved.");
+        }
+    }
+
+    private void MoveBlockVertically()
+    {
+        {
+            if (Input.GetKey(KeyCode.W))
+            {
+                initBlockPosition.y += blockYShiftRate;
+                Debug.Log("Moving block UP");
+                return;
+            } 
+            else if (Input.GetKeyUp(KeyCode.W))
+            {
+                initBlockPosition.y = gameObject.transform.position.y;
+                return;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                initBlockPosition.y -= blockYShiftRate;
+                Debug.Log("Moving block DOWN");
+                return;
+            } 
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                initBlockPosition.y = gameObject.transform.position.y;
+                return;
+            }
+        }
+    }
+
+    private void RotateBlockAboutYAxis()
+    {
+        {
+            if (Input.GetKey(KeyCode.A))
+            {
+                Debug.Log("Rotating block LEFT");
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                Debug.Log("Rotating block RIGHT");
+            }
         }
     }
 
