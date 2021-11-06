@@ -475,6 +475,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5359996919358459375, guid: b3eab7c930f6ca94ea304d15173f366f,
         type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359996919358459375, guid: b3eab7c930f6ca94ea304d15173f366f,
+        type: 3}
       propertyPath: m_Name
       value: CameraPivot
       objectReference: {fileID: 0}

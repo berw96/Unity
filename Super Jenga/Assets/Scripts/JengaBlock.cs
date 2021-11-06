@@ -24,7 +24,6 @@ public sealed class JengaBlock : MonoBehaviour
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] BoxCollider collider;
 
-
     private static GameObject cameraPivotReference;
     private readonly Color defaultColor = new Color(215.0f / 255.0f, 166.0f / 255.0f, 104.0f / 255.0f);
     private readonly Color hoverColor = Color.grey;
@@ -44,6 +43,7 @@ public sealed class JengaBlock : MonoBehaviour
     private static float blockSlerpRate = 0.01f;
     private float blockLerpProgress = 0.0f;
     private float blockSlerpProgress = 0.0f;
+    private static float blockYRotationRate = 2.0f;
     private Vector3 initBlockPosition;
     private Quaternion initBlockOrientation;
     private Quaternion targetBlockOrientation;
@@ -339,10 +339,20 @@ public sealed class JengaBlock : MonoBehaviour
             if (Input.GetKey(KeyCode.A))
             {
                 Debug.Log("Rotating block LEFT");
+                targetBlockOrientation = Quaternion.Euler(
+                    targetBlockOrientation.eulerAngles.x,
+                    targetBlockOrientation.eulerAngles.y - blockYRotationRate,
+                    targetBlockOrientation.eulerAngles.z
+                    );
             }
             if (Input.GetKey(KeyCode.D))
             {
                 Debug.Log("Rotating block RIGHT");
+                targetBlockOrientation = Quaternion.Euler(
+                    targetBlockOrientation.eulerAngles.x,
+                    targetBlockOrientation.eulerAngles.y + blockYRotationRate,
+                    targetBlockOrientation.eulerAngles.z
+                    );
             }
         }
     }
