@@ -1,18 +1,55 @@
-﻿using System;
+﻿#define SCENE_LOADER
+#if (UNITY_2019_3_OR_NEWER && SCENE_LOADER)
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class SceneLoader : ScriptableObject
+public class SceneLoader : MonoBehaviour
 {
     private static Scene[] scenes;
+    private readonly float maxOverlayFill = 1.0f;
+    private readonly float minOverlayFill = 0.0f;
+    private readonly float maxOverlayFillRate = 0.01f;
+    private float waitTime = 0.0f;
+    private readonly float maxWaitTime = 3.0f;
+    [SerializeField] Image sceneTransitionOverlay;
 
     private void Awake()
     {
         RegisterAllScenes();
+        sceneTransitionOverlay.fillAmount = maxOverlayFill;
+        sceneTransitionOverlay.raycastTarget = true;
+        sceneTransitionOverlay.maskable = true;
+        sceneTransitionOverlay.enabled = true;
     }
+
+    private void FixedUpdate()
+    {
+        waitTime += Time.fixedDeltaTime;
+        {
+            if(waitTime >= maxWaitTime)
+            {
+                waitTime = maxWaitTime;
+                if (sceneTransitionOverlay.fillAmount > minOverlayFill)
+                {
+                    sceneTransitionOverlay.fillAmount -= maxOverlayFillRate;
+                    return;
+                }
+                else
+                {
+                    sceneTransitionOverlay.fillAmount = minOverlayFill;
+                    sceneTransitionOverlay.raycastTarget = false;
+                    sceneTransitionOverlay.maskable = false;
+                    sceneTransitionOverlay.enabled = false;
+                }
+            }
+        }
+    }
+
     private void RegisterAllScenes()
     {
         scenes = new Scene[SceneManager.sceneCountInBuildSettings];
@@ -29,6 +66,7 @@ public class SceneLoader : ScriptableObject
             //Be sure that the scenes you want registered are opened in the hierarchy.
         }
     }
+
     public void LoadScene(int index)
     {
         try
@@ -40,8 +78,10 @@ public class SceneLoader : ScriptableObject
             Debug.LogException(e);
         }
     }
+
     public void ExitApplication()
     {
         Application.Quit();
     }
 }
+#endif

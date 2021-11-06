@@ -9,7 +9,7 @@ using static RandomNumberGeneration.RNG;
 public sealed class CameraSettings : MonoBehaviour
 {
     private readonly Color DEFAULT_BACKGROUND_COLOR = Color.black;
-    private readonly Color RED_BACKGROUND_COLOR = new Color(190.0f / 255.0f, 122.0f / 225.0f, 122.0f / 255.0f);
+    private readonly Color RED_BACKGROUND_COLOR = new Color(230.0f / 255.0f, 122.0f / 225.0f, 122.0f / 255.0f);
     private readonly Color GREEN_BACKGROUND_COLOR = new Color(122.0f / 255.0f, 190.0f / 255.0f, 122.0f / 255.0f);
     private readonly Color BLUE_BACKGROUND_COLOR = new Color(0.0f, 120.0f / 255.0f, 1.0f);
     private readonly Color YELLOW_BACKGROUND_COLOR = new Color(1.0f, 224.0f / 255.0f, 120.0f / 255.0f);

@@ -69,17 +69,14 @@ namespace CameraManagement
         private static GameObject cameraPivot;
 
         [Space(param_spacing)]
-        [Header("Rotation Rate")]
         [Range(minRotationRate, maxRotationRate)]
         public float rotationRate;
 
         [Space(param_spacing)]
-        [Header("Shift Rate")]
         [Range(minShiftRate, maxShiftRate)]
         public float shiftRate;
 
         [Space(param_spacing)]
-        [Header("Zoom Rate")]
         [Range(minZoomRate, maxZoomRate)]
         public float zoomRate;
 

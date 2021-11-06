@@ -9,7 +9,12 @@ namespace InitialObjectTransform
 {
     public sealed class InitialObjectTransformData : ScriptableObject
     {
+        public List<GameObject> gameObjects;
 
+        public List<GameObject> GetGameObjects()
+        {
+            return gameObjects;
+        }
     }
 }
 #endif

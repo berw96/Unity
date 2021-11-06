@@ -43,7 +43,6 @@ public class JengaBlock : MonoBehaviour
     private Vector3 initBlockRotation;
     private Vector3 clickPoint;
 
-    // Start is called before the first frame update
     private void Awake()
     {
         dragPoint = GameObject.Find("MouseDragPoint");
