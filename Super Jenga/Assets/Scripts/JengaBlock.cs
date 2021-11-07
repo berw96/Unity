@@ -96,7 +96,11 @@ public sealed class JengaBlock : MonoBehaviour
     {
         clickPoint = Input.mousePosition;
         initBlockPosition = gameObject.transform.position;
-        targetBlockOrientation = initBlockOrientation;
+        targetBlockOrientation = Quaternion.Euler(
+            initBlockOrientation.x,
+            gameObject.transform.rotation.eulerAngles.y,
+            initBlockOrientation.z
+            ); ;
 
         {
             if (isHovered &&

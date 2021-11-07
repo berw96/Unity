@@ -255,6 +255,11 @@ PrefabInstance:
       objectReference: {fileID: 568093917}
     - target: {fileID: 1934847852478969737, guid: f60ec0005d7b2fb4dad3e967bcbee85d,
         type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934847852478969737, guid: f60ec0005d7b2fb4dad3e967bcbee85d,
+        type: 3}
       propertyPath: toggleTransition
       value: 0
       objectReference: {fileID: 0}
@@ -540,7 +545,7 @@ PrefabInstance:
     - target: {fileID: 5359996919278547779, guid: b3eab7c930f6ca94ea304d15173f366f,
         type: 3}
       propertyPath: orthographic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5359996919278547779, guid: b3eab7c930f6ca94ea304d15173f366f,
         type: 3}

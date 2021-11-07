@@ -93,6 +93,7 @@ namespace CameraManagement
         [SerializeField] AudioClip moveSFX;
         [SerializeField] AudioClip zoomInSFX;
         [SerializeField] AudioClip zoomOutSFX;
+        bool isPlaying = false;
 
         private void Start()
         {
@@ -355,7 +356,7 @@ namespace CameraManagement
                         }
                         else
                         {
-                            AudioSource.PlayClipAtPoint(moveSFX, Camera.main.transform.position);
+                            StartCoroutine(PlaySound(moveSFX, Camera.main.transform.position, 1.0f));
                             if (obj.name.Contains("Left"))
                             {
                                 rotationDirection = DIRECTION.LEFT;
@@ -380,8 +381,7 @@ namespace CameraManagement
                         }
                         else
                         {
-                            AudioSource.PlayClipAtPoint(moveSFX, Camera.main.transform.position);
-
+                            StartCoroutine(PlaySound(moveSFX, Camera.main.transform.position, 1.0f));
                             if (obj.name.Contains("Up"))
                             {
                                 shiftDirection = DIRECTION.UP;
@@ -408,15 +408,15 @@ namespace CameraManagement
                         {
                             if (obj.name.Contains("In"))
                             {
+                                StartCoroutine(PlaySound(zoomInSFX, Camera.main.transform.position, 0.5f));
                                 zoomDirection = DIRECTION.ZOOMIN;
                                 Debug.Log("Zooming IN");
-                                AudioSource.PlayClipAtPoint(zoomInSFX, Camera.main.transform.position, 0.5f);
                             }
                             if (obj.name.Contains("Out"))
                             {
+                                StartCoroutine(PlaySound(zoomOutSFX, Camera.main.transform.position, 0.5f));
                                 zoomDirection = DIRECTION.ZOOMOUT;
                                 Debug.Log("Zooming OUT");
-                                AudioSource.PlayClipAtPoint(zoomOutSFX, Camera.main.transform.position, 0.5f);
                             }
                             SetResZoom(zoomDirection);
                         }
@@ -530,6 +530,18 @@ namespace CameraManagement
                 Camera.main.orthographic = true;
                 return;
             }
+        }
+
+        private IEnumerator PlaySound(AudioClip clip, Vector3 point, float volume)
+        {
+            if (!isPlaying)
+            {
+                isPlaying = true;
+                AudioSource.PlayClipAtPoint(clip, point, volume);
+            }
+            
+            yield return new WaitForSeconds(clip.length);
+            isPlaying = false;
         }
     }
 }
