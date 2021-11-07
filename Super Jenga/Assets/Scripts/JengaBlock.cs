@@ -115,7 +115,10 @@ public sealed class JengaBlock : MonoBehaviour
             {
                 clicks++;
                 if (clicks >= clicksToInventoryBlock)
+                {
                     AddBlockToInventory(gameObject);
+                    AudioSource.PlayClipAtPoint(inventoriedSFX, Camera.main.transform.position);
+                }
                 if (clicks >= int.MaxValue - 1)
                     clicks = int.MaxValue - 1;
                 return;
@@ -359,6 +362,8 @@ public sealed class JengaBlock : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (rigidbody.velocity.magnitude >= 0.0f)
+            AudioSource.PlayClipAtPoint(collisionSFX, gameObject.transform.position);
         Debug.Log("Block collider ENTER");
     }
 

@@ -13,7 +13,7 @@ public class SceneLoader : MonoBehaviour
     private static Scene[] scenes;
     public readonly float maxOverlayFill = 1.0f;
     public readonly float minOverlayFill = 0.0f;
-    public readonly float maxOverlayFillRate = 0.05f;
+    public readonly float maxOverlayFillRate = 0.025f;
     private float waitTime = 0.0f;
     public readonly float maxWaitTime = 1.0f;
     [SerializeField] Image sceneTransitionOverlay;

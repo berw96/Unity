@@ -22,6 +22,12 @@ namespace CameraManagement
             ZOOMOUT
         }
 
+        private enum PROJECTION
+        {
+            ORTHOGRAPHIC,
+            PERSPECTIVE
+        }
+
         private const float minRotationRate = 0.001f;
         private const float maxRotationRate = 0.100f;
         private const int numberOfRotationLevels = 4;
@@ -38,7 +44,7 @@ namespace CameraManagement
         private float rotationProgress;
         private DIRECTION rotationDirection;
 
-        private const float minShiftRate = 0.5f;
+        private const float minShiftRate = 0.1f;
         private const float maxShiftRate = 2.0f;
         private const int numberOfShiftLevels = 3;
         private const float shiftLevel_3_Height = 18.0f;
@@ -52,33 +58,41 @@ namespace CameraManagement
         private int shiftIterator = 0;
         private DIRECTION shiftDirection;
 
-        private const float minZoomRate = 0.2f;
-        private const float maxZoomRate = 0.5f;
+        private const float minOrthographicZoomRate = 0.1f;
+        private const float maxOrthographicZoomRate = 0.5f;
+        private const float minPerspectiveZoomRate = 0.1f;
+        private const float maxPerspectiveZoomRate = 2.0f;
         private const int numberOfZoomLevels = 2;
-        private const int zoomLevel_2 = 16;
-        private const int zoomLevel_1 = 8;
-        private float resZoom;
+        private const int orthographicZoomLevel_2 = 16;
+        private const int orthographicZoomLevel_1 = 8;
+        private const int perspectiveZoomLevel_2 = 60;
+        private const int perspectiveZoomLevel_1 = 100;
+        private float resOrthographicZoom;
+        private float resPerspectiveZoom;
         private DIRECTION zoomDirection;
 
         private List<Quaternion> rotationPresets;
         private List<Vector3> shiftPresets;
-        private List<int> zoomPresets;
+        private List<int> orthographicZoomPresets;
+        private List<int> perspectiveZoomPresets;
 
-        [Header("Camera Pivot")]
-        //[SerializeField] GameObject cameraPivot;
         private static GameObject cameraPivot;
 
-        [Space(param_spacing)]
+        [Header("Movement Settings")]
         [Range(minRotationRate, maxRotationRate)]
         public float rotationRate;
-
-        [Space(param_spacing)]
         [Range(minShiftRate, maxShiftRate)]
         public float shiftRate;
+        [Range(minOrthographicZoomRate, maxOrthographicZoomRate)]
+        public float orthographicZoomRate;
+        [Range(minPerspectiveZoomRate, maxPerspectiveZoomRate)]
+        public float perspectiveZoomRate;
 
         [Space(param_spacing)]
-        [Range(minZoomRate, maxZoomRate)]
-        public float zoomRate;
+        [Header("SFX")]
+        [SerializeField] AudioClip moveSFX;
+        [SerializeField] AudioClip zoomInSFX;
+        [SerializeField] AudioClip zoomOutSFX;
 
         private void Start()
         {
@@ -93,6 +107,8 @@ namespace CameraManagement
 
             SetInitOrientation();
             SetInitPosition();
+
+            ToggleOrthographicProjection();
 
             Debug.Log($"Init camera orientation = {cameraPivot.transform.rotation.eulerAngles}");
             Debug.Log($"Init camera position = {cameraPivot.transform.position}");
@@ -116,32 +132,63 @@ namespace CameraManagement
         private void AdjustCameraZoom()
         {
             {
-                if (Camera.main.orthographicSize != resZoom)
-                    switch (zoomDirection)
+                if(Camera.main.orthographic)
+                    if (Camera.main.orthographicSize != resOrthographicZoom)
+                        switch (zoomDirection)
+                        {
+                            case DIRECTION.ZOOMIN:
+                                {
+                                    if (Camera.main.orthographicSize > resOrthographicZoom)
+                                        Camera.main.orthographicSize -= orthographicZoomRate;
+                                    else
+                                        Camera.main.orthographicSize = resOrthographicZoom;
+                                }
+                                break;
+                            case DIRECTION.ZOOMOUT:
+                                {
+                                    if (Camera.main.orthographicSize < resOrthographicZoom)
+                                        Camera.main.orthographicSize += orthographicZoomRate;
+                                    else
+                                        Camera.main.orthographicSize = resOrthographicZoom;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    else
                     {
-                        case DIRECTION.ZOOMIN:
-                            {
-                                if (Camera.main.orthographicSize > resZoom)
-                                    Camera.main.orthographicSize -= zoomRate;
-                                else
-                                    Camera.main.orthographicSize = resZoom;
-                            }
-                            break;
-                        case DIRECTION.ZOOMOUT:
-                            {
-                                if (Camera.main.orthographicSize < resZoom)
-                                    Camera.main.orthographicSize += zoomRate;
-                                else
-                                    Camera.main.orthographicSize = resZoom;
-                            }
-                            break;
-                        default:
-                            break;
+                        StopZooming();
+                        Debug.Log($"New camera zoom = {Camera.main.orthographicSize}");
                     }
                 else
                 {
-                    StopZooming();
-                    Debug.Log($"New camera zoom = {Camera.main.orthographicSize}");
+                    if (Camera.main.fieldOfView != resPerspectiveZoom)
+                        switch (zoomDirection)
+                        {
+                            case DIRECTION.ZOOMIN:
+                                {
+                                    if (Camera.main.fieldOfView > resPerspectiveZoom)
+                                        Camera.main.fieldOfView -= perspectiveZoomRate;
+                                    else
+                                        Camera.main.fieldOfView = resPerspectiveZoom;
+                                }
+                                break;
+                            case DIRECTION.ZOOMOUT:
+                                {
+                                    if (Camera.main.fieldOfView < resPerspectiveZoom)
+                                        Camera.main.fieldOfView += perspectiveZoomRate;
+                                    else
+                                        Camera.main.fieldOfView = resPerspectiveZoom;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    else
+                    {
+                        StopZooming();
+                        Debug.Log($"New camera FOV = {Camera.main.fieldOfView}");
+                    }
                 }
             }
         }
@@ -270,15 +317,17 @@ namespace CameraManagement
             switch (d)
             {
                 case DIRECTION.ZOOMIN:
-                    resZoom = zoomPresets[0];
+                    resOrthographicZoom = orthographicZoomPresets[0];
+                    resPerspectiveZoom = perspectiveZoomPresets[0];
                     break;
                 case DIRECTION.ZOOMOUT:
-                    resZoom = zoomPresets[1];
+                    resOrthographicZoom = orthographicZoomPresets[1];
+                    resPerspectiveZoom = perspectiveZoomPresets[1];
                     break;
                 default:
                     break;
             }
-            Debug.Log($"Should now {d.ToString()} to {resZoom}");
+            Debug.Log($"Should now {d.ToString()} to {resOrthographicZoom}");
         }
 
         private void SetRotationProgress() { rotationProgress = 0.0f; }
@@ -306,6 +355,7 @@ namespace CameraManagement
                         }
                         else
                         {
+                            AudioSource.PlayClipAtPoint(moveSFX, Camera.main.transform.position);
                             if (obj.name.Contains("Left"))
                             {
                                 rotationDirection = DIRECTION.LEFT;
@@ -330,6 +380,8 @@ namespace CameraManagement
                         }
                         else
                         {
+                            AudioSource.PlayClipAtPoint(moveSFX, Camera.main.transform.position);
+
                             if (obj.name.Contains("Up"))
                             {
                                 shiftDirection = DIRECTION.UP;
@@ -358,11 +410,13 @@ namespace CameraManagement
                             {
                                 zoomDirection = DIRECTION.ZOOMIN;
                                 Debug.Log("Zooming IN");
+                                AudioSource.PlayClipAtPoint(zoomInSFX, Camera.main.transform.position, 0.5f);
                             }
                             if (obj.name.Contains("Out"))
                             {
                                 zoomDirection = DIRECTION.ZOOMOUT;
                                 Debug.Log("Zooming OUT");
+                                AudioSource.PlayClipAtPoint(zoomOutSFX, Camera.main.transform.position, 0.5f);
                             }
                             SetResZoom(zoomDirection);
                         }
@@ -434,9 +488,13 @@ namespace CameraManagement
         {
             Debug.Log("Setting Zoom presets...");
 
-            zoomPresets = new List<int>(numberOfZoomLevels);
-            zoomPresets.Add(zoomLevel_1);
-            zoomPresets.Add(zoomLevel_2);
+            orthographicZoomPresets = new List<int>(numberOfZoomLevels);
+            orthographicZoomPresets.Add(orthographicZoomLevel_1);
+            orthographicZoomPresets.Add(orthographicZoomLevel_2);
+            
+            perspectiveZoomPresets = new List<int>(numberOfZoomLevels);
+            perspectiveZoomPresets.Add(perspectiveZoomLevel_2);
+            perspectiveZoomPresets.Add(perspectiveZoomLevel_1);
         }
 
         private void StopRotating()
@@ -458,6 +516,20 @@ namespace CameraManagement
         public static GameObject GetCameraPivot()
         {
             return cameraPivot;
+        }
+
+        public void ToggleOrthographicProjection()
+        {
+            if (Camera.main.orthographic)
+            {
+                Camera.main.orthographic = false;
+                return;
+            }
+            if (!Camera.main.orthographic)
+            {
+                Camera.main.orthographic = true;
+                return;
+            }
         }
     }
 }

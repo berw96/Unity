@@ -152,10 +152,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.0001
+  near clip plane: 0.01
   far clip plane: 120
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 16
   m_Depth: -1
   m_CullingMask:
@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ddec0626a767d48b2ce4580770675a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jengaMat: {fileID: 0}
 --- !u!114 &5359996919278547782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,3 +352,6 @@ MonoBehaviour:
   rotationRate: 0.0525
   shiftRate: 2
   zoomRate: 0.5
+  moveSFX: {fileID: 0}
+  zoomInSFX: {fileID: 0}
+  zoomOutSFX: {fileID: 0}

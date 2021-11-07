@@ -142,9 +142,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240d98be59e94784696b5ce0e8c411ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedSFX: {fileID: 8300000, guid: 256790fdff93b0844acc674f6381348d, type: 3}
-  inventoriedSFX: {fileID: 0}
-  collisionSFX: {fileID: 0}
+  selectedSFX: {fileID: 8300000, guid: f765da094df01a448a58c287c254d529, type: 3}
+  inventoriedSFX: {fileID: 8300000, guid: 0e8a8e442001e694bb2f2a5291f5aa8c, type: 3}
+  collisionSFX: {fileID: 8300000, guid: 0e8a8e442001e694bb2f2a5291f5aa8c, type: 3}
   renderer: {fileID: 4362205985130844690}
   rigidbody: {fileID: 4362205985130844703}
   collider: {fileID: 4362205985130844701}
@@ -273,9 +273,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240d98be59e94784696b5ce0e8c411ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedSFX: {fileID: 8300000, guid: 256790fdff93b0844acc674f6381348d, type: 3}
-  inventoriedSFX: {fileID: 0}
-  collisionSFX: {fileID: 0}
+  selectedSFX: {fileID: 8300000, guid: f765da094df01a448a58c287c254d529, type: 3}
+  inventoriedSFX: {fileID: 8300000, guid: 0e8a8e442001e694bb2f2a5291f5aa8c, type: 3}
+  collisionSFX: {fileID: 8300000, guid: 0e8a8e442001e694bb2f2a5291f5aa8c, type: 3}
   renderer: {fileID: 4362205985314054742}
   rigidbody: {fileID: 4362205985314054698}
   collider: {fileID: 4362205985314054737}
@@ -404,9 +404,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 240d98be59e94784696b5ce0e8c411ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedSFX: {fileID: 8300000, guid: 256790fdff93b0844acc674f6381348d, type: 3}
-  inventoriedSFX: {fileID: 0}
-  collisionSFX: {fileID: 0}
+  selectedSFX: {fileID: 8300000, guid: f765da094df01a448a58c287c254d529, type: 3}
+  inventoriedSFX: {fileID: 8300000, guid: 0e8a8e442001e694bb2f2a5291f5aa8c, type: 3}
+  collisionSFX: {fileID: 8300000, guid: 0e8a8e442001e694bb2f2a5291f5aa8c, type: 3}
   renderer: {fileID: 4362205985685780736}
   rigidbody: {fileID: 4362205985685780749}
   collider: {fileID: 4362205985685780739}
