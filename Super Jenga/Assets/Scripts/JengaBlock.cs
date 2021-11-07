@@ -15,6 +15,7 @@ public sealed class JengaBlock : MonoBehaviour
     [SerializeField] AudioClip selectedSFX;
     [SerializeField] AudioClip inventoriedSFX;
     [SerializeField] AudioClip collisionSFX;
+    private const float collisionSoundTriggeringVelocityMagnitude = 5.0f;
 
     [Header("GFX")]
     [SerializeField] Renderer renderer;
@@ -366,7 +367,8 @@ public sealed class JengaBlock : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (rigidbody.velocity.magnitude >= 0.0f)
+        if (rigidbody.velocity.magnitude >= collisionSoundTriggeringVelocityMagnitude &&
+            collisionSFX.loadState == AudioDataLoadState.Loaded)
             AudioSource.PlayClipAtPoint(collisionSFX, gameObject.transform.position);
         Debug.Log("Block collider ENTER");
     }

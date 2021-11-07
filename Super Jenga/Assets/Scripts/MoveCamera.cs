@@ -534,7 +534,7 @@ namespace CameraManagement
 
         private IEnumerator PlaySound(AudioClip clip, Vector3 point, float volume)
         {
-            if (!isPlaying)
+            if (!isPlaying && clip.loadState == AudioDataLoadState.Loaded)
             {
                 isPlaying = true;
                 AudioSource.PlayClipAtPoint(clip, point, volume);
