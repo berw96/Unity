@@ -10,17 +10,31 @@ using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
+    private enum SCENE_TRANSITION_MODE
+    {
+        LOADING,
+        RESET,
+        QUIT,
+        NEXT_SCENE,
+        PREV_SCENE
+    }
+
     private static Scene[] scenes;
     public readonly float maxOverlayFill = 1.0f;
     public readonly float minOverlayFill = 0.0f;
     public readonly float maxOverlayFillRate = 0.025f;
-    private float waitTime = 0.0f;
+    private float waitTime;
     public readonly float maxWaitTime = 1.0f;
     [SerializeField] Image sceneTransitionOverlay;
+    private SCENE_TRANSITION_MODE mode;
+    private int targetSceneIndex;
 
     private void Awake()
     {
+        mode = SCENE_TRANSITION_MODE.LOADING;
         RegisterAllScenes();
+        targetSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        waitTime = 0.0f;
         sceneTransitionOverlay.fillAmount = maxOverlayFill;
         sceneTransitionOverlay.raycastTarget = true;
         sceneTransitionOverlay.maskable = true;
@@ -30,23 +44,65 @@ public class SceneLoader : MonoBehaviour
     private void FixedUpdate()
     {
         waitTime += Time.fixedDeltaTime;
+
+        switch (mode)
         {
-            if(waitTime >= maxWaitTime)
-            {
-                waitTime = maxWaitTime;
-                if (sceneTransitionOverlay.fillAmount > minOverlayFill)
+            case SCENE_TRANSITION_MODE.LOADING:
+                if (waitTime >= maxWaitTime)
                 {
-                    sceneTransitionOverlay.fillAmount -= maxOverlayFillRate;
-                    return;
+                    waitTime = maxWaitTime;
+                    if (sceneTransitionOverlay.fillAmount > minOverlayFill)
+                    {
+                        sceneTransitionOverlay.fillAmount -= maxOverlayFillRate;
+                        return;
+                    }
+                    else
+                    {
+                        sceneTransitionOverlay.fillAmount = minOverlayFill;
+                        sceneTransitionOverlay.raycastTarget = false;
+                        sceneTransitionOverlay.maskable = false;
+                        sceneTransitionOverlay.enabled = false;
+                        return;
+                    }
                 }
-                else
+                break;
+            default:
+                switch (mode)
                 {
-                    sceneTransitionOverlay.fillAmount = minOverlayFill;
-                    sceneTransitionOverlay.raycastTarget = false;
-                    sceneTransitionOverlay.maskable = false;
-                    sceneTransitionOverlay.enabled = false;
+                    case SCENE_TRANSITION_MODE.RESET:
+                        targetSceneIndex = SceneManager.GetActiveScene().buildIndex;
+                        break;
+                    case SCENE_TRANSITION_MODE.QUIT:
+                        ExitApplication();
+                        break;
+                    case SCENE_TRANSITION_MODE.NEXT_SCENE:
+                        targetSceneIndex++;
+                        break;
+                    case SCENE_TRANSITION_MODE.PREV_SCENE:
+                        targetSceneIndex--;
+                        break;
                 }
-            }
+
+                sceneTransitionOverlay.raycastTarget = true;
+                sceneTransitionOverlay.maskable = true;
+                sceneTransitionOverlay.enabled = true;
+
+                if (waitTime >= maxWaitTime)
+                {
+                    waitTime = maxWaitTime;
+                    if (sceneTransitionOverlay.fillAmount < maxOverlayFill)
+                    {
+                        sceneTransitionOverlay.fillAmount += maxOverlayFillRate;
+                        return;
+                    }
+                    else
+                    {
+                        sceneTransitionOverlay.fillAmount = maxOverlayFill;
+                        LoadScene(targetSceneIndex);
+                        return;
+                    }
+                }
+                break;
         }
     }
 
@@ -76,6 +132,27 @@ public class SceneLoader : MonoBehaviour
         catch (IndexOutOfRangeException e)
         {
             Debug.LogException(e);
+        }
+    }
+
+    public void SetSceneTransitionMode(GameObject obj)
+    {
+        waitTime = 0.0f;
+
+        switch (obj.name)
+        {
+            case "Reset":
+                mode = SCENE_TRANSITION_MODE.RESET;
+                break;
+            case "Quit":
+                mode = SCENE_TRANSITION_MODE.QUIT;
+                break;
+            case "Continue":
+                mode = SCENE_TRANSITION_MODE.NEXT_SCENE;
+                break;
+            case "Back":
+                mode = SCENE_TRANSITION_MODE.PREV_SCENE;
+                break;
         }
     }
 

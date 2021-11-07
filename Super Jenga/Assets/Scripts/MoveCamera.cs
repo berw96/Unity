@@ -408,13 +408,13 @@ namespace CameraManagement
                         {
                             if (obj.name.Contains("In"))
                             {
-                                StartCoroutine(PlaySound(zoomInSFX, Camera.main.transform.position, 0.5f));
+                                StartCoroutine(PlaySound(zoomInSFX, Camera.main.transform.position, 0.25f));
                                 zoomDirection = DIRECTION.ZOOMIN;
                                 Debug.Log("Zooming IN");
                             }
                             if (obj.name.Contains("Out"))
                             {
-                                StartCoroutine(PlaySound(zoomOutSFX, Camera.main.transform.position, 0.5f));
+                                StartCoroutine(PlaySound(zoomOutSFX, Camera.main.transform.position, 0.25f));
                                 zoomDirection = DIRECTION.ZOOMOUT;
                                 Debug.Log("Zooming OUT");
                             }

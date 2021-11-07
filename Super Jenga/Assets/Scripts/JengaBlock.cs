@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 using static BlockManagement.SelectedBlock;
 using static BlockManagement.InventoriedBlock;
 using static CameraManagement.MoveCamera;
@@ -19,6 +20,7 @@ public sealed class JengaBlock : MonoBehaviour
 
     [Header("GFX")]
     [SerializeField] Renderer renderer;
+    private GameObject WASDOverlay;
     private static float colorLerpRate = 0.03f;
 
     [Header("Physics")]
@@ -88,7 +90,9 @@ public sealed class JengaBlock : MonoBehaviour
                     rigidbody.isKinematic = true;
                 }
                 else
+                {
                     rigidbody.isKinematic = false;
+                }
             }
         }
     }
@@ -101,7 +105,7 @@ public sealed class JengaBlock : MonoBehaviour
             initBlockOrientation.x,
             gameObject.transform.rotation.eulerAngles.y,
             initBlockOrientation.z
-            ); ;
+            );
 
         {
             if (isHovered &&
@@ -135,7 +139,10 @@ public sealed class JengaBlock : MonoBehaviour
     {
         // player releases block
         isDragging = false;
+        if(gameObject.Equals(GetInventoriedBlock()))
+            WASDOverlay.GetComponent<Image>().enabled = false;
         RemoveInventoriedBlock();
+        WASDOverlay = null;
         Debug.Log("Click up");
         Debug.Log($"Clicks provided = {clicks}");
         Cursor.visible = true;
@@ -160,6 +167,9 @@ public sealed class JengaBlock : MonoBehaviour
             isDragging = true;
             cameraPivotReference = GetCameraPivot();
             float dragAngle = cameraPivotReference.transform.rotation.eulerAngles.y;
+
+            WASDOverlay = GameObject.Find("WASDOverlay");
+            WASDOverlay.GetComponent<Image>().enabled = true;
 
             Debug.Log($"Dragging at {dragAngle} degrees");
             Cursor.visible = false;
@@ -369,7 +379,8 @@ public sealed class JengaBlock : MonoBehaviour
     {
         if (rigidbody.velocity.magnitude >= collisionSoundTriggeringVelocityMagnitude &&
             collisionSFX.loadState == AudioDataLoadState.Loaded)
-            AudioSource.PlayClipAtPoint(collisionSFX, gameObject.transform.position);
+            AudioSource.PlayClipAtPoint(collisionSFX, gameObject.transform.position, 1.0f);
+        
         Debug.Log("Block collider ENTER");
     }
 
