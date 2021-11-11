@@ -14,7 +14,8 @@ namespace Effects
             NO_EFFECT,
             RESTRICT_TO_BOTTOM,
             DISABLE_CAMERA_ROTATION,
-            REDUCE_LIGHTING
+            REDUCE_LIGHTING,
+            RANDOM_BLOCK_MASS
         }
     }
 }

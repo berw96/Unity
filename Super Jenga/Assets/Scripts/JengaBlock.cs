@@ -380,7 +380,7 @@ public sealed class JengaBlock : MonoBehaviour
         if (rigidbody.velocity.magnitude >= collisionSoundTriggeringVelocityMagnitude &&
             collisionSFX.loadState == AudioDataLoadState.Loaded)
             AudioSource.PlayClipAtPoint(collisionSFX, gameObject.transform.position, 1.0f);
-        
+
         Debug.Log("Block collider ENTER");
     }
 
