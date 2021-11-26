@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Contains class definitions for common Lindenmeyer systems (L-Systems)
@@ -19,16 +20,17 @@ namespace Lindenmeyer {
         protected MODE mode;
 
         /*
-         * Take a list of characters (symbols),
+         * Take a string of characters (symbols),
          * mutate them based on a specified ruleset, 
-         * and assign the results to the system's current_state member.
+         * and concactenate the results to the system's
+         * current_state member.
          */
-        public delegate void RuleSet(List<char> symbols);
+        public delegate void RuleSet(string symbols);
         private RuleSet rule_set;
 
-        protected List<char> variables;
-        protected List<char> constants;
-        protected List<char> axiom;
+        protected string variables;
+        protected string constants;
+        protected string axiom;
         protected string current_state;
 
         public MODE Mode {
@@ -41,17 +43,17 @@ namespace Lindenmeyer {
             set { this.rule_set = value; }
         }
 
-        public List<char> Variables {
+        public string Variables {
             get { return this.variables; }
             set { this.variables = value; }
         }
 
-        public List<char> Constants {
+        public string Constants {
             get { return this.constants; }
             set { this.constants = value; }
         }
 
-        public List<char> Axiom {
+        public string Axiom {
             get { return this.axiom; }
             set { this.axiom = value; }
         }
@@ -63,39 +65,39 @@ namespace Lindenmeyer {
 
         // default constructor for subclasses and custom L-Systems
         public LindenmeyerSystem() {
-            variables = new List<char>();
-            constants = new List<char>();
-            axiom = new List<char>();
+            variables = "";
+            constants = "";
+            axiom = "";
         }
 
         #region CUSTOM_LSYSTEM_CONSTRUCTORS
-        public LindenmeyerSystem(List<char> variables) {
+        public LindenmeyerSystem(string variables) {
             this.variables = variables;
-            constants = new List<char>();
-            axiom = new List<char>();
+            constants = "";
+            axiom = "";
         }
         
         public LindenmeyerSystem(
-            List<char> variables,
-            List<char> constants) {
+            string variables,
+            string constants) {
             this.variables = variables;
             this.constants = constants;
-            axiom = new List<char>();
+            axiom = "";
         }
         
         public LindenmeyerSystem(
-            List<char> variables, 
-            List<char> constants,
-            List<char> axiom) {
+            string variables, 
+            string constants,
+            string axiom) {
             this.variables = variables;
             this.constants = constants;
             this.axiom = axiom;
         }
 
         public LindenmeyerSystem(
-            List<char> variables,
-            List<char> constants,
-            List<char> axiom,
+            string variables,
+            string constants,
+            string axiom,
             MODE mode) {
             this.variables = variables;
             this.constants = constants;
@@ -104,9 +106,9 @@ namespace Lindenmeyer {
         }
 
         public LindenmeyerSystem(
-            List<char> variables,
-            List<char> constants,
-            List<char> axiom,
+            string variables,
+            string constants,
+            string axiom,
             MODE mode,
             RuleSet rule_set) {
             this.variables = variables;
@@ -117,45 +119,66 @@ namespace Lindenmeyer {
         }
         #endregion
 
-        public virtual void ApplyRules(List<char> symbols) { Rule_set.Invoke(symbols); }
+        /// <summary>
+        /// Takes a defined list of characters and applies
+        /// a predefined set of mutations on each character
+        /// constituting the grammar.
+        /// </summary>
+        /// <param name="symbols"></param>
+        public virtual void ApplyRules(string symbols) {
+            // If the system has no axiom set, assign the value of the provided symbol(s).
+            if (string.IsNullOrEmpty(this.axiom))
+                this.axiom = symbols;
+
+            // If the system's current state is null, initialize it before applying ruleset.
+            if (string.IsNullOrEmpty(this.current_state))
+                this.current_state = this.axiom;
+
+            // Invokes method assigned to the rule_set delegate.
+            Rule_set.Invoke(symbols); 
+        }
     }
 
     #region PRESETS
     public sealed class SierpinskiTriangle : LindenmeyerSystem {
-        private readonly List<char> sierpinski_triangle_variables = new List<char>() { 'A', 'B' };
-        private readonly List<char> sierpinski_triangle_constants = new List<char>() { '+', '-' };
+        private readonly string sierpinski_triangle_variables = "AB";
+        private readonly string sierpinski_triangle_constants = "+-";
 
-        public SierpinskiTriangle(char axiom) : base() {
+        public SierpinskiTriangle(string axiom) : base() {
             this.variables = sierpinski_triangle_variables;
             this.constants = sierpinski_triangle_constants;
-            this.axiom.Add(axiom);
-            this.current_state = this.axiom.ToString();
+            this.axiom = axiom;
+            this.current_state = this.axiom;
         }
 
-        public override void ApplyRules(List<char> symbols) {
-            foreach (char symbol in symbols) {
-                if(this.variables.Contains(symbol) &&
-                    this.constants.Contains(symbol)) {
-                    return;
-                } else {
-                    switch (symbol) {
-                        case 'A':
-                            this.current_state.Replace(symbol.ToString(), "B-A-B");
-                            break;
-                        case 'B':
-                            this.current_state.Replace(symbol.ToString(), "A+B+A");
-                            break;
-                        default:
-                            break;
-                    }
+        public override void ApplyRules(string symbols) {
+            string new_state = "";
+            for (int i = 0; i < symbols.Length; i++) {
+                string symbol = symbols[i].ToString();
+                switch (symbol) {
+                    case "A":
+                        new_state += "B-A-B";
+                        break;
+                    case "B":
+                        new_state += "A+B+A";
+                        break;
+                    case "+":
+                        new_state += "+";
+                        break;
+                    case "-":
+                        new_state += "-";
+                        break;
+                    default:
+                        break;
                 }
             }
+            this.current_state = new_state;
         }
     }
 
     public class KochCurve : LindenmeyerSystem {
-        private readonly List<char> KochCurveVariables = new List<char>() { 'F' };
-        private readonly List<char> KochCurveConstants = new List<char>() { '+', '-' };
+        private readonly string KochCurveVariables = "F";
+        private readonly string KochCurveConstants = "+-";
 
         public KochCurve() {
             this.variables = KochCurveVariables;
@@ -169,8 +192,8 @@ namespace Lindenmeyer {
     }
 
     public sealed class SimplePlant : LindenmeyerSystem {
-        private readonly List<char> SimplePlantVariables = new List<char>() { 'A', 'F' };
-        private readonly List<char> SimplePlantConstants = new List<char>() { '+', '-', '[', ']' };
+        private readonly string SimplePlantVariables = "AF";
+        private readonly string SimplePlantConstants = "+-[]";
 
         public SimplePlant() {
             this.variables = SimplePlantVariables;
@@ -179,8 +202,8 @@ namespace Lindenmeyer {
     }
 
     public sealed class DragonCurve : LindenmeyerSystem {
-        private readonly List<char> DragonCurveVariables = new List<char>() { 'A', 'B' };
-        private readonly List<char> DragonCurveConstants = new List<char>() { 'F', '+', '-' };
+        private readonly string DragonCurveVariables = "AB";
+        private readonly string DragonCurveConstants = "F+-";
 
         public DragonCurve() {
             this.variables = DragonCurveVariables;
