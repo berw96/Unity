@@ -1,5 +1,10 @@
+#define LINDENMEYER
+#if (UNITY_2019_3_OR_NEWER && LINDENMEYER)
+
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.IO;
 using UnityEngine;
 
 /// <summary>
@@ -20,18 +25,26 @@ namespace Lindenmeyer {
         protected MODE mode;
 
         /*
-         * Take a string of characters (symbols),
-         * mutate them based on a specified ruleset, 
-         * and concactenate the results to the system's
-         * current_state member.
+         * Mutate the system's current state using a provided
+         * rule set and concactenate the results to a new string.
          */
-        public delegate void RuleSet(string symbols);
+        public delegate void RuleSet(int iterations);
         private RuleSet rule_set;
 
         protected string variables;
         protected string constants;
         protected string axiom;
         protected string current_state;
+
+        /*
+         * List for containing the results produced by an L-System
+         * at each iteration where its rule set is applied.
+         * 
+         * This list is later queried by the interpretor which maps
+         * each result to corresponding instructions used for invoking
+         * responses (e.g., Turtle Graphics).
+         */
+        protected List<string> results = new List<string>();
 
         public MODE Mode {
             get { return this.mode; }
@@ -61,6 +74,11 @@ namespace Lindenmeyer {
         public string Current_state {
             get { return this.current_state; }
             set { this.current_state = value; }
+        }
+
+        public List<string> Results {
+            get { return this.results; }
+            set { this.results = value; }
         }
 
         // default constructor for subclasses and custom L-Systems
@@ -120,22 +138,17 @@ namespace Lindenmeyer {
         #endregion
 
         /// <summary>
-        /// Takes a defined list of characters and applies
+        /// Takes the system's current state and applies
         /// a predefined set of mutations on each character
         /// constituting the grammar.
         /// </summary>
-        /// <param name="symbols"></param>
-        public virtual void ApplyRules(string symbols) {
-            // If the system has no axiom set, assign the value of the provided symbol(s).
-            if (string.IsNullOrEmpty(this.axiom))
-                this.axiom = symbols;
-
+        public virtual void ApplyRules(int iterations) {
             // If the system's current state is null, initialize it before applying ruleset.
             if (string.IsNullOrEmpty(this.current_state))
                 this.current_state = this.axiom;
 
             // Invokes method assigned to the rule_set delegate.
-            Rule_set.Invoke(symbols); 
+            Rule_set.Invoke(iterations); 
         }
     }
 
@@ -149,30 +162,34 @@ namespace Lindenmeyer {
             this.constants = sierpinski_triangle_constants;
             this.axiom = axiom;
             this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
         }
 
-        public override void ApplyRules(string symbols) {
-            string new_state = "";
-            for (int i = 0; i < symbols.Length; i++) {
-                string symbol = symbols[i].ToString();
-                switch (symbol) {
-                    case "A":
-                        new_state += "B-A-B";
-                        break;
-                    case "B":
-                        new_state += "A+B+A";
-                        break;
-                    case "+":
-                        new_state += "+";
-                        break;
-                    case "-":
-                        new_state += "-";
-                        break;
-                    default:
-                        break;
+        public override void ApplyRules(int iterations) {
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (symbol) {
+                        case "A":
+                            new_state += "B-A-B";
+                            break;
+                        case "B":
+                            new_state += "A+B+A";
+                            break;
+                        case "+":
+                            new_state += "+";
+                            break;
+                        case "-":
+                            new_state += "-";
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
             }
-            this.current_state = new_state;
         }
     }
 
@@ -183,21 +200,112 @@ namespace Lindenmeyer {
         public KochCurve() {
             this.variables = KochCurveVariables;
             this.constants = KochCurveConstants;
+            this.axiom = "F";
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (symbol) {
+                        case "F":
+                            new_state += "F+F-F-F+F";
+                            break;
+                        case "+":
+                            new_state += "+";
+                            break;
+                        case "-":
+                            new_state += "-";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+            }
         }
     }
 
     public sealed class KochSnowflake : KochCurve {
         // Koch Snowflake applies identical symbols to basic Koch Curve
-        public KochSnowflake() : base() {}
+        public KochSnowflake() : base() {
+            this.axiom = "F++F++F";
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (symbol) {
+                        case "F":
+                            new_state += "F-F++F-F";
+                            break;
+                        case "+":
+                            new_state += "+";
+                            break;
+                        case "-":
+                            new_state += "-";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+            }
+        }
     }
 
     public sealed class SimplePlant : LindenmeyerSystem {
         private readonly string SimplePlantVariables = "AF";
         private readonly string SimplePlantConstants = "+-[]";
 
-        public SimplePlant() {
+        public SimplePlant(string axiom) {
             this.variables = SimplePlantVariables;
             this.constants = SimplePlantConstants;
+            this.axiom = axiom;
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (symbol) {
+                        case "A":
+                            new_state += "F-[[A]+A]+F[+FA]-A";
+                            break;
+                        case "F":
+                            new_state += "FF";
+                            break;
+                        case "+":
+                            new_state += "+";
+                            break;
+                        case "-":
+                            new_state += "-";
+                            break;
+                        case "[":
+                            new_state += "[";
+                            break;
+                        case "]":
+                            new_state += "]";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+            }
         }
     }
 
@@ -205,11 +313,44 @@ namespace Lindenmeyer {
         private readonly string DragonCurveVariables = "AB";
         private readonly string DragonCurveConstants = "F+-";
 
-        public DragonCurve() {
+        public DragonCurve(string axiom) {
             this.variables = DragonCurveVariables;
             this.constants = DragonCurveConstants;
+            this.axiom = axiom;
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (symbol) {
+                        case "A":
+                            new_state += "A+BF";
+                            break;
+                        case "B":
+                            new_state += "FA-B";
+                            break;
+                        case "F":
+                            new_state += "F";
+                            break;
+                        case "+":
+                            new_state += "+";
+                            break;
+                        case "-":
+                            new_state += "-";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+            }
         }
     }
     #endregion
 }
-
+#endif

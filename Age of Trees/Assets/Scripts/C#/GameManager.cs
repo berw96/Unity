@@ -1,3 +1,6 @@
+#define GAME_MANAGER
+#if (UNITY_2019_3_OR_NEWER && GAME_MANAGER)
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,24 +8,31 @@ using Lindenmeyer;
 
 public class GameManager : MonoBehaviour {
     // Start is called before the first frame update
+
+    SierpinskiTriangle st = new SierpinskiTriangle("A");
+    KochCurve kc = new KochCurve();
+
     void Start() {
         LindenmeyerSystem ls = new LindenmeyerSystem();
         ls.Axiom = "A";
         ls.Rule_set = DoSomething;
-        ls.ApplyRules(ls.Axiom);
+        ls.ApplyRules(3);
 
-        SierpinskiTriangle st = new SierpinskiTriangle("A+B");
         Debug.Log($"Initial state: {st.Current_state}");
-        st.ApplyRules(st.Current_state);
-        Debug.Log($"New state: {st.Current_state}");
+        st.ApplyRules(2);
+        Debug.Log($"End state: {st.Current_state}");
+
+        foreach (string result in st.Results)
+            Debug.Log($"Result {st.Results.IndexOf(result) + 1}: {result}");
     }
 
     // Update is called once per frame
     void Update() {
-        
+
     }
 
-    void DoSomething(string symbols) {
-        Debug.Log("Do something");
+    void DoSomething(int iterations) {
+        Debug.Log("Did something");
     }
 }
+#endif
