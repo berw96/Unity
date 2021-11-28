@@ -20,7 +20,12 @@ namespace Lindenmeyer {
         CONTEXT_SENSITIVE
     }
 
-    public class LindenmeyerSystem {
+    /// <summary>
+    /// The base class for all L-System presets and user-defined grammars.
+    /// This class inherits from <c>MonoBehaviour</c> to enable access 
+    /// to Unity's API and debugging features.
+    /// </summary>
+    public class LindenmeyerSystem : MonoBehaviour {
 
         protected MODE mode;
 
@@ -137,6 +142,7 @@ namespace Lindenmeyer {
         }
         #endregion
 
+        #region RULES
         /// <summary>
         /// Takes the system's current state and applies
         /// a predefined set of mutations on each character
@@ -150,6 +156,7 @@ namespace Lindenmeyer {
             // Invokes method assigned to the rule_set delegate.
             Rule_set.Invoke(iterations); 
         }
+        #endregion
     }
 
     #region PRESETS
@@ -193,7 +200,7 @@ namespace Lindenmeyer {
         }
     }
 
-    public class KochCurve : LindenmeyerSystem {
+    public sealed class KochCurve : LindenmeyerSystem {
         private readonly string KochCurveVariables = "F";
         private readonly string KochCurveConstants = "+-";
 
@@ -230,9 +237,18 @@ namespace Lindenmeyer {
         }
     }
 
-    public sealed class KochSnowflake : KochCurve {
-        // Koch Snowflake applies identical symbols to basic Koch Curve
+    public sealed class KochSnowflake : LindenmeyerSystem {
+        /* 
+         * Koch Snowflake applies identical symbols to basic Koch Curve
+         * although inheritance is avoided here due to these systems
+         * obiding by different instructions for Turtle Graphics.
+         */
+        private readonly string KochSnowflakeVariables = "F";
+        private readonly string KochSnowflakeConstants = "+-";
+
         public KochSnowflake() : base() {
+            this.variables = KochSnowflakeVariables;
+            this.constants = KochSnowflakeConstants;
             this.axiom = "F++F++F";
             this.current_state = this.axiom;
             this.Rule_set = ApplyRules;

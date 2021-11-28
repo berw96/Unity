@@ -5,34 +5,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Lindenmeyer;
+using TurtleGraphics;
 
 public class GameManager : MonoBehaviour {
-    // Start is called before the first frame update
+    private List<LindenmeyerSystem> systems = new List<LindenmeyerSystem>();
+    private List<GameObject> branches = new List<GameObject>();
+    private TurtleGraphics.TutrtleGraphicsManager tgm = new TutrtleGraphicsManager();
 
-    SierpinskiTriangle st = new SierpinskiTriangle("A");
-    KochCurve kc = new KochCurve();
+    [SerializeField] GameObject branch;
 
-    void Start() {
-        LindenmeyerSystem ls = new LindenmeyerSystem();
-        ls.Axiom = "A";
-        ls.Rule_set = DoSomething;
-        ls.ApplyRules(3);
+    private void Start() {
 
-        Debug.Log($"Initial state: {st.Current_state}");
-        st.ApplyRules(2);
-        Debug.Log($"End state: {st.Current_state}");
+        systems.Add(new SierpinskiTriangle("A"));
+        Debug.Log($"Initial state: {systems[0].Current_state}");
+        systems[0].ApplyRules(2);
+        Debug.Log($"End state: {systems[0].Current_state}");
+        tgm.ApplyTurtleGraphics(branch, systems[0], 1);
 
-        foreach (string result in st.Results)
-            Debug.Log($"Result {st.Results.IndexOf(result) + 1}: {result}");
+        foreach (string result in systems[0].Results)
+            Debug.Log($"Result {systems[0].Results.IndexOf(result) + 1}: {result}");
     }
 
-    // Update is called once per frame
-    void Update() {
-
+    private void GenerateResults(int iterations) {
+        // apply respective rules to each L-System
     }
 
-    void DoSomething(int iterations) {
+    private void CustomLindenmeyerSystemRuleSet(int iterations) {
         Debug.Log("Did something");
+    }
+
+    public void ChangeLindenmeyerSystem(GameObject button) {
+        // change the current L-System based on the button pressed.
+    }
+
+    public void ChangeResultsIteration(GameObject button) {
+        // change the iteration of the current L-System based on the button pressed.
+    }
+
+    public void ChangeZoom() {
+        // use GUI slider to alter the main camera's zoom level.
     }
 }
 #endif
