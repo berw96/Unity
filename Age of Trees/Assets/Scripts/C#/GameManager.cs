@@ -7,35 +7,39 @@ using UnityEngine;
 using Lindenmeyer;
 using TurtleGraphics;
 
+/// <summary>
+/// Initializes the L-Systems and invokes their Turtle Graphics.
+/// </summary>
 public class GameManager : MonoBehaviour {
     private List<LindenmeyerSystem> systems = new List<LindenmeyerSystem>();
-    private List<GameObject> branches = new List<GameObject>();
     private TurtleGraphics.TutrtleGraphicsManager tgm = new TutrtleGraphicsManager();
-
-    [SerializeField] GameObject branch;
+    private SierpinskiTriangle st = new SierpinskiTriangle("A");
 
     private void Start() {
-
-        systems.Add(new SierpinskiTriangle("A"));
-        Debug.Log($"Initial state: {systems[0].Current_state}");
-        systems[0].ApplyRules(2);
-        Debug.Log($"End state: {systems[0].Current_state}");
-        tgm.ApplyTurtleGraphics(branch, systems[0], 1);
-
-        foreach (string result in systems[0].Results)
-            Debug.Log($"Result {systems[0].Results.IndexOf(result) + 1}: {result}");
+        RegisterSystem(st);
+        GenerateResults(5);
+        tgm.ApplyTurtleGraphics(st, gameObject, 4);
     }
 
     private void GenerateResults(int iterations) {
         // apply respective rules to each L-System
+        st.ApplyRules(iterations);
     }
 
-    private void CustomLindenmeyerSystemRuleSet(int iterations) {
-        Debug.Log("Did something");
+    private void RegisterSystem(LindenmeyerSystem lm) {
+        systems.Add(lm);
     }
 
     public void ChangeLindenmeyerSystem(GameObject button) {
-        // change the current L-System based on the button pressed.
+        // change the current L-System displayed based on the button pressed.
+        switch (button.name) {
+            case "Previous":
+                Debug.Log("Selecting previous L-System");
+                break;
+            case "Next":
+                Debug.Log("Selecting next L-System");
+                break;
+        }
     }
 
     public void ChangeResultsIteration(GameObject button) {
