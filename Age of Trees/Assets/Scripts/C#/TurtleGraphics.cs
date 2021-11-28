@@ -13,7 +13,6 @@ namespace TurtleGraphics {
     /// </summary>
     public interface ITurtleGraphics {
         void Grow();
-        void Split();
         void TurnRight(float degrees);
         void TurnLeft(float degrees);
     }
@@ -39,14 +38,14 @@ namespace TurtleGraphics {
                         transform_data.Push(current_transform);
 
                         Vector3 init_position = obj.transform.position;
-                        obj.transform.Translate(Vector3.forward);
+                        obj.transform.Translate(Vector3.up);
                         Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
                     } else if (symbol == '+') {
-                        Debug.Log("I should turn LEFT 120 degrees");
-                        obj.transform.Rotate(Vector3.up * 60);
+                        Debug.Log("I should turn LEFT 60 degrees");
+                        obj.transform.Rotate(Vector3.forward * 60);
                     } else if (symbol == '-') {
-                        Debug.Log("I should turn RIGHT 120 degrees");
-                        obj.transform.Rotate(Vector3.up * -60);
+                        Debug.Log("I should turn RIGHT 60 degrees");
+                        obj.transform.Rotate(Vector3.forward * -60);
                     }
                 }
             }
@@ -55,10 +54,21 @@ namespace TurtleGraphics {
                     if(symbol == 'F') {
                         Debug.Log("I should GROW");
                         Debug.Log("I should PUSH transform to stack");
+                        TransformData current_transform = new TransformData();
+                        current_transform.position = obj.transform.position;
+                        current_transform.rotation = obj.transform.rotation.eulerAngles;
+                        transform_data.Push(current_transform);
+
+                        Vector3 init_position = obj.transform.position;
+                        obj.transform.Translate(Vector3.up);
+                        Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
+
                     } else if (symbol == '+') {
                         Debug.Log("I should turn RIGHT 90 degrees");
+                        obj.transform.Rotate(Vector3.forward * 90);
                     } else if (symbol == '-') {
                         Debug.Log("I should turn LEFT 90 degrees");
+                        obj.transform.Rotate(Vector3.forward * -90);
                     }
                 }
             }
@@ -67,10 +77,20 @@ namespace TurtleGraphics {
                     if (symbol == 'F') {
                         Debug.Log("I should GROW");
                         Debug.Log("I should PUSH transform to stack");
+                        TransformData current_transform = new TransformData();
+                        current_transform.position = obj.transform.position;
+                        current_transform.rotation = obj.transform.rotation.eulerAngles;
+                        transform_data.Push(current_transform);
+
+                        Vector3 init_position = obj.transform.position;
+                        obj.transform.Translate(Vector3.up);
+                        Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
                     } else if (symbol == '+') {
                         Debug.Log("I should turn RIGHT 60 degrees");
+                        obj.transform.Rotate(Vector3.forward * 60);
                     } else if (symbol == '-') {
                         Debug.Log("I should turn LEFT 60 degrees");
+                        obj.transform.Rotate(Vector3.forward * -60);
                     }
                 }
             }
@@ -79,24 +99,32 @@ namespace TurtleGraphics {
                 foreach (char symbol in lm.Results[iteration]) {
                     if (symbol == 'F') {
                         Debug.Log("I should GROW");
+                        Vector3 init_position = obj.transform.position;
+                        obj.transform.Translate(Vector3.up);
+                        Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
                     } else if (symbol == '+') {
                         Debug.Log("I should turn RIGHT 25 degrees");
+                        obj.transform.Rotate(Vector3.forward * 25);
                     } else if (symbol == '-') {
                         Debug.Log("I should turn LEFT 25 degrees");
+                        obj.transform.Rotate(Vector3.forward * -25);
                     } else if (symbol == '[') {
                         Debug.Log("I should PUSH transform to stack");
+                        TransformData current_transform = new TransformData();
+                        current_transform.position = obj.transform.position;
+                        current_transform.rotation = obj.transform.rotation.eulerAngles;
+                        transform_data.Push(current_transform);
                     } else if (symbol == ']') {
                         Debug.Log("I should POP transform from stack");
+                        TransformData current_transform = transform_data.Pop();
+                        obj.transform.position = current_transform.position;
+                        obj.transform.rotation = Quaternion.Euler(current_transform.rotation);
                     }
                 }
             }
         }
 
         public void Grow() {
-
-        }
-
-        public void Split() {
 
         }
 

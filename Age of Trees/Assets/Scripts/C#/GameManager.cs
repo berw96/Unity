@@ -9,21 +9,37 @@ using TurtleGraphics;
 
 /// <summary>
 /// Initializes the L-Systems and invokes their Turtle Graphics.
+/// Attatched game object acts as a spawner for branches.
 /// </summary>
 public class GameManager : MonoBehaviour {
     private List<LindenmeyerSystem> systems = new List<LindenmeyerSystem>();
     private TurtleGraphics.TutrtleGraphicsManager tgm = new TutrtleGraphicsManager();
+    
     private SierpinskiTriangle st = new SierpinskiTriangle("A");
+    private KochCurve kc = new KochCurve();
+    private KochSnowflake ks = new KochSnowflake();
+    private SimplePlant sp = new SimplePlant("A");
+    private DragonCurve dc = new DragonCurve("FA");
+    
 
     private void Start() {
         RegisterSystem(st);
-        GenerateResults(5);
-        tgm.ApplyTurtleGraphics(st, gameObject, 4);
+        RegisterSystem(kc);
+        RegisterSystem(ks);
+        RegisterSystem(dc);
+        RegisterSystem(sp);
+        
+        GenerateResults(6);
+        tgm.ApplyTurtleGraphics(sp, gameObject, 5);
     }
 
     private void GenerateResults(int iterations) {
         // apply respective rules to each L-System
-        st.ApplyRules(iterations);
+        //st.ApplyRules(iterations);
+        //dc.ApplyRules(iterations);
+        //kc.ApplyRules(iterations);
+        //ks.ApplyRules(iterations);
+        sp.ApplyRules(iterations);
     }
 
     private void RegisterSystem(LindenmeyerSystem lm) {
