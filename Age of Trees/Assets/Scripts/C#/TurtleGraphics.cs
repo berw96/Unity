@@ -12,9 +12,10 @@ namespace TurtleGraphics {
     /// Defines common behaviours for Turtle Graphics.
     /// </summary>
     public interface ITurtleGraphics {
-        void Grow();
-        void TurnRight(float degrees);
-        void TurnLeft(float degrees);
+        void Grow(GameObject obj);
+        void Turn(GameObject obj, float degrees);
+        void AddTransform(GameObject obj);
+        void RemoveTransform(GameObject obj);
     }
 
     /// <summary>
@@ -29,68 +30,36 @@ namespace TurtleGraphics {
             if (lm is SierpinskiTriangle) {
                 foreach (char symbol in lm.Results[iteration]) {
                     if (symbol == 'A' || symbol == 'B') {
-                        Debug.Log("I should GROW");
-                        Debug.Log("I should PUSH transform to stack");
-
-                        TransformData current_transform = new TransformData();
-                        current_transform.position = obj.transform.position;
-                        current_transform.rotation = obj.transform.rotation.eulerAngles;
-                        transform_data.Push(current_transform);
-
-                        Vector3 init_position = obj.transform.position;
-                        obj.transform.Translate(Vector3.up);
-                        Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
+                        AddTransform(obj);
+                        Grow(obj);
                     } else if (symbol == '+') {
-                        Debug.Log("I should turn LEFT 60 degrees");
-                        obj.transform.Rotate(Vector3.forward * 60);
+                        Turn(obj, 60f);
                     } else if (symbol == '-') {
-                        Debug.Log("I should turn RIGHT 60 degrees");
-                        obj.transform.Rotate(Vector3.forward * -60);
+                        Turn(obj, -60f);
                     }
                 }
             }
             if (lm is KochCurve || lm is DragonCurve) {
                 foreach (char symbol in lm.Results[iteration]) {
                     if(symbol == 'F') {
-                        Debug.Log("I should GROW");
-                        Debug.Log("I should PUSH transform to stack");
-                        TransformData current_transform = new TransformData();
-                        current_transform.position = obj.transform.position;
-                        current_transform.rotation = obj.transform.rotation.eulerAngles;
-                        transform_data.Push(current_transform);
-
-                        Vector3 init_position = obj.transform.position;
-                        obj.transform.Translate(Vector3.up);
-                        Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
-
+                        AddTransform(obj);
+                        Grow(obj);
                     } else if (symbol == '+') {
-                        Debug.Log("I should turn RIGHT 90 degrees");
-                        obj.transform.Rotate(Vector3.forward * 90);
+                        Turn(obj, 90f);
                     } else if (symbol == '-') {
-                        Debug.Log("I should turn LEFT 90 degrees");
-                        obj.transform.Rotate(Vector3.forward * -90);
+                        Turn(obj, -90f);
                     }
                 }
             }
             if (lm is KochSnowflake) {
                 foreach (char symbol in lm.Results[iteration]) {
                     if (symbol == 'F') {
-                        Debug.Log("I should GROW");
-                        Debug.Log("I should PUSH transform to stack");
-                        TransformData current_transform = new TransformData();
-                        current_transform.position = obj.transform.position;
-                        current_transform.rotation = obj.transform.rotation.eulerAngles;
-                        transform_data.Push(current_transform);
-
-                        Vector3 init_position = obj.transform.position;
-                        obj.transform.Translate(Vector3.up);
-                        Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
+                        AddTransform(obj);
+                        Grow(obj);
                     } else if (symbol == '+') {
-                        Debug.Log("I should turn RIGHT 60 degrees");
-                        obj.transform.Rotate(Vector3.forward * 60);
+                        Turn(obj, 60f);
                     } else if (symbol == '-') {
-                        Debug.Log("I should turn LEFT 60 degrees");
-                        obj.transform.Rotate(Vector3.forward * -60);
+                        Turn(obj, -60f);
                     }
                 }
             }
@@ -98,42 +67,43 @@ namespace TurtleGraphics {
                 Debug.Log("Simple Plant Detected");
                 foreach (char symbol in lm.Results[iteration]) {
                     if (symbol == 'F') {
-                        Debug.Log("I should GROW");
-                        Vector3 init_position = obj.transform.position;
-                        obj.transform.Translate(Vector3.up);
-                        Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
+                        Grow(obj);
                     } else if (symbol == '+') {
-                        Debug.Log("I should turn RIGHT 25 degrees");
-                        obj.transform.Rotate(Vector3.forward * 25);
+                        Turn(obj, 25f);
                     } else if (symbol == '-') {
-                        Debug.Log("I should turn LEFT 25 degrees");
-                        obj.transform.Rotate(Vector3.forward * -25);
+                        Turn(obj, -25f);
                     } else if (symbol == '[') {
-                        Debug.Log("I should PUSH transform to stack");
-                        TransformData current_transform = new TransformData();
-                        current_transform.position = obj.transform.position;
-                        current_transform.rotation = obj.transform.rotation.eulerAngles;
-                        transform_data.Push(current_transform);
+                        AddTransform(obj);
                     } else if (symbol == ']') {
-                        Debug.Log("I should POP transform from stack");
-                        TransformData current_transform = transform_data.Pop();
-                        obj.transform.position = current_transform.position;
-                        obj.transform.rotation = Quaternion.Euler(current_transform.rotation);
+                        RemoveTransform(obj);
                     }
                 }
             }
         }
 
-        public void Grow() {
-
+        public void Grow(GameObject obj) {
+            Vector3 init_position = obj.transform.position;
+            obj.transform.Translate(Vector3.up);
+            Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
         }
 
-        public void TurnRight(float degrees) {
-
+        public void Turn(GameObject obj, float degrees) {
+            obj.transform.Rotate(Vector3.forward * degrees);
         }
 
-        public void TurnLeft(float degrees) {
+        public void AddTransform(GameObject obj) {
+            TransformData current_transform = new TransformData();
+            current_transform.position = obj.transform.position;
+            current_transform.rotation = obj.transform.rotation.eulerAngles;
+            current_transform.scale = obj.transform.localScale;
+            transform_data.Push(current_transform);
+        }
 
+        public void RemoveTransform(GameObject obj) {
+            TransformData current_transform = transform_data.Pop();
+            obj.transform.position = current_transform.position;
+            obj.transform.rotation = Quaternion.Euler(current_transform.rotation);
+            obj.transform.localScale = current_transform.scale;
         }
     }
 

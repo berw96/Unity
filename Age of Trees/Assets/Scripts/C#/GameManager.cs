@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour {
     private KochSnowflake ks = new KochSnowflake();
     private SimplePlant sp = new SimplePlant("A");
     private DragonCurve dc = new DragonCurve("FA");
-    
 
     private void Start() {
         RegisterSystem(st);
@@ -30,16 +29,15 @@ public class GameManager : MonoBehaviour {
         RegisterSystem(sp);
         
         GenerateResults(6);
+
         tgm.ApplyTurtleGraphics(sp, gameObject, 5);
     }
 
     private void GenerateResults(int iterations) {
         // apply respective rules to each L-System
-        //st.ApplyRules(iterations);
-        //dc.ApplyRules(iterations);
-        //kc.ApplyRules(iterations);
-        //ks.ApplyRules(iterations);
-        sp.ApplyRules(iterations);
+        foreach (LindenmeyerSystem system in systems) {
+            system.ApplyRules(iterations);
+        }
     }
 
     private void RegisterSystem(LindenmeyerSystem lm) {
