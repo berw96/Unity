@@ -1,6 +1,7 @@
 #define TURTLE_GRAPHICS
 #if (UNITY_2019_3_OR_NEWER && TURTLE_GRAPHICS)
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,74 +17,95 @@ namespace TurtleGraphics {
         void Turn(GameObject obj, float degrees);
         void AddTransform(GameObject obj);
         void RemoveTransform(GameObject obj);
+        void ResetGraphics(GameObject obj);
     }
 
     /// <summary>
     /// This class instantiates game objects which represent branches produced
     /// by the provided L-System results.
     /// </summary>
-    public class TutrtleGraphicsManager : MonoBehaviour, ITurtleGraphics {
+    public class TurtleGraphicsManager : MonoBehaviour, ITurtleGraphics {
         private Stack<TransformData> transform_data = new Stack<TransformData>();
+        private Stack<GameObject> branches = new Stack<GameObject>();
 
         public void ApplyTurtleGraphics(LindenmeyerSystem lm, GameObject obj, int iteration) {
-            Debug.Log($"Produced: {lm.Results[iteration]}");
-            if (lm is SierpinskiTriangle) {
-                foreach (char symbol in lm.Results[iteration]) {
-                    if (symbol == 'A' || symbol == 'B') {
-                        AddTransform(obj);
-                        Grow(obj);
-                    } else if (symbol == '+') {
-                        Turn(obj, 60f);
-                    } else if (symbol == '-') {
-                        Turn(obj, -60f);
+            // reset transform data
+            ResetGraphics(obj);
+
+            switch (lm.Mode) {
+                case MODE.DETERMINISTIC:
+                    Debug.Log($"Produced: {lm.Results[iteration]}");
+                    if (lm is SierpinskiTriangle) {
+                        foreach (char symbol in lm.Results[iteration]) {
+                            if (symbol == 'A' || symbol == 'B') {
+                                AddTransform(obj);
+                                Grow(obj);
+                            } else if (symbol == '+') {
+                                Turn(obj, 60f);
+                            } else if (symbol == '-') {
+                                Turn(obj, -60f);
+                            }
+                        }
                     }
-                }
-            }
-            if (lm is KochCurve || lm is DragonCurve) {
-                foreach (char symbol in lm.Results[iteration]) {
-                    if(symbol == 'F') {
-                        AddTransform(obj);
-                        Grow(obj);
-                    } else if (symbol == '+') {
-                        Turn(obj, 90f);
-                    } else if (symbol == '-') {
-                        Turn(obj, -90f);
+                    if (lm is KochCurve || lm is DragonCurve) {
+                        foreach (char symbol in lm.Results[iteration]) {
+                            if (symbol == 'F') {
+                                AddTransform(obj);
+                                Grow(obj);
+                            } else if (symbol == '+') {
+                                Turn(obj, 90f);
+                            } else if (symbol == '-') {
+                                Turn(obj, -90f);
+                            }
+                        }
                     }
-                }
-            }
-            if (lm is KochSnowflake) {
-                foreach (char symbol in lm.Results[iteration]) {
-                    if (symbol == 'F') {
-                        AddTransform(obj);
-                        Grow(obj);
-                    } else if (symbol == '+') {
-                        Turn(obj, 60f);
-                    } else if (symbol == '-') {
-                        Turn(obj, -60f);
+                    if (lm is KochSnowflake) {
+                        foreach (char symbol in lm.Results[iteration]) {
+                            if (symbol == 'F') {
+                                AddTransform(obj);
+                                Grow(obj);
+                            } else if (symbol == '+') {
+                                Turn(obj, 60f);
+                            } else if (symbol == '-') {
+                                Turn(obj, -60f);
+                            }
+                        }
                     }
-                }
-            }
-            if (lm is SimplePlant) {
-                Debug.Log("Simple Plant Detected");
-                foreach (char symbol in lm.Results[iteration]) {
-                    if (symbol == 'F') {
-                        Grow(obj);
-                    } else if (symbol == '+') {
-                        Turn(obj, 25f);
-                    } else if (symbol == '-') {
-                        Turn(obj, -25f);
-                    } else if (symbol == '[') {
-                        AddTransform(obj);
-                    } else if (symbol == ']') {
-                        RemoveTransform(obj);
+                    if (lm is SimplePlant) {
+                        Debug.Log("Simple Plant Detected");
+                        foreach (char symbol in lm.Results[iteration]) {
+                            if (symbol == 'F') {
+                                Grow(obj);
+                            } else if (symbol == '+') {
+                                Turn(obj, 25f);
+                            } else if (symbol == '-') {
+                                Turn(obj, -25f);
+                            } else if (symbol == '[') {
+                                AddTransform(obj);
+                            } else if (symbol == ']') {
+                                RemoveTransform(obj);
+                            }
+                        }
                     }
-                }
+                    break;
+
+                case MODE.STOCHASTIC:
+                    throw new NotImplementedException();
+                case MODE.CONTEXT_SENSITIVE:
+                    throw new NotImplementedException();
+                default:
+                    Debug.LogWarning($"No mode specified, setting to {MODE.DETERMINISTIC} as default.");
+                    lm.Mode = MODE.DETERMINISTIC;
+                    // retry
+                    ApplyTurtleGraphics(lm, obj, iteration);
+                    break;
             }
         }
 
         public void Grow(GameObject obj) {
             Vector3 init_position = obj.transform.position;
             obj.transform.Translate(Vector3.up);
+
             Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
         }
 
@@ -104,6 +126,12 @@ namespace TurtleGraphics {
             obj.transform.position = current_transform.position;
             obj.transform.rotation = Quaternion.Euler(current_transform.rotation);
             obj.transform.localScale = current_transform.scale;
+        }
+
+        public void ResetGraphics(GameObject obj) {
+            transform_data.Clear();
+            obj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+            obj.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         }
     }
 
