@@ -16,9 +16,9 @@ using UnityEngine;
 namespace Lindenmeyer {
 
     public enum MODE {
-        DETERMINISTIC,
-        STOCHASTIC,
-        CONTEXT_SENSITIVE
+        DETERMINISTIC = 1,
+        STOCHASTIC = 2,
+        CONTEXT_SENSITIVE = 3
     }
 
     /// <summary>

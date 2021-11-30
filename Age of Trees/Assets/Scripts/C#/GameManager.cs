@@ -19,13 +19,16 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField] int specified_iterations;
     [SerializeField] int selected_iteration;
-    [SerializeField] MODE selected_mode;
+    [SerializeField] MODE selected_mode = MODE.DETERMINISTIC;
     private LindenmeyerSystem selected_system;
     private int selected_system_index;
 
     private List<LindenmeyerSystem> systems = new List<LindenmeyerSystem>();
     private TurtleGraphics.TurtleGraphicsManager tgm = new TurtleGraphicsManager();
     [SerializeField] GameObject branch_prefab;
+    [SerializeField] Text l_system_UI_tag;
+    [SerializeField] Text iteration_UI_tag;
+    [SerializeField] Text mode_UI_tag;
 
     private SierpinskiTriangle st = new SierpinskiTriangle("A");
     private KochCurve kc = new KochCurve();
@@ -75,7 +78,6 @@ public class GameManager : MonoBehaviour {
 
     public void ChangeLindenmeyerSystem(Button button) {
         // change the current L-System displayed based on the button pressed.
-
         switch (button.name) {
             case "Previous_System":
                 Debug.Log("Selecting previous L-System");
@@ -117,9 +119,31 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void ChangeSystemMode(Button button) {
+        // change the current L-System mode based on the button pressed.
+        switch (button.name) {
+            case "Deterministic":
+                foreach (LindenmeyerSystem system in systems)
+                    system.Mode = MODE.DETERMINISTIC;
+                break;
+            case "Stochastic":
+                foreach (LindenmeyerSystem system in systems)
+                    system.Mode = MODE.STOCHASTIC;
+                break;
+            case "Context-sensetive":
+                foreach (LindenmeyerSystem system in systems)
+                    system.Mode = MODE.CONTEXT_SENSITIVE;
+                break;
+        }
+        GenerateGraphics();
+    }
+
     public void GenerateGraphics() {
         try {
             tgm.ApplyTurtleGraphics(selected_system, gameObject, selected_iteration);
+            l_system_UI_tag.text = selected_system.GetType().ToString();
+            iteration_UI_tag.text = (selected_iteration + 1).ToString();
+            mode_UI_tag.text = selected_system.Mode.ToString();
         } catch (IndexOutOfRangeException) {
             Exception e = new IndexOutOfRangeException();
             Debug.LogWarning($"{e.ToString()}");

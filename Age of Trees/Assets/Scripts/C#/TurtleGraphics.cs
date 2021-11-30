@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Lindenmeyer;
+using RandomNumberGeneration;
 
 namespace TurtleGraphics {
     /// <summary>
@@ -105,9 +106,11 @@ namespace TurtleGraphics {
                     break;
 
                 case MODE.STOCHASTIC:
-                    throw new NotImplementedException();
+                    Debug.LogWarning($"{lm.Mode} has been selected, but it has not yet been implemented.");
+                    break;
                 case MODE.CONTEXT_SENSITIVE:
-                    throw new NotImplementedException();
+                    Debug.LogWarning($"{lm.Mode} has been selected, but it has not yet been implemented.");
+                    break;
                 default:
                     Debug.LogWarning($"No mode specified, setting to {MODE.DETERMINISTIC} as default.");
                     lm.Mode = MODE.DETERMINISTIC;
