@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour {
 
     private List<LindenmeyerSystem> systems = new List<LindenmeyerSystem>();
     private TurtleGraphics.TurtleGraphicsManager tgm = new TurtleGraphicsManager();
-    
+    [SerializeField] GameObject branch_prefab;
+
     private SierpinskiTriangle st = new SierpinskiTriangle("A");
     private KochCurve kc = new KochCurve();
     private KochSnowflake ks = new KochSnowflake();
@@ -39,7 +40,10 @@ public class GameManager : MonoBehaviour {
         RegisterSystem(sp);
         RegisterSystem(dc);
 
+        tgm.Branch = branch_prefab;
+
         GenerateResults(specified_iterations);
+        GenerateGraphics();
     }
 
     private void GenerateResults(int iterations) {
@@ -120,7 +124,7 @@ public class GameManager : MonoBehaviour {
             Exception e = new IndexOutOfRangeException();
             Debug.LogWarning($"{e.ToString()}");
         } catch (ArgumentOutOfRangeException) {
-            Exception e = new IndexOutOfRangeException();
+            Exception e = new ArgumentOutOfRangeException();
             Debug.LogWarning($"{e.ToString()}");
         } catch (NullReferenceException) {
             Exception e = new NullReferenceException();

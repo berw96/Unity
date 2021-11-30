@@ -8,7 +8,6 @@ using UnityEngine;
 using Lindenmeyer;
 
 namespace TurtleGraphics {
-
     /// <summary>
     /// Defines common behaviours for Turtle Graphics.
     /// </summary>
@@ -27,6 +26,22 @@ namespace TurtleGraphics {
     public class TurtleGraphicsManager : MonoBehaviour, ITurtleGraphics {
         private Stack<TransformData> transform_data = new Stack<TransformData>();
         private Stack<GameObject> branches = new Stack<GameObject>();
+
+        // prefab provided by the GameManager
+        private GameObject branch;
+
+        public Stack<TransformData> Transform_data {
+            get { return this.transform_data; }
+        }
+
+        public Stack<GameObject> Branches {
+            get { return this.branches; }
+        }
+
+        public GameObject Branch {
+            get { return this.branch; }
+            set { this.branch = value; }
+        }
 
         public void ApplyTurtleGraphics(LindenmeyerSystem lm, GameObject obj, int iteration) {
             // reset transform data
@@ -105,8 +120,9 @@ namespace TurtleGraphics {
         public void Grow(GameObject obj) {
             Vector3 init_position = obj.transform.position;
             obj.transform.Translate(Vector3.up);
-
-            Debug.DrawLine(init_position, obj.transform.position, Color.white, 10000f, false);
+            branches.Push(GameObject.Instantiate(branch));
+            branches.Peek().transform.position = obj.transform.position;
+            branches.Peek().transform.rotation = obj.transform.rotation;
         }
 
         public void Turn(GameObject obj, float degrees) {
@@ -130,6 +146,10 @@ namespace TurtleGraphics {
 
         public void ResetGraphics(GameObject obj) {
             transform_data.Clear();
+            foreach (GameObject branch in branches) {
+                GameObject.Destroy(branch);
+            }
+            branches.Clear();
             obj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
             obj.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         }
