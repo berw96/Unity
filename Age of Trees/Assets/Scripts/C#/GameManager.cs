@@ -2,7 +2,6 @@
 #if (UNITY_2019_3_OR_NEWER && GAME_MANAGER)
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,21 +19,21 @@ public class GameManager : MonoBehaviour {
     [SerializeField] int specified_iterations;
     [SerializeField] int selected_iteration;
     [SerializeField] MODE selected_mode = MODE.DETERMINISTIC;
-    private LindenmeyerSystem selected_system;
+    private LindenmeyerSystem? selected_system = null;
     private int selected_system_index;
 
-    private List<LindenmeyerSystem> systems = new List<LindenmeyerSystem>();
-    private TurtleGraphics.TurtleGraphicsManager tgm = new TurtleGraphicsManager();
+    private readonly List<LindenmeyerSystem> systems = new List<LindenmeyerSystem>();
+    private readonly TurtleGraphicsManager tgm = new TurtleGraphicsManager();
     [SerializeField] GameObject branch_prefab;
     [SerializeField] Text l_system_UI_tag;
     [SerializeField] Text iteration_UI_tag;
     [SerializeField] Text mode_UI_tag;
 
-    private SierpinskiTriangle st = new SierpinskiTriangle("A");
-    private KochCurve kc = new KochCurve();
-    private KochSnowflake ks = new KochSnowflake();
-    private SimplePlant sp = new SimplePlant("A");
-    private DragonCurve dc = new DragonCurve("FA");
+    private readonly SierpinskiTriangle st = new SierpinskiTriangle("A");
+    private readonly KochCurve kc = new KochCurve();
+    private readonly KochSnowflake ks = new KochSnowflake();
+    private readonly SimplePlant sp = new SimplePlant("A");
+    private readonly DragonCurve dc = new DragonCurve("FA");
 
     private void Start() {
         RegisterSystem(st);
@@ -107,43 +106,50 @@ public class GameManager : MonoBehaviour {
                 if (selected_iteration <= min_iterations - 1)
                     break;
                 selected_iteration--;
-                GenerateGraphics();
                 break;
             case "Next_Iteration":
                 Debug.Log("NEXT ITERATION");
                 if (selected_iteration >= max_iterations - 1)
                     break;
                 selected_iteration++;
-                GenerateGraphics();
                 break;
         }
+        Debug.Log($"Iteration = {selected_iteration}");
+        GenerateGraphics();
     }
 
     public void ChangeSystemMode(Button button) {
         // change the current L-System mode based on the button pressed.
-        switch (button.name) {
-            case "Deterministic":
-                foreach (LindenmeyerSystem system in systems)
-                    system.Mode = MODE.DETERMINISTIC;
-                break;
-            case "Stochastic":
-                foreach (LindenmeyerSystem system in systems)
-                    system.Mode = MODE.STOCHASTIC;
-                break;
-            case "Context-sensetive":
-                foreach (LindenmeyerSystem system in systems)
-                    system.Mode = MODE.CONTEXT_SENSITIVE;
-                break;
+        try {
+            switch (button.name) {
+                case "Deterministic":
+                    Debug.Log("DETERMINISTIC");
+                    this.selected_mode = MODE.DETERMINISTIC;
+                    break;
+                case "Stochastic":
+                    Debug.Log("STOCHASTIC");
+                    this.selected_mode = MODE.STOCHASTIC;
+                    break;
+                case "Context-Sensitive":
+                    Debug.Log("CONTEXT_SENSITIVE");
+                    this.selected_mode = MODE.CONTEXT_SENSITIVE;
+                    break;
+            }
+            Debug.Log($"Mode = {selected_mode.GetType()}");
+            GenerateGraphics();
+        } catch (NullReferenceException) {
+            Exception e = new NullReferenceException();
+            Debug.LogWarning($"{e.ToString()}");
         }
-        GenerateGraphics();
     }
 
     public void GenerateGraphics() {
         try {
-            tgm.ApplyTurtleGraphics(selected_system, gameObject, selected_iteration);
             l_system_UI_tag.text = selected_system.GetType().ToString();
             iteration_UI_tag.text = (selected_iteration + 1).ToString();
-            mode_UI_tag.text = selected_system.Mode.ToString();
+            mode_UI_tag.text = selected_mode.ToString();
+            selected_system.Mode = selected_mode;
+            tgm.ApplyTurtleGraphics(selected_system, gameObject, selected_iteration);
         } catch (IndexOutOfRangeException) {
             Exception e = new IndexOutOfRangeException();
             Debug.LogWarning($"{e.ToString()}");

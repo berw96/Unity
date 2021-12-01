@@ -1,8 +1,6 @@
 #define TURTLE_GRAPHICS
 #if (UNITY_2019_3_OR_NEWER && TURTLE_GRAPHICS)
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Lindenmeyer;
@@ -24,7 +22,7 @@ namespace TurtleGraphics {
     /// This class instantiates game objects which represent branches produced
     /// by the provided L-System results.
     /// </summary>
-    public class TurtleGraphicsManager : MonoBehaviour, ITurtleGraphics {
+    public class TurtleGraphicsManager : ITurtleGraphics {
         private Stack<TransformData> transform_data = new Stack<TransformData>();
         private Stack<GameObject> branches = new Stack<GameObject>();
 

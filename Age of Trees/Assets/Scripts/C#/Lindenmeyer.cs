@@ -1,12 +1,7 @@
 #define LINDENMEYER
 #if (UNITY_2019_3_OR_NEWER && LINDENMEYER)
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using System.IO;
-using UnityEngine;
 
 /// <summary>
 /// Contains class definitions for common Lindenmeyer systems (L-Systems)
@@ -26,7 +21,7 @@ namespace Lindenmeyer {
     /// This class inherits from <c>MonoBehaviour</c> to enable access 
     /// to Unity's API and debugging features.
     /// </summary>
-    public abstract class LindenmeyerSystem : MonoBehaviour {
+    public abstract class LindenmeyerSystem {
 
         protected MODE mode;
 
