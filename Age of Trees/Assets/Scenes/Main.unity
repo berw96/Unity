@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -367,6 +367,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 318934053844840127, guid: fd8b36df63498aa44a85ff21c5475d63,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 311
+      objectReference: {fileID: 0}
+    - target: {fileID: 318934053917013388, guid: fd8b36df63498aa44a85ff21c5475d63,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -89.000015
+      objectReference: {fileID: 0}
     - target: {fileID: 318934054130707089, guid: fd8b36df63498aa44a85ff21c5475d63,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -522,6 +532,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 318934054522653156, guid: fd8b36df63498aa44a85ff21c5475d63,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -289
+      objectReference: {fileID: 0}
     - target: {fileID: 318934054653417450, guid: fd8b36df63498aa44a85ff21c5475d63,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -537,6 +552,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 10939475}
+    - target: {fileID: 318934055089260318, guid: fd8b36df63498aa44a85ff21c5475d63,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 110.999985
+      objectReference: {fileID: 0}
     - target: {fileID: 318934055242478211, guid: fd8b36df63498aa44a85ff21c5475d63,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -576,6 +596,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 318934055730939296, guid: fd8b36df63498aa44a85ff21c5475d63,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 111
       objectReference: {fileID: 0}
     - target: {fileID: 318934055730939296, guid: fd8b36df63498aa44a85ff21c5475d63,
         type: 3}
@@ -700,6 +725,11 @@ PrefabInstance:
       propertyPath: mode_UI_tag
       value: 
       objectReference: {fileID: 1155848462}
+    - target: {fileID: 6579898173154218939, guid: f589de4dcaf4f5447a85135b8593839d,
+        type: 3}
+      propertyPath: selected_mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6579898173154218939, guid: f589de4dcaf4f5447a85135b8593839d,
         type: 3}
       propertyPath: l_system_UI_tag

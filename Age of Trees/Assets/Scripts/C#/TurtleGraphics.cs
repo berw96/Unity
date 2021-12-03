@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Lindenmeyer;
-using RandomNumberGeneration;
 
 namespace TurtleGraphics {
     /// <summary>
@@ -45,76 +44,58 @@ namespace TurtleGraphics {
         public void ApplyTurtleGraphics(LindenmeyerSystem lm, GameObject obj, int iteration) {
             // reset transform data
             ResetGraphics(obj);
-
-            switch (lm.Mode) {
-                case MODE.DETERMINISTIC:
-                    Debug.Log($"Produced: {lm.Results[iteration]}");
-                    if (lm is SierpinskiTriangle) {
-                        foreach (char symbol in lm.Results[iteration]) {
-                            if (symbol == 'A' || symbol == 'B') {
-                                AddTransform(obj);
-                                Grow(obj);
-                            } else if (symbol == '+') {
-                                Turn(obj, 60f);
-                            } else if (symbol == '-') {
-                                Turn(obj, -60f);
-                            }
-                        }
+            Debug.Log($"Produced: {lm.Results[iteration]}");
+            if (lm is SierpinskiTriangle) {
+                foreach (char symbol in lm.Results[iteration]) {
+                    if (symbol == 'A' || symbol == 'B') {
+                        AddTransform(obj);
+                        Grow(obj);
+                    } else if (symbol == '+') {
+                        Turn(obj, 60f);
+                    } else if (symbol == '-') {
+                        Turn(obj, -60f);
                     }
-                    if (lm is KochCurve || lm is DragonCurve) {
-                        foreach (char symbol in lm.Results[iteration]) {
-                            if (symbol == 'F') {
-                                AddTransform(obj);
-                                Grow(obj);
-                            } else if (symbol == '+') {
-                                Turn(obj, 90f);
-                            } else if (symbol == '-') {
-                                Turn(obj, -90f);
-                            }
-                        }
+                }
+            }
+            if (lm is KochCurve || lm is DragonCurve) {
+                foreach (char symbol in lm.Results[iteration]) {
+                    if (symbol == 'F') {
+                        AddTransform(obj);
+                        Grow(obj);
+                    } else if (symbol == '+') {
+                        Turn(obj, 90f);
+                    } else if (symbol == '-') {
+                        Turn(obj, -90f);
                     }
-                    if (lm is KochSnowflake) {
-                        foreach (char symbol in lm.Results[iteration]) {
-                            if (symbol == 'F') {
-                                AddTransform(obj);
-                                Grow(obj);
-                            } else if (symbol == '+') {
-                                Turn(obj, 60f);
-                            } else if (symbol == '-') {
-                                Turn(obj, -60f);
-                            }
-                        }
+                }
+            }
+            if (lm is KochSnowflake) {
+                foreach (char symbol in lm.Results[iteration]) {
+                    if (symbol == 'F') {
+                        AddTransform(obj);
+                        Grow(obj);
+                    } else if (symbol == '+') {
+                        Turn(obj, 60f);
+                    } else if (symbol == '-') {
+                        Turn(obj, -60f);
                     }
-                    if (lm is SimplePlant) {
-                        Debug.Log("Simple Plant Detected");
-                        foreach (char symbol in lm.Results[iteration]) {
-                            if (symbol == 'F') {
-                                Grow(obj);
-                            } else if (symbol == '+') {
-                                Turn(obj, 25f);
-                            } else if (symbol == '-') {
-                                Turn(obj, -25f);
-                            } else if (symbol == '[') {
-                                AddTransform(obj);
-                            } else if (symbol == ']') {
-                                RemoveTransform(obj);
-                            }
-                        }
+                }
+            }
+            if (lm is SimplePlant) {
+                Debug.Log("Simple Plant Detected");
+                foreach (char symbol in lm.Results[iteration]) {
+                    if (symbol == 'F') {
+                        Grow(obj);
+                    } else if (symbol == '+') {
+                        Turn(obj, 25f);
+                    } else if (symbol == '-') {
+                        Turn(obj, -25f);
+                    } else if (symbol == '[') {
+                        AddTransform(obj);
+                    } else if (symbol == ']') {
+                        RemoveTransform(obj);
                     }
-                    break;
-
-                case MODE.STOCHASTIC:
-                    Debug.LogWarning($"{lm.Mode} has been selected, but it has not yet been implemented.");
-                    break;
-                case MODE.CONTEXT_SENSITIVE:
-                    Debug.LogWarning($"{lm.Mode} has been selected, but it has not yet been implemented.");
-                    break;
-                default:
-                    Debug.LogWarning($"No mode specified, setting to {MODE.DETERMINISTIC} as default.");
-                    lm.Mode = MODE.DETERMINISTIC;
-                    // retry
-                    ApplyTurtleGraphics(lm, obj, iteration);
-                    break;
+                }
             }
         }
 

@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour {
                     this.selected_mode = MODE.STOCHASTIC;
                     break;
                 case "Context-Sensitive":
-                    Debug.Log("CONTEXT_SENSITIVE");
+                    Debug.Log("CONTEXT SENSITIVE");
                     this.selected_mode = MODE.CONTEXT_SENSITIVE;
                     break;
             }
