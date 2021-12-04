@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField] GameObject branch_prefab;
     [SerializeField] Text l_system_UI_tag;
     [SerializeField] Text iteration_UI_tag;
-    [SerializeField] Text mode_UI_tag;
 
     private readonly SierpinskiTriangle st = new SierpinskiTriangle("A");
     private readonly KochCurve kc = new KochCurve();
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour {
         }
 
         foreach (LindenmeyerSystem system in systems) {
-            system.Current_state = "";
             system.Mode = selected_mode;
             system.ApplyRules(iterations);
         }
@@ -119,34 +117,10 @@ public class GameManager : MonoBehaviour {
         GenerateGraphics();
     }
 
-    public void ChangeSystemMode(Button button) {
-        // change the current L-System mode based on the button pressed.
-        try {
-            switch (button.name) {
-                case "Deterministic":
-                    this.selected_mode = MODE.DETERMINISTIC;
-                    break;
-                case "Stochastic":
-                    this.selected_mode = MODE.STOCHASTIC;
-                    break;
-                case "Context-Sensitive":
-                    this.selected_mode = MODE.CONTEXT_SENSITIVE;
-                    break;
-            }
-            Debug.Log($"Mode = {selected_mode}");
-            GenerateGraphics();
-        } catch (NullReferenceException e) {
-            Debug.LogWarning($"{e}");
-        } catch (StackOverflowException e) {
-            Debug.LogWarning($"{e}");
-        }
-    }
-
     public void GenerateGraphics() {
         try {
             l_system_UI_tag.text = "System: " + selected_system.GetType().ToString();
             iteration_UI_tag.text = "Iteration: " + (selected_iteration + 1).ToString();
-            mode_UI_tag.text = "Mode: " + selected_mode.ToString();
             selected_system.Mode = selected_mode;
             tgm.ApplyTurtleGraphics(selected_system, gameObject, selected_iteration);
         } catch (IndexOutOfRangeException e) {
