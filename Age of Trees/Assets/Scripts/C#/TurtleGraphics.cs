@@ -1,6 +1,7 @@
 #define TURTLE_GRAPHICS
 #if (UNITY_2019_3_OR_NEWER && TURTLE_GRAPHICS)
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Lindenmeyer;
@@ -167,20 +168,28 @@ namespace TurtleGraphics {
         }
 
         public void RemoveTransform(GameObject obj) {
-            TransformData current_transform = transform_data.Pop();
-            obj.transform.position = current_transform.position;
-            obj.transform.rotation = Quaternion.Euler(current_transform.rotation);
-            obj.transform.localScale = current_transform.scale;
+            try {
+                TransformData current_transform = transform_data.Pop();
+                obj.transform.position = current_transform.position;
+                obj.transform.rotation = Quaternion.Euler(current_transform.rotation);
+                obj.transform.localScale = current_transform.scale;
+            } catch (InvalidOperationException e) {
+                Debug.LogWarning($"{e}");
+            }
         }
 
         public void ResetGraphics(GameObject obj) {
-            transform_data.Clear();
-            foreach (GameObject branch in branches) {
-                GameObject.Destroy(branch);
+            try {
+                transform_data.Clear();
+                foreach (GameObject branch in branches) {
+                    GameObject.Destroy(branch);
+                }
+                branches.Clear();
+                obj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+                obj.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+            } catch (InvalidOperationException e) {
+                Debug.LogWarning($"{e}");
             }
-            branches.Clear();
-            obj.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-            obj.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         }
     }
 

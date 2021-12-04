@@ -910,11 +910,11 @@ namespace Lindenmeyer {
                             switch (symbol) {
                                 case "F":
                                     if (this.random_number >= 1 && this.random_number < 50) {
-                                        new_state += "";
+                                        new_state += "F[+F]F[-F]F";
                                     } else if (this.random_number >= 50 && this.random_number < 75) {
-                                        new_state += "";
+                                        new_state += "F]-F[F]+F[F";
                                     } else if (this.random_number >= 75 && this.random_number <= 100) {
-                                        new_state += "";
+                                        new_state += "F[-F-[F[-F-[F";
                                     }
                                     break;
                                 case "+":
@@ -1396,11 +1396,11 @@ namespace Lindenmeyer {
                             switch (symbol) {
                                 case "F":
                                     if (this.random_number >= 1 && this.random_number < 50) {
-                                        new_state += "";
+                                        new_state += "F[+F]F[-F][F]";
                                     } else if (this.random_number >= 50 && this.random_number < 75) {
-                                        new_state += "";
+                                        new_state += "F[-F]F[+F][F]";
                                     } else if (this.random_number >= 75 && this.random_number <= 100) {
-                                        new_state += "";
+                                        new_state += "F[F+]F[F-][F]";
                                     }
                                     break;
                                 case "+":
@@ -1882,11 +1882,11 @@ namespace Lindenmeyer {
                             switch (symbol) {
                                 case "F":
                                     if (this.random_number >= 1 && this.random_number < 50) {
-                                        new_state += "";
+                                        new_state += "FF-[-F+F+F]+[+F-F-F]";
                                     } else if (this.random_number >= 50 && this.random_number < 75) {
-                                        new_state += "";
+                                        new_state += "FF+[+F-F-F]-[-F+F+F]";
                                     } else if (this.random_number >= 75 && this.random_number <= 100) {
-                                        new_state += "";
+                                        new_state += "-[-F+F+F]-[[+F-F-F]]FF";
                                     }
                                     break;
                                 case "+":
@@ -2371,20 +2371,20 @@ namespace Lindenmeyer {
                             switch (symbol) {
                                 case "A":
                                     if (this.random_number >= 1 && this.random_number < 50) {
-                                        new_state += "";
+                                        new_state += "F[+A]F[-A]+A";
                                     } else if (this.random_number >= 50 && this.random_number < 75) {
-                                        new_state += "";
+                                        new_state += "FF[-A][-A]-A";
                                     } else if (this.random_number >= 75 && this.random_number <= 100) {
-                                        new_state += "";
+                                        new_state += "AA";
                                     }
                                     break;
                                 case "F":
                                     if (this.random_number >= 1 && this.random_number < 50) {
-                                        new_state += "";
+                                        new_state += "FF";
                                     } else if (this.random_number >= 50 && this.random_number < 75) {
-                                        new_state += "";
+                                        new_state += "AF";
                                     } else if (this.random_number >= 75 && this.random_number <= 100) {
-                                        new_state += "";
+                                        new_state += "A";
                                     }
                                     break;
                                 case "+":
@@ -3109,20 +3109,20 @@ namespace Lindenmeyer {
                             switch (symbol) {
                                 case "A":
                                     if (this.random_number >= 1 && this.random_number < 50) {
-                                        new_state += "";
+                                        new_state += "F[+A][-A]FA";
                                     } else if (this.random_number >= 50 && this.random_number < 75) {
-                                        new_state += "";
+                                        new_state += "AA";
                                     } else if (this.random_number >= 75 && this.random_number <= 100) {
-                                        new_state += "";
+                                        new_state += "F";
                                     }
                                     break;
                                 case "F":
                                     if (this.random_number >= 1 && this.random_number < 50) {
-                                        new_state += "";
+                                        new_state += "FF";
                                     } else if (this.random_number >= 50 && this.random_number < 75) {
-                                        new_state += "";
+                                        new_state += "A[+F][-F]AF";
                                     } else if (this.random_number >= 75 && this.random_number <= 100) {
-                                        new_state += "";
+                                        new_state += "A";
                                     }
                                     break;
                                 case "+":
