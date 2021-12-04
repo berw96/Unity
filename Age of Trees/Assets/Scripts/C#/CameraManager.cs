@@ -7,22 +7,22 @@ using UnityEngine.UI;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] Slider slider;
+    [SerializeField] Slider zoom_slider;
     private float editor_FOV;
 
-    private void Start()
+    private void Awake()
     {
         try {
-            Debug.Log($"Registered {slider} as the slider for the camera zoom.");
+            Debug.Log($"Registered {zoom_slider} as the slider for the camera zoom.");
             editor_FOV = Camera.main.fieldOfView;
         } catch (NullReferenceException e) {
             Debug.LogWarning($"{e}");
         }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        Camera.main.fieldOfView = slider.value * editor_FOV;
+        Camera.main.fieldOfView = zoom_slider.value * editor_FOV;
     }
 }
 #endif
