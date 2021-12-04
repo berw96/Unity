@@ -865,11 +865,2945 @@ namespace Lindenmeyer {
         }
     }
 
-    public sealed class SimplePlant : LindenmeyerSystem {
+    public sealed class SimplePlantA : LindenmeyerSystem {
+        private readonly string SimplePlantVariables = "F";
+        private readonly string SimplePlantConstants = "+-[]";
+
+        public SimplePlantA(string axiom) {
+            this.variables = SimplePlantVariables;
+            this.constants = SimplePlantConstants;
+            this.axiom = axiom;
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            this.results.Clear();
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (this.mode) {
+                        case MODE.DETERMINISTIC:
+                            switch (symbol) {
+                                case "F":
+                                    new_state += "F[+F]F[-F]F";
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.STOCHASTIC:
+                            this.random_number = UnityEngine.Random.Range(1, 100);
+                            switch (symbol) {
+                                case "F":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "";
+                                    }
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.CONTEXT_SENSITIVE:
+                            Debug.LogWarning("CONTEXT SENSITIVE has been selected but not implemented yet.");
+                            try {
+                                string neighbour_right = current_state[j + 1].ToString();
+                                string neighbour_left = current_state[j - 1].ToString();
+                                if (neighbour_left.Equals("F") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            } catch (IndexOutOfRangeException) {
+                                Debug.LogWarning($"Current symbol not situated between neighbours. " +
+                                    $"Applying default rules.");
+                                switch (symbol) {
+                                    case "F":
+                                        new_state += "";
+                                        break;
+                                    case "+":
+                                        new_state += "+";
+                                        break;
+                                    case "-":
+                                        new_state += "-";
+                                        break;
+                                    case "[":
+                                        new_state += "[";
+                                        break;
+                                    case "]":
+                                        new_state += "]";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        default:
+                            this.mode = MODE.DETERMINISTIC;
+                            Debug.LogWarning("No mode has been selected. Default set to DETERMINISTIC.");
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
+            }
+        }
+    }
+
+    public sealed class SimplePlantB : LindenmeyerSystem {
+        private readonly string SimplePlantVariables = "F";
+        private readonly string SimplePlantConstants = "+-[]";
+
+        public SimplePlantB(string axiom) {
+            this.variables = SimplePlantVariables;
+            this.constants = SimplePlantConstants;
+            this.axiom = axiom;
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            this.results.Clear();
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (this.mode) {
+                        case MODE.DETERMINISTIC:
+                            switch (symbol) {
+                                case "F":
+                                    new_state += "F[+F]F[-F][F]";
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.STOCHASTIC:
+                            this.random_number = UnityEngine.Random.Range(1, 100);
+                            switch (symbol) {
+                                case "F":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "";
+                                    }
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.CONTEXT_SENSITIVE:
+                            Debug.LogWarning("CONTEXT SENSITIVE has been selected but not implemented yet.");
+                            try {
+                                string neighbour_right = current_state[j + 1].ToString();
+                                string neighbour_left = current_state[j - 1].ToString();
+                                if (neighbour_left.Equals("F") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            } catch (IndexOutOfRangeException) {
+                                Debug.LogWarning($"Current symbol not situated between neighbours. " +
+                                    $"Applying default rules.");
+                                switch (symbol) {
+                                    case "F":
+                                        new_state += "";
+                                        break;
+                                    case "+":
+                                        new_state += "+";
+                                        break;
+                                    case "-":
+                                        new_state += "-";
+                                        break;
+                                    case "[":
+                                        new_state += "[";
+                                        break;
+                                    case "]":
+                                        new_state += "]";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        default:
+                            this.mode = MODE.DETERMINISTIC;
+                            Debug.LogWarning("No mode has been selected. Default set to DETERMINISTIC.");
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
+            }
+        }
+    }
+
+    public sealed class SimplePlantC : LindenmeyerSystem {
+        private readonly string SimplePlantVariables = "F";
+        private readonly string SimplePlantConstants = "+-[]";
+
+        public SimplePlantC(string axiom) {
+            this.variables = SimplePlantVariables;
+            this.constants = SimplePlantConstants;
+            this.axiom = axiom;
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            this.results.Clear();
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (this.mode) {
+                        case MODE.DETERMINISTIC:
+                            switch (symbol) {
+                                case "F":
+                                    new_state += "FF-[-F+F+F]+[+F-F-F]";
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.STOCHASTIC:
+                            this.random_number = UnityEngine.Random.Range(1, 100);
+                            switch (symbol) {
+                                case "F":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "";
+                                    }
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.CONTEXT_SENSITIVE:
+                            Debug.LogWarning("CONTEXT SENSITIVE has been selected but not implemented yet.");
+                            try {
+                                string neighbour_right = current_state[j + 1].ToString();
+                                string neighbour_left = current_state[j - 1].ToString();
+                                if (neighbour_left.Equals("F") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            } catch (IndexOutOfRangeException) {
+                                Debug.LogWarning($"Current symbol not situated between neighbours. " +
+                                    $"Applying default rules.");
+                                switch (symbol) {
+                                    case "F":
+                                        new_state += "";
+                                        break;
+                                    case "+":
+                                        new_state += "+";
+                                        break;
+                                    case "-":
+                                        new_state += "-";
+                                        break;
+                                    case "[":
+                                        new_state += "[";
+                                        break;
+                                    case "]":
+                                        new_state += "]";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        default:
+                            this.mode = MODE.DETERMINISTIC;
+                            Debug.LogWarning("No mode has been selected. Default set to DETERMINISTIC.");
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
+            }
+        }
+    }
+
+    public sealed class SimplePlantD : LindenmeyerSystem {
         private readonly string SimplePlantVariables = "AF";
         private readonly string SimplePlantConstants = "+-[]";
 
-        public SimplePlant(string axiom) {
+        public SimplePlantD(string axiom) {
+            this.variables = SimplePlantVariables;
+            this.constants = SimplePlantConstants;
+            this.axiom = axiom;
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            this.results.Clear();
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (this.mode) {
+                        case MODE.DETERMINISTIC:
+                            switch (symbol) {
+                                case "A":
+                                    new_state += "F[+A]F[-A]+A";
+                                    break;
+                                case "F":
+                                    new_state += "FF";
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.STOCHASTIC:
+                            this.random_number = UnityEngine.Random.Range(1, 100);
+                            switch (symbol) {
+                                case "A":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "";
+                                    }
+                                    break;
+                                case "F":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "";
+                                    }
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.CONTEXT_SENSITIVE:
+                            Debug.LogWarning("CONTEXT SENSITIVE has been selected but not implemented yet.");
+                            try {
+                                string neighbour_right = current_state[j + 1].ToString();
+                                string neighbour_left = current_state[j - 1].ToString();
+                                if (neighbour_left.Equals("A") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            } catch (IndexOutOfRangeException) {
+                                Debug.LogWarning($"Current symbol not situated between neighbours. " +
+                                    $"Applying default rules.");
+                                switch (symbol) {
+                                    case "A":
+                                        new_state += "";
+                                        break;
+                                    case "F":
+                                        new_state += "FF";
+                                        break;
+                                    case "+":
+                                        new_state += "+";
+                                        break;
+                                    case "-":
+                                        new_state += "-";
+                                        break;
+                                    case "[":
+                                        new_state += "[";
+                                        break;
+                                    case "]":
+                                        new_state += "]";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        default:
+                            this.mode = MODE.DETERMINISTIC;
+                            Debug.LogWarning("No mode has been selected. Default set to DETERMINISTIC.");
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
+            }
+        }
+    }
+
+    public sealed class SimplePlantE : LindenmeyerSystem {
+        private readonly string SimplePlantVariables = "AF";
+        private readonly string SimplePlantConstants = "+-[]";
+
+        public SimplePlantE(string axiom) {
+            this.variables = SimplePlantVariables;
+            this.constants = SimplePlantConstants;
+            this.axiom = axiom;
+            this.current_state = this.axiom;
+            this.Rule_set = ApplyRules;
+        }
+
+        public override void ApplyRules(int iterations) {
+            this.results.Clear();
+            for (int i = 0; i < iterations; i++) {
+                string new_state = "";
+                for (int j = 0; j < this.current_state.Length; j++) {
+                    string symbol = this.current_state[j].ToString();
+                    switch (this.mode) {
+                        case MODE.DETERMINISTIC:
+                            switch (symbol) {
+                                case "A":
+                                    new_state += "F[+A][-A]FA";
+                                    break;
+                                case "F":
+                                    new_state += "FF";
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.STOCHASTIC:
+                            this.random_number = UnityEngine.Random.Range(1, 100);
+                            switch (symbol) {
+                                case "A":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "";
+                                    }
+                                    break;
+                                case "F":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "";
+                                    }
+                                    break;
+                                case "+":
+                                    new_state += "+";
+                                    break;
+                                case "-":
+                                    new_state += "-";
+                                    break;
+                                case "[":
+                                    new_state += "[";
+                                    break;
+                                case "]":
+                                    new_state += "]";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case MODE.CONTEXT_SENSITIVE:
+                            Debug.LogWarning("CONTEXT SENSITIVE has been selected but not implemented yet.");
+                            try {
+                                string neighbour_right = current_state[j + 1].ToString();
+                                string neighbour_left = current_state[j - 1].ToString();
+                                if (neighbour_left.Equals("A") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("A") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("F") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("+") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("-") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("[") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("A")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("F")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("+")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("-")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("[")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                } else if (neighbour_left.Equals("]") && neighbour_right.Equals("]")) {
+                                    switch (symbol) {
+                                        case "A":
+                                            break;
+                                        case "F":
+                                            break;
+                                        case "+":
+                                            break;
+                                        case "-":
+                                            break;
+                                        case "[":
+                                            break;
+                                        case "]":
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                            } catch (IndexOutOfRangeException) {
+                                Debug.LogWarning($"Current symbol not situated between neighbours. " +
+                                    $"Applying default rules.");
+                                switch (symbol) {
+                                    case "A":
+                                        new_state += "";
+                                        break;
+                                    case "F":
+                                        new_state += "FF";
+                                        break;
+                                    case "+":
+                                        new_state += "+";
+                                        break;
+                                    case "-":
+                                        new_state += "-";
+                                        break;
+                                    case "[":
+                                        new_state += "[";
+                                        break;
+                                    case "]":
+                                        new_state += "]";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break;
+                        default:
+                            this.mode = MODE.DETERMINISTIC;
+                            Debug.LogWarning("No mode has been selected. Default set to DETERMINISTIC.");
+                            break;
+                    }
+                }
+                this.current_state = new_state;
+                this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
+            }
+        }
+    }
+
+    public sealed class SimplePlantF : LindenmeyerSystem {
+        private readonly string SimplePlantVariables = "AF";
+        private readonly string SimplePlantConstants = "+-[]";
+
+        public SimplePlantF(string axiom) {
             this.variables = SimplePlantVariables;
             this.constants = SimplePlantConstants;
             this.axiom = axiom;

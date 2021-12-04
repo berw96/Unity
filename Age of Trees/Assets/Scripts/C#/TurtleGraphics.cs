@@ -80,8 +80,56 @@ namespace TurtleGraphics {
                     }
                 }
             }
-            if (lm is SimplePlant) {
-                Debug.Log("Simple Plant Detected");
+            if (lm is SimplePlantA || lm is SimplePlantE) {
+                Debug.Log("Simple Plant A Detected");
+                foreach (char symbol in lm.Results[iteration]) {
+                    if (symbol == 'F') {
+                        Grow(obj);
+                    } else if (symbol == '+') {
+                        Turn(obj, 25.7f);
+                    } else if (symbol == '-') {
+                        Turn(obj, -25.7f);
+                    } else if (symbol == '[') {
+                        AddTransform(obj);
+                    } else if (symbol == ']') {
+                        RemoveTransform(obj);
+                    }
+                }
+            }
+            if (lm is SimplePlantC) {
+                Debug.Log("Simple Plant C Detected");
+                foreach (char symbol in lm.Results[iteration]) {
+                    if (symbol == 'F') {
+                        Grow(obj);
+                    } else if (symbol == '+') {
+                        Turn(obj, 22.5f);
+                    } else if (symbol == '-') {
+                        Turn(obj, -22.5f);
+                    } else if (symbol == '[') {
+                        AddTransform(obj);
+                    } else if (symbol == ']') {
+                        RemoveTransform(obj);
+                    }
+                }
+            }
+            if (lm is SimplePlantB || lm is SimplePlantD) {
+                Debug.Log("Simple Plant D Detected");
+                foreach (char symbol in lm.Results[iteration]) {
+                    if (symbol == 'F') {
+                        Grow(obj);
+                    } else if (symbol == '+') {
+                        Turn(obj, 20f);
+                    } else if (symbol == '-') {
+                        Turn(obj, -20f);
+                    } else if (symbol == '[') {
+                        AddTransform(obj);
+                    } else if (symbol == ']') {
+                        RemoveTransform(obj);
+                    }
+                }
+            }
+            if (lm is SimplePlantF) {
+                Debug.Log("Simple Plant F Detected");
                 foreach (char symbol in lm.Results[iteration]) {
                     if (symbol == 'F') {
                         Grow(obj);

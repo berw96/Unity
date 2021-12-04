@@ -31,14 +31,24 @@ public class GameManager : MonoBehaviour {
     private readonly SierpinskiTriangle st = new SierpinskiTriangle("A");
     private readonly KochCurve kc = new KochCurve();
     private readonly KochSnowflake ks = new KochSnowflake();
-    private readonly SimplePlant sp = new SimplePlant("A");
+    private readonly SimplePlantA spa = new SimplePlantA("F");
+    private readonly SimplePlantB spb = new SimplePlantB("F");
+    private readonly SimplePlantC spc = new SimplePlantC("F");
+    private readonly SimplePlantD spd = new SimplePlantD("A");
+    private readonly SimplePlantE spe = new SimplePlantE("A");
+    private readonly SimplePlantF spf = new SimplePlantF("A");
     private readonly DragonCurve dc = new DragonCurve("FA");
 
     private void Awake() {
         RegisterSystem(st);
         RegisterSystem(kc);
         RegisterSystem(ks);
-        RegisterSystem(sp);
+        RegisterSystem(spa);
+        RegisterSystem(spb);
+        RegisterSystem(spc);
+        RegisterSystem(spd);
+        RegisterSystem(spe);
+        RegisterSystem(spf);
         RegisterSystem(dc);
 
         tgm.Branch = branch_prefab;
