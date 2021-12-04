@@ -44,7 +44,6 @@ namespace TurtleGraphics {
         public void ApplyTurtleGraphics(LindenmeyerSystem lm, GameObject obj, int iteration) {
             // reset transform data
             ResetGraphics(obj);
-            Debug.Log($"Produced: {lm.Results[iteration]}");
             if (lm is SierpinskiTriangle) {
                 foreach (char symbol in lm.Results[iteration]) {
                     if (symbol == 'A' || symbol == 'B') {

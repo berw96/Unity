@@ -15,9 +15,8 @@ public class CameraManager : MonoBehaviour
         try {
             Debug.Log($"Registered {slider} as the slider for the camera zoom.");
             editor_FOV = Camera.main.fieldOfView;
-        } catch (NullReferenceException) {
-            Exception e = new NullReferenceException();
-            Debug.LogWarning($"{e.ToString()}");
+        } catch (NullReferenceException e) {
+            Debug.LogWarning($"{e}");
         }
     }
 

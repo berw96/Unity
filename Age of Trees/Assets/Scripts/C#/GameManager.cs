@@ -13,7 +13,7 @@ using TurtleGraphics;
 /// Attatched game object acts as a spawner for branches.
 /// </summary>
 public class GameManager : MonoBehaviour {
-    private const int max_iterations = 6;
+    private const int max_iterations = 10;
     private const int min_iterations = 1;
 
     [SerializeField] int specified_iterations;
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
     private readonly SimplePlant sp = new SimplePlant("A");
     private readonly DragonCurve dc = new DragonCurve("FA");
 
-    private void Start() {
+    private void Awake() {
         RegisterSystem(st);
         RegisterSystem(kc);
         RegisterSystem(ks);
@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour {
         }
 
         foreach (LindenmeyerSystem system in systems) {
+            system.Current_state = "";
             system.Mode = selected_mode;
             system.ApplyRules(iterations);
         }
@@ -109,7 +110,7 @@ public class GameManager : MonoBehaviour {
                 break;
             case "Next_Iteration":
                 Debug.Log("NEXT ITERATION");
-                if (selected_iteration >= max_iterations - 1)
+                if (selected_iteration >= specified_iterations - 1)
                     break;
                 selected_iteration++;
                 break;
@@ -123,42 +124,43 @@ public class GameManager : MonoBehaviour {
         try {
             switch (button.name) {
                 case "Deterministic":
-                    Debug.Log("DETERMINISTIC");
                     this.selected_mode = MODE.DETERMINISTIC;
                     break;
                 case "Stochastic":
-                    Debug.Log("STOCHASTIC");
                     this.selected_mode = MODE.STOCHASTIC;
                     break;
                 case "Context-Sensitive":
-                    Debug.Log("CONTEXT SENSITIVE");
                     this.selected_mode = MODE.CONTEXT_SENSITIVE;
                     break;
             }
-            Debug.Log($"Mode = {selected_mode.GetType()}");
+            Debug.Log($"Mode = {selected_mode}");
             GenerateGraphics();
-        } catch (NullReferenceException) {
-            Exception e = new NullReferenceException();
-            Debug.LogWarning($"{e.ToString()}");
+        } catch (NullReferenceException e) {
+            Debug.LogWarning($"{e}");
+        } catch (StackOverflowException e) {
+            Debug.LogWarning($"{e}");
         }
     }
 
     public void GenerateGraphics() {
         try {
-            l_system_UI_tag.text = selected_system.GetType().ToString();
-            iteration_UI_tag.text = (selected_iteration + 1).ToString();
-            mode_UI_tag.text = selected_mode.ToString();
+            l_system_UI_tag.text = "System: " + selected_system.GetType().ToString();
+            iteration_UI_tag.text = "Iteration: " + (selected_iteration + 1).ToString();
+            mode_UI_tag.text = "Mode: " + selected_mode.ToString();
             selected_system.Mode = selected_mode;
             tgm.ApplyTurtleGraphics(selected_system, gameObject, selected_iteration);
-        } catch (IndexOutOfRangeException) {
-            Exception e = new IndexOutOfRangeException();
-            Debug.LogWarning($"{e.ToString()}");
-        } catch (ArgumentOutOfRangeException) {
-            Exception e = new ArgumentOutOfRangeException();
-            Debug.LogWarning($"{e.ToString()}");
-        } catch (NullReferenceException) {
-            Exception e = new NullReferenceException();
-            Debug.LogWarning($"{e.ToString()}");
+        } catch (IndexOutOfRangeException e) {
+            Debug.LogWarning($"{e}");
+            selected_iteration = specified_iterations - 1;
+            GenerateGraphics();
+        } catch (ArgumentOutOfRangeException e) {
+            Debug.LogWarning($"{e}");
+            selected_iteration = specified_iterations - 1;
+            GenerateGraphics();
+        } catch (NullReferenceException e) {
+            Debug.LogWarning($"{e}");
+        } catch (StackOverflowException e) {
+            Debug.LogWarning($"{e}");
         }
     }
 }

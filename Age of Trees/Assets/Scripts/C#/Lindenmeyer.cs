@@ -93,7 +93,7 @@ namespace Lindenmeyer {
             axiom = "";
         }
 
-        #region CUSTOM_LSYSTEM_CONSTRUCTORS
+        #region BASE_LSYSTEM_CONSTRUCTORS
         public LindenmeyerSystem(string variables) {
             this.variables = variables;
             constants = "";
@@ -173,6 +173,7 @@ namespace Lindenmeyer {
         }
 
         public override void ApplyRules(int iterations) {
+            this.results.Clear();
             for (int i = 0; i < iterations; i++) {
                 string new_state = "";
                 for (int j = 0; j < this.current_state.Length; j++) {
@@ -197,16 +198,31 @@ namespace Lindenmeyer {
                             }
                             break;
                         case MODE.STOCHASTIC:
-                            Debug.LogWarning("STOCHASTIC has been selected but not implemented yet.");
                             this.random_number = UnityEngine.Random.Range(1, 100);
                             switch (symbol) {
                                 case "A":
+                                    if (this.random_number >= 1 && this.random_number < 80) {
+                                        new_state += "B-A-B";
+                                    } else if (this.random_number >= 80 && this.random_number < 90) {
+                                        new_state += "B+A+B";
+                                    } else if (this.random_number >= 90 && this.random_number <= 100) {
+                                        new_state += "B";
+                                    }
                                     break;
                                 case "B":
+                                    if (this.random_number >= 1 && this.random_number < 80) {
+                                        new_state += "A+B+A";
+                                    } else if (this.random_number >= 80 && this.random_number < 90) {
+                                        new_state += "A-B-A";
+                                    } else if (this.random_number >= 90 && this.random_number <= 100) {
+                                        new_state += "A";
+                                    }
                                     break;
                                 case "+":
+                                    new_state += "+";
                                     break;
                                 case "-":
+                                    new_state += "-";
                                     break;
                                 default:
                                     break;
@@ -455,6 +471,7 @@ namespace Lindenmeyer {
                 }
                 this.current_state = new_state;
                 this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
             }
         }
     }
@@ -472,6 +489,7 @@ namespace Lindenmeyer {
         }
 
         public override void ApplyRules(int iterations) {
+            this.results.Clear();
             for (int i = 0; i < iterations; i++) {
                 string new_state = "";
                 for (int j = 0; j < this.current_state.Length; j++) {
@@ -493,14 +511,22 @@ namespace Lindenmeyer {
                             }
                             break;
                         case MODE.STOCHASTIC:
-                            Debug.LogWarning("STOCHASTIC has been selected but not implemented yet.");
                             this.random_number = UnityEngine.Random.Range(1, 100);
                             switch (symbol) {
                                 case "F":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "F+F-F-F+F";
+                                    } else if (this.random_number >= 50 && this.random_number < 90) {
+                                        new_state += "FF+F+FF";
+                                    } else if (this.random_number >= 90 && this.random_number <= 100) {
+                                        new_state += "FF";
+                                    }
                                     break;
                                 case "+":
+                                    new_state += "+";
                                     break;
                                 case "-":
+                                    new_state += "-";
                                     break;
                                 default:
                                     break;
@@ -637,6 +663,7 @@ namespace Lindenmeyer {
                 }
                 this.current_state = new_state;
                 this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
             }
         }
     }
@@ -659,6 +686,7 @@ namespace Lindenmeyer {
         }
 
         public override void ApplyRules(int iterations) {
+            this.results.Clear();
             for (int i = 0; i < iterations; i++) {
                 string new_state = "";
                 for (int j = 0; j < this.current_state.Length; j++) {
@@ -680,14 +708,22 @@ namespace Lindenmeyer {
                             }
                             break;
                         case MODE.STOCHASTIC:
-                            Debug.LogWarning("STOCHASTIC has been selected but not implemented yet.");
                             this.random_number = UnityEngine.Random.Range(1, 100);
                             switch (symbol) {
                                 case "F":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "F-F++F-F";
+                                    } else if (this.random_number >= 50 && this.random_number < 80) {
+                                        new_state += "F+F--F+F";
+                                    } else if (this.random_number >= 80 && this.random_number <= 100) {
+                                        new_state += "-F+FF+F-";
+                                    }
                                     break;
                                 case "+":
+                                    new_state += "+";
                                     break;
                                 case "-":
+                                    new_state += "-";
                                     break;
                                 default:
                                     break;
@@ -824,6 +860,7 @@ namespace Lindenmeyer {
                 }
                 this.current_state = new_state;
                 this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
             }
         }
     }
@@ -841,6 +878,7 @@ namespace Lindenmeyer {
         }
 
         public override void ApplyRules(int iterations) {
+            this.results.Clear();
             for (int i = 0; i < iterations; i++) {
                 string new_state = "";
                 for (int j = 0; j < this.current_state.Length; j++) {
@@ -871,20 +909,37 @@ namespace Lindenmeyer {
                             }
                             break;
                         case MODE.STOCHASTIC:
-                            Debug.LogWarning("STOCHASTIC has been selected but not implemented yet.");
                             this.random_number = UnityEngine.Random.Range(1, 100);
                             switch (symbol) {
                                 case "A":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "F-[[A]+A]+F[+FA]-A";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "AA";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "F";
+                                    }
                                     break;
                                 case "F":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "FF";
+                                    } else if (this.random_number >= 50 && this.random_number < 75) {
+                                        new_state += "A";
+                                    } else if (this.random_number >= 75 && this.random_number <= 100) {
+                                        new_state += "A-[[F]+F]+A[+AF]-F";
+                                    }
                                     break;
                                 case "+":
+                                    new_state += "+";
                                     break;
                                 case "-":
+                                    new_state += "-";
                                     break;
                                 case "[":
+                                    new_state += "[";
                                     break;
                                 case "]":
+                                    new_state += "]";
                                     break;
                                 default:
                                     break;
@@ -1543,6 +1598,7 @@ namespace Lindenmeyer {
                 }
                 this.current_state = new_state;
                 this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
             }
         }
     }
@@ -1560,6 +1616,7 @@ namespace Lindenmeyer {
         }
 
         public override void ApplyRules(int iterations) {
+            this.results.Clear();
             for (int i = 0; i < iterations; i++) {
                 string new_state = "";
                 for (int j = 0; j < this.current_state.Length; j++) {
@@ -1587,18 +1644,34 @@ namespace Lindenmeyer {
                             }
                             break;
                         case MODE.STOCHASTIC:
-                            Debug.LogWarning("STOCHASTIC has been selected but not implemented yet.");
                             this.random_number = UnityEngine.Random.Range(1, 100);
                             switch (symbol) {
                                 case "A":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "A+BF";
+                                    } else if (this.random_number >= 50 && this.random_number < 90) {
+                                        new_state += "BF+A";
+                                    } else if (this.random_number >= 90 && this.random_number <= 100) {
+                                        new_state += "A-BF";
+                                    }
                                     break;
                                 case "B":
+                                    if (this.random_number >= 1 && this.random_number < 50) {
+                                        new_state += "FA-B";
+                                    } else if (this.random_number >= 50 && this.random_number < 90) {
+                                        new_state += "B-FA";
+                                    } else if (this.random_number >= 90 && this.random_number <= 100) {
+                                        new_state += "FA+B";
+                                    }
                                     break;
                                 case "F":
+                                    new_state += "F";
                                     break;
                                 case "+":
+                                    new_state += "+";
                                     break;
                                 case "-":
+                                    new_state += "-";
                                     break;
                                 default:
                                     break;
@@ -2062,6 +2135,7 @@ namespace Lindenmeyer {
                 }
                 this.current_state = new_state;
                 this.results.Add(this.current_state);
+                Debug.Log($"Produced: {this.current_state}");
             }
         }
     }
