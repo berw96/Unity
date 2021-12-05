@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
     private const int max_iterations = 10;
     private const int min_iterations = 1;
 
+    [Tooltip("It is recommended that at most 7 iterations are specified.")]
     [SerializeField] int specified_iterations;
     [SerializeField] int selected_iteration;
     [SerializeField] MODE selected_mode = MODE.DETERMINISTIC;
