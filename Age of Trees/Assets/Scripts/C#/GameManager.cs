@@ -1,5 +1,6 @@
 #define GAME_MANAGER
 #if (UNITY_2019_3_OR_NEWER && GAME_MANAGER)
+#nullable enable
 
 /*
  * Age of Trees, a Lindenmayer simulator.
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour {
     private const int max_iterations = 10;
     private const int min_iterations = 1;
 
-    [Tooltip("It is recommended that at most 7 iterations are specified.")]
+    [Tooltip("It is recommended that at most 5 iterations are specified.")]
     [SerializeField] int specified_iterations;
     [SerializeField] int selected_iteration;
     [SerializeField] MODE selected_mode = MODE.DETERMINISTIC;

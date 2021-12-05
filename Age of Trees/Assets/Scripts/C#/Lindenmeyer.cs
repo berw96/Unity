@@ -161,7 +161,11 @@ namespace Lindenmeyer {
                 this.current_state = this.axiom;
 
             // Invokes method assigned to the rule_set delegate.
-            Rule_set.Invoke(iterations); 
+            try {
+                Rule_set.Invoke(iterations);
+            } catch (NotImplementedException e) {
+                Debug.LogWarning($"{e}");
+            }
         }
         #endregion
     }
