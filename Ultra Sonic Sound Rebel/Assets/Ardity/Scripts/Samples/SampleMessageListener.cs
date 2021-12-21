@@ -9,7 +9,7 @@
  * by Elliot Walker <ewalk008@gold.ac.uk> to enable
  * the SampleMessageListener object to control the
  * PlayerObject based on input from the Ultrasonic
- * controller. Such aspects are tagged with their
+ * controller. Such aspects are encased with their
  * Goldsmiths Student Number (SN: 3368 6408).
  */
 
