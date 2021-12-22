@@ -79,6 +79,8 @@ public class SampleMessageListener : MonoBehaviour {
         position_x += (Time.deltaTime * movement_scale * movement_rate_x);
         player_object.transform.position = new Vector3(position_x, player_object.transform.position.y, 0.0f);
 
+        ball_object.SetActive(trigger);
+
         CheckBoundaries();
     }
 
@@ -88,9 +90,6 @@ public class SampleMessageListener : MonoBehaviour {
 
         if (player_object.transform.position.x > (7.5f))
             player_object.transform.position = new Vector3(7.5f, player_object.transform.position.y, 0.0f);
-    }
-
-    public void SetControlMode() {
 
     }
     // SN: 3368 6408
