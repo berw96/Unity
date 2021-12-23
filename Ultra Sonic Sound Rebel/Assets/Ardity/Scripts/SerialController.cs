@@ -4,9 +4,18 @@
  *
  * This work is released under the Creative Commons Attributions license.
  * https://creativecommons.org/licenses/by/2.0/
+ * 
+ * Aspects of this source file have been modified
+ * by me (Elliot Walker <ewalk008@gold.ac.uk>) to enable
+ * the SerialController object to control the
+ * PlayerObject based on input from the Ultrasonic
+ * controller. Such aspects are encased with my
+ * Goldsmiths Student Number (SN: 3368 6408).
  */
 
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Threading;
 
 /**
@@ -55,6 +64,28 @@ public class SerialController : MonoBehaviour
     protected Thread thread;
     protected SerialThreadLines serialThread;
 
+    // SN: 3368 6408
+    private bool trigger = false;
+    private float bat_movement_rate_x;
+    private float bat_position_x;
+
+    private float timer = 3.0f;
+
+    private const float bat_max_movement_scale = 0.3f;
+    private const float bat_min_movement_scale = 0.0001f;
+
+    [Header("Extensions")]
+    [Space(100)]
+    [Range(bat_min_movement_scale, bat_max_movement_scale)]
+    [SerializeField] float bat_movement_scale;
+
+    [SerializeField] GameObject bat_object;
+    [SerializeField] GameObject ball_object;
+
+    [SerializeField] GameObject main_text;
+    [SerializeField] Text secondary_text;
+    [SerializeField] Text telemetry_text;
+    // SN: 3368 6408
 
     // ------------------------------------------------------------------------
     // Invoked whenever the SerialController gameobject is activated.
@@ -69,6 +100,11 @@ public class SerialController : MonoBehaviour
                                              maxUnreadMessages);
         thread = new Thread(new ThreadStart(serialThread.RunForever));
         thread.Start();
+
+        // SN: 3368 6408
+        bat_movement_rate_x = 0;
+        ball_object.SetActive(false);
+        // SN: 3368 6408
     }
 
     // ------------------------------------------------------------------------
@@ -124,6 +160,38 @@ public class SerialController : MonoBehaviour
             messageListener.SendMessage("OnConnectionEvent", false);
         else
             messageListener.SendMessage("OnMessageArrived", message);
+
+        // SN: 3368 6408
+        if (message.Contains("TRIGGER")) {
+            Debug.Log("This is an action command...");
+            trigger = true;
+        } else {
+            Debug.Log("This is a movement command...");
+            try {
+                bat_movement_rate_x = float.Parse(message);
+                Debug.Log($"Movement rate = {bat_movement_rate_x}");
+                telemetry_text.text = "Bat Speed: " + bat_movement_rate_x;
+                if (bat_movement_rate_x != 0.0f)
+                    bat_object.GetComponent<Rigidbody2D>().AddForce(new Vector2(bat_movement_rate_x, 0.0f));
+                else
+                    bat_object.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+            } catch (FormatException) {
+                Debug.LogWarning("The data acquired from the Arduino Serial Stream " +
+                    $"cannot be parsed from {message.GetType()} to {bat_movement_rate_x.GetType()}.");
+            }
+        }
+
+        if (trigger) {
+            if (timer > 0.0f) {
+                timer -= Time.deltaTime * 2;
+                secondary_text.text = ((int)timer + 1).ToString();
+            } else {
+                secondary_text.text = "";
+                ball_object.SetActive(trigger);
+            }
+            main_text.SetActive(!trigger);
+        } 
+        // SN: 3368 6408
     }
 
     // ------------------------------------------------------------------------
@@ -156,4 +224,15 @@ public class SerialController : MonoBehaviour
         this.userDefinedTearDownFunction = userFunction;
     }
 
+    //SN: 3368 6408
+    private void CheckBoundaries() {
+        if (bat_object.transform.position.x < (-7.5f)) {
+            bat_position_x = -7.5f;
+        }
+
+        if (bat_object.transform.position.x > (7.5f)) {
+            bat_position_x = 7.5f;
+        }
+    }
+    //SN: 3368 6408
 }

@@ -1,54 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ball : MonoBehaviour {
 
-    public float movement_rate_x;
-    public float movement_rate_y;
-    private float position_x;
-    private float position_y;
+    private const float ball_movement_rate_x_collision_multiplier = 1.1f;
+    private const float ball_movement_rate_y_collision_multiplier = 1.1f;
 
-    private const float max_movement_scale = 1.0f;
-    private const float min_movement_scale = 0.0001f;
+    private const float ball_max_movement_rate_x = 4.0f;
+    private const float ball_min_movement_rate_x = 2.0f;
+    private const float ball_max_movement_rate_y = 3.0f;
+    private const float ball_min_movement_rate_y = 1.0f;
 
-    [Range(min_movement_scale, max_movement_scale)]
-    [SerializeField] float movement_scale;
+    private const float ball_max_movement_scale = 1.0f;
+    private const float ball_min_movement_scale = 0.0001f;
+    
+    private float ball_position_x;
+    private float ball_position_y;
 
-    [SerializeField] GameObject player_object;
+    private int score = 0;
+
+    [Range(ball_min_movement_scale, ball_max_movement_scale)]
+    [SerializeField] float ball_movement_scale;
+
+    [Range(ball_min_movement_rate_x, ball_max_movement_rate_x)]
+    [SerializeField] float ball_movement_rate_x;
+
+    [Range(ball_min_movement_rate_y, ball_max_movement_rate_y)]
+    [SerializeField] float ball_movement_rate_y;
+
+    [SerializeField] GameObject bat_object;
+    [SerializeField] Text score_text;
     [SerializeField] List<GameObject> boundaries = new List<GameObject>(4);
 
-    void Start() {
-
+    private void Start() {
+        score_text.text = "";
     }
 
-    void FixedUpdate() {
-        position_x += (Time.deltaTime * movement_scale * movement_rate_x);
-        position_y += (Time.deltaTime * movement_scale * movement_rate_y);
+    private void OnEnable() {
+        Debug.Log("Ball is now active!");
+        score_text.text = "Score: ";
+    }
 
-        gameObject.transform.position = new Vector3(position_x, position_y, 0.0f);
+    private void FixedUpdate() {
+        ball_position_x += (Time.deltaTime * ball_movement_scale * ball_movement_rate_x);
+        ball_position_y += (Time.deltaTime * ball_movement_scale * ball_movement_rate_y);
+
+        gameObject.transform.position = new Vector3(ball_position_x, ball_position_y, 0.0f);
+
+        score_text.text = "Score: " + score;
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
 
         Debug.LogWarning($"{gameObject.name} collided with {collision.gameObject.name}!");
 
-        if (collision.gameObject == player_object)
-            movement_rate_y *= -1;
+        if(Mathf.Abs(ball_movement_rate_x) < ball_max_movement_rate_x)
+            ball_movement_rate_x *= ball_movement_rate_x_collision_multiplier;
+        if(Mathf.Abs(ball_movement_rate_y) < ball_max_movement_rate_y)
+            ball_movement_rate_y *= ball_movement_rate_y_collision_multiplier;
+
+        if (collision.gameObject == bat_object)
+            ball_movement_rate_y *= -1;
 
         if (boundaries.Contains(collision.gameObject))
             switch (collision.gameObject.name) {
                 case "TOP":
-                    movement_rate_y *= -1;
+                    ball_movement_rate_y *= -1;
+                    score += 1;
+                    score_text.text = "Score: " + score;
                     break;
                 case "BOTTOM":
-                    movement_rate_y *= -1;
+                    ball_movement_rate_y *= -1;
                     break;
                 case "LEFT":
-                    movement_rate_x *= -1;
+                    ball_movement_rate_x *= -1;
                     break;
                 case "RIGHT":
-                    movement_rate_x *= -1;
+                    ball_movement_rate_x *= -1;
                     break;
                 default:
                     Debug.LogWarning("Collision boundary not found.");
