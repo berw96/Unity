@@ -67,7 +67,6 @@ public class SerialController : MonoBehaviour
     // SN: 3368 6408
     private bool trigger = false;
     private float bat_movement_rate_x;
-    private float bat_position_x;
 
     private float timer = 3.0f;
 
@@ -77,7 +76,6 @@ public class SerialController : MonoBehaviour
     [Header("Extensions")]
     [Space(100)]
     [Range(bat_min_movement_scale, bat_max_movement_scale)]
-    [SerializeField] float bat_movement_scale;
 
     [SerializeField] GameObject bat_object;
     [SerializeField] GameObject ball_object;
@@ -170,7 +168,6 @@ public class SerialController : MonoBehaviour
             try {
                 bat_movement_rate_x = float.Parse(message);
                 Debug.Log($"Movement rate = {bat_movement_rate_x}");
-                telemetry_text.text = "Bat Speed: " + bat_movement_rate_x;
                 if (bat_movement_rate_x != 0.0f)
                     bat_object.GetComponent<Rigidbody2D>().AddForce(new Vector2(bat_movement_rate_x, 0.0f));
                 else
@@ -187,6 +184,7 @@ public class SerialController : MonoBehaviour
                 secondary_text.text = ((int)timer + 1).ToString();
             } else {
                 secondary_text.text = "";
+                telemetry_text.text = "Bat Speed: " + Mathf.Round(bat_object.GetComponent<Rigidbody2D>().velocity.x);
                 ball_object.SetActive(trigger);
             }
             main_text.SetActive(!trigger);
@@ -223,16 +221,4 @@ public class SerialController : MonoBehaviour
     {
         this.userDefinedTearDownFunction = userFunction;
     }
-
-    //SN: 3368 6408
-    private void CheckBoundaries() {
-        if (bat_object.transform.position.x < (-7.5f)) {
-            bat_position_x = -7.5f;
-        }
-
-        if (bat_object.transform.position.x > (7.5f)) {
-            bat_position_x = 7.5f;
-        }
-    }
-    //SN: 3368 6408
 }
